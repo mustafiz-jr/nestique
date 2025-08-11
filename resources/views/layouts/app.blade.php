@@ -44,85 +44,57 @@
                         <span>Category</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="catdd-dropdown " id="catddDropdown" role="region" aria-label="Category Dropdown">
+                    <div class="catdd-dropdown" id="catddDropdown" role="region" aria-label="Category Dropdown">
                         <button class="catdd-close-btn" aria-label="Close category dropdown" style="display:none;">
                             <i class="fas fa-times"></i> Close
                         </button>
 
-                        <h4 tabindex="0"><span>Fitness Equipment</span> <i class="fas fa-chevron-right"
-                                aria-hidden="true"></i></h4>
+                        <!-- Men -->
+                        <h4 tabindex="0"><span>Men</span> <i class="fas fa-chevron-right" aria-hidden="true"></i></h4>
                         <div class="catdd-links">
-                            <a href="#">Cardio Machines</a>
-                            <a href="#">Strength Training</a>
-                            <a href="#">Benches & Racks</a>
-                            <a href="#">Home Gym Sets</a>
-                            <a href="#">Mats & Flooring</a>
+                            <a href="#">T-Shirts & Polos</a>
+                            <a href="#">Shirts</a>
+                            <a href="#">Jeans & Trousers</a>
+                            <a href="#">Jackets & Coats</a>
+                            <a href="#">Ethnic Wear</a>
                         </div>
 
-                        <h4 tabindex="0"><span>Sportswear</span> <i class="fas fa-chevron-right"
-                                aria-hidden="true"></i>
+                        <!-- Women -->
+                        <h4 tabindex="0"><span>Women</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </h4>
                         <div class="catdd-links">
-                            <a href="#">Men</a>
-                            <a href="#">Women</a>
-                            <a href="#">Kids</a>
-                            <a href="#">Swimwear</a>
+                            <a href="#">Tops & Blouses</a>
+                            <a href="#">Dresses</a>
+                            <a href="#">Sarees</a>
+                            <a href="#">Salwar Kameez</a>
+                            <a href="#">Kurtis & Tunics</a>
                         </div>
 
-                        <h4 tabindex="0"><span>Footwear</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        <!-- Kids -->
+                        <h4 tabindex="0"><span>Kids</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </h4>
                         <div class="catdd-links">
-                            <a href="#">Running Shoes</a>
-                            <a href="#">Training Shoes</a>
-                            <a href="#">Football Boots</a>
-                            <a href="#">Court Shoes</a>
-                            <a href="#">Hiking Shoes</a>
+                            <a href="#">Boys' Clothing</a>
+                            <a href="#">Girls' Clothing</a>
+                            <a href="#">Footwear</a>
+                            <a href="#">Ethnic Wear</a>
+                            <a href="#">School Accessories</a>
                         </div>
 
-                        <h4 tabindex="0"><span>Team Sports</span> <i class="fas fa-chevron-right"
-                                aria-hidden="true"></i>
-                        </h4>
-                        <div class="catdd-links">
-                            <a href="#">Football / Soccer</a>
-                            <a href="#">Cricket</a>
-                            <a href="#">Basketball</a>
-                            <a href="#">Badminton</a>
-                            <a href="#">Tennis</a>
-                            <a href="#">Volleyball</a>
-                        </div>
-
-                        <h4 tabindex="0"><span>Yoga & Wellness</span> <i class="fas fa-chevron-right"
-                                aria-hidden="true"></i>
-                        </h4>
-                        <div class="catdd-links">
-                            <a href="#">Yoga Mats</a>
-                            <a href="#">Blocks & Straps</a>
-                            <a href="#">Pilates Rings</a>
-                            <a href="#">Meditation Accessories</a>
-                        </div>
-
-                        <h4 tabindex="0"><span>Outdoor & Adventure</span> <i class="fas fa-chevron-right"
-                                aria-hidden="true"></i>
-                        </h4>
-                        <div class="catdd-links">
-                            <a href="#">Camping Gear</a>
-                            <a href="#">Hiking Accessories</a>
-                            <a href="#">Climbing Gear</a>
-                            <a href="#">Cycling Gear</a>
-                        </div>
-
+                        <!-- Accessories -->
                         <h4 tabindex="0"><span>Accessories</span> <i class="fas fa-chevron-right"
                                 aria-hidden="true"></i></h4>
                         <div class="catdd-links">
-                            <a href="#">Water Bottles & Shakers</a>
-                            <a href="#">Gym Bags</a>
-                            <a href="#">Towels</a>
-                            <a href="#">Foam Rollers</a>
-                            <a href="#">Fitness Trackers</a>
+                            <a href="#">Bags & Backpacks</a>
+                            <a href="#">Watches</a>
+                            <a href="#">Sunglasses</a>
+                            <a href="#">Jewelry</a>
+                            <a href="#">Belts & Wallets</a>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <input type="text" class="navbar-search__input" placeholder="I'm shopping for..." />
             <button class="navbar-search__button">

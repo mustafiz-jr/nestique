@@ -1,10 +1,45 @@
 @extends('layouts.app')
 @section('css')
     <style>
+        .category-card {
+            border: 1px solid var(--color-dark);
+            padding: 15px;
+            height: 170px !important;
+            width: 170px !important;
+            display: flex !important;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            text-decoration: none;
+            margin: 0px 5px;
+        }
 
+        .category-icon-circle {
+            height: 60px;
+            width: 60px;
+        }
 
+        .category-icon {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
 
+        .category-title {
+            color: var(--color-dark);
+            font-weight: 600;
+        }
 
+        .category-card:hover {
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+            border: 1px solid var(--color-tertiary);
+        }
+
+        .category-card:hover .category-title {
+            color: var(--color-tertiary);
+        }
     </style>
 @endsection
 
@@ -22,24 +57,19 @@
             <div><img src="{{ asset('assets/frontend/images/sports_banner_7.jpg') }}" alt="sports_banner_7"></div>
         </div> --}}
         <div class="row head-grid g-0">
-            <div class="col-md-8 banner"><img src="{{ asset('assets/frontend/images/sports_banner_1.jpg') }}"
-                    alt="sports_banner_1">
-                <h2 class="banner-title" style="color:#FF4F0F; ">Fitness</h2>
+            <div class="col-md-8 banner"><img src="{{ asset('assets/frontend/images/banner_men.jpg') }}" alt="banner_1">
+                <h2 class="banner-title" style="color:#FF4F0F; ">Men</h2>
                 <a href="" class="banner_shop_btn">Shop Now</a>
             </div>
-            <div class="col-md-4 banner"><img src="{{ asset('assets/frontend/images/sports_banner_6.jpg') }}"
-                    alt="sports_banner_1">
-                <h2 class="banner-title" style="color:#FFA673; ">Adventure</h2>
+            <div class="col-md-4 banner"><img src="{{ asset('assets/frontend/images/banner_kid.png') }}" alt="banner_1">
+                <h2 class="banner-title" style="color:#FFA673; ">Kids</h2>
                 <a href="" class="banner_shop_btn">Shop Now</a>
             </div>
-            <div class="col-md-4 banner"><img src="{{ asset('assets/frontend/images/sports_banner_5.jpg') }}"
-                    alt="sports_banner_1">
-                <h2 class="banner-title" style="color:#FFA673">Yoga</h2>
+            <div class="col-md-4 banner"><img src="{{ asset('assets/frontend/images/banner_women.jpeg') }}" alt="banner_1">
+                <h2 class="banner-title" style="color:#FFA673">Women</h2>
                 <a href="" class="banner_shop_btn">Shop Now</a>
             </div>
-            <div class="col-md-8 banner"><img src="https://i.pinimg.com/736x/c3/57/13/c35713fc6cd4f8d62efd4d6b451f9e1b.jpg"
-                    alt="sports_banner_1">
-                <h2 class="banner-title" style="color: #FF4F0F">Offers</h2>
+            <div class="col-md-8 banner"><img src="{{ asset('assets/frontend/images/banner_dis.jpg') }}" alt="banner_1">
                 <a href="" class="banner_shop_btn">Shop Now</a>
             </div>
         </div>
@@ -49,63 +79,114 @@
             <h2 class="mb-3">Top Categories</h2>
             <div class="w-25 title-border"></div>
             <div class="col-md-12">
-                <div class="category_carousel">
-                    <a href="" class="category_card">
-                        <img src="https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?cs=srgb&dl=pexels-anush-1229356.jpg&fm=jpg"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Fitness</h2>
+                <div class="category_carousel py-3">
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/pant_category.png') }}" alt="Category"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">Jeans</p>
                     </a>
-                    <a href="" class="category_card">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5USPMdecyoGwK5xRslyfflEyNYcav2G23_w&s"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Sportswear</h2>
+                    <!-- Men -->
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/tshirt_category.png') }}" alt="T-Shirts"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">T-Shirts & Polos</p>
                     </a>
-                    <a href="" class="category_card">
-                        <img src="https://plus.unsplash.com/premium_photo-1682435561654-20d84cef00eb?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8fDA%3D"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Footwear</h2>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/shirt_category.png') }}" alt="Shirts"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">Shirts</p>
                     </a>
-                    <a href="" class="category_card">
-                        <img src="https://t4.ftcdn.net/jpg/00/04/43/79/360_F_4437974_DbE4NRiaoRtUeivMyfPoXZFNdCnYmjPq.jpg"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Sports</h2>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/jeans_category.png') }}" alt="Jeans"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">Jeans & Trousers</p>
                     </a>
-                    <a href="" class="category_card">
-                        <img src="https://t3.ftcdn.net/jpg/03/17/25/70/360_F_317257068_riIf6w8jDqCjAVcgcYWPbLNSmD2Dp3nX.jpg"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Yoga</h2>
+
+                    <!-- Women -->
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/dress_category.png') }}" alt="Dresses"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">Dresses</p>
                     </a>
-                    <a href="" class="category_card">
-                        <img src="https://images.unsplash.com/photo-1568736333626-be878c584b98?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YWR2ZW50dXJlJTIwdHJhdmVsfGVufDB8fDB8fHww"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Adventure</h2>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/saree_category.png') }}" alt="Sarees"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">Sarees</p>
                     </a>
-                    <a href="" class="category_card">
-                        <img src="https://www.kidsworldfun.com/blog/wp-content/uploads/2023/03/Outdoor-Footbal-Game.jpg"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Outdoor</h2>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/kurtis_category.png') }}" alt="Kurtis"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">Kurtis & Tunics</p>
                     </a>
-                    <a href="" class="category_card">
-                        <img src="https://img.freepik.com/free-photo/top-view-composition-with-neatly-arranged-organized-sport-items_23-2150275221.jpg"
-                            alt="Category Image">
-                        <div class="category_content">
-                            <h2>Accessories</h2>
+
+                    <!-- Kids -->
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/kids_boys_category.png') }}" alt="Boys' Clothing"
+                                class="category-icon">
                         </div>
+                        <p class="category-title">Boys' Clothing</p>
                     </a>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/kids_girls_category.png') }}" alt="Girls' Clothing"
+                                class="category-icon">
+                        </div>
+                        <p class="category-title">Girls' Clothing</p>
+                    </a>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/kids_shoes_category.png') }}" alt="Kids Footwear"
+                                class="category-icon">
+                        </div>
+                        <p class="category-title">Kids' Footwear</p>
+                    </a>
+
+                    <!-- Accessories -->
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/bags_category.png') }}" alt="Bags"
+                                class="category-icon">
+                        </div>
+                        <p class="category-title">Bags & Backpacks</p>
+                    </a>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/watches_category.png') }}" alt="Watches"
+                                class="category-icon">
+                        </div>
+                        <p class="category-title">Watches</p>
+                    </a>
+
+                    <a href="" class="category-card">
+                        <div class="category-icon-circle">
+                            <img src="{{ asset('assets/frontend/images/sunglasses_category.png') }}" alt="Sunglasses"
+                                class="category-icon">
+                        </div>
+                        <p class="category-title">Sunglasses</p>
+                    </a>
+
                 </div>
             </div>
         </div>
