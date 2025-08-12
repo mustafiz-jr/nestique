@@ -199,7 +199,6 @@
                 @include('components.product')
                 @include('components.product')
                 @include('components.product')
-                @include('components.product')
             </div>
         </div>
         <br>
@@ -207,7 +206,6 @@
             <h2 class="my-3">Best Selling Products</h2>
             <div class="w-25 title-border"></div>
             <div class="row g-3">
-                @include('components.product')
                 @include('components.product')
                 @include('components.product')
                 @include('components.product')
@@ -220,7 +218,6 @@
             <h2 class="my-3">Today's Pick</h2>
             <div class="w-25 title-border"></div>
             <div class="row g-3">
-                @include('components.product')
                 @include('components.product')
                 @include('components.product')
                 @include('components.product')

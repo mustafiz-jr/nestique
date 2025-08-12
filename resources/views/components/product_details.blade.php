@@ -82,33 +82,33 @@
             <!-- Left: Product Images -->
             <div class="col-md-6">
                 <img id="mainProductImage" class="main-image mb-3"
-                    src="https://sportsandfitness.com.bd/wp-content/uploads/2024/12/2.5kg-hex-dumbbell.webp"
-                    alt="Hex Dumbbell" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal(this.src)">
+                    src="https://fabrilife.com/products/64bbded722dda-square.png?v=20" alt="polo shirt" data-bs-toggle="modal"
+                    data-bs-target="#imageModal" onclick="openModal(this.src)">
 
                 <div class="row g-2 product-gallery">
                     <div class="col-3">
-                        <img src="https://sportsandfitness.com.bd/wp-content/uploads/2024/12/2.5kg-hex-dumbbell.webp"
-                            class="img-fluid" onclick="changeMainImage(this.src)">
+                        <img src="https://fabrilife.com/products/64944f852b247-square.jpg?v=20" class="img-fluid"
+                            onclick="changeMainImage(this.src)">
                     </div>
                     <div class="col-3">
-                        <img src="https://img.drz.lazcdn.com/g/kf/Sa40615d596c14bfdaf3cc5ae0dcdd84b3.jpg_720x720q80.jpg"
-                            class="img-fluid" onclick="changeMainImage(this.src)">
+                        <img src="https://fabrilife.com/products/632c5f39def34-square.jpg?v=20" class="img-fluid"
+                            onclick="changeMainImage(this.src)">
                     </div>
                     <div class="col-3">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3IqHe9kJ46doTpDfeW1aBNa90_WJJ6Po_bjOjg0CBI84KOb3nM4mzZ7Ew7XWrMUEdcGw&usqp=CAU"
-                            class="img-fluid" onclick="changeMainImage(this.src)">
+                        <img src="https://fabrilife.com/products/632c5f39def34-square.jpg?v=20" class="img-fluid"
+                            onclick="changeMainImage(this.src)">
                     </div>
                     <div class="col-3">
-                        <img src="https://www.southsidefitness.com.au/wp-content/uploads/2023/01/rrdb10-scaled-1.jpg"
-                            class="img-fluid" onclick="changeMainImage(this.src)">
+                        <img src="https://fabrilife.com/products/655705370a351-square.jpg?v=20" class="img-fluid"
+                            onclick="changeMainImage(this.src)">
                     </div>
                 </div>
             </div>
 
             <!-- Right: Product Info -->
             <div class="col-md-6">
-                <small class="text-muted text-uppercase">Fitness</small>
-                <h2 class="mt-2">Hex Dumbbell (2.5kg - 25kg)</h2>
+                <small class="text-muted text-uppercase">Polo shirt</small>
+                <h2 class="mt-2">Premium Designer Edition Double PK Cotton Polo</h2>
 
                 <!-- Rating -->
                 <div class="rating mb-2">
@@ -122,15 +122,15 @@
 
                 <!-- Price -->
                 <div class="mb-3">
-                    <span class="old-price">$120</span>
-                    <span class="price ms-2">$90</span>
-                    <span class="badge ms-2">-25% OFF</span>
+                    <span class="old-price">$11.27</span>
+                    <span class="price ms-2">$9.80</span>
+                    <span class="badge ms-2">-15% OFF</span>
                 </div>
 
                 <!-- Short Description -->
                 <p>
-                    Premium rubber-coated Hex Dumbbell for strength training. Durable, anti-slip grip, and designed to
-                    protect flooring.
+                    This Polo t-shirt is made with single jersey fabric which features premium 100% combed compact organic
+                    cotton. The t-shirt has a soft touch which makes it very comfortable for day-long usage.
                 </p>
 
                 <!-- Quantity Selector -->
@@ -170,17 +170,18 @@
                 <div class="tab-content" id="productTabContent">
                     <div class="tab-pane fade show active" id="description" role="tabpanel">
                         <p>
-                            The Hex Dumbbell is crafted from premium cast iron with a protective rubber coating to reduce
-                            noise and floor damage. Perfect for weightlifting, strength training, and toning.
+                            <strong>Premium Single Jersey Polo T-shirt</strong><br>
+                            This Polo t-shirt is made with single jersey fabric which features premium 100% combed compact
+                            organic cotton. The t-shirt has a soft touch which makes it very comfortable for day-long usage
                         </p>
                     </div>
                     <div class="tab-pane fade" id="specs" role="tabpanel">
                         <ul>
-                            <li>Material: Solid cast iron with rubber coating</li>
-                            <li>Weight Range: 2.5kg - 25kg</li>
-                            <li>Grip: Knurled anti-slip handle</li>
-                            <li>Shape: Hexagonal ends to prevent rolling</li>
-                            <li>Use: Home & commercial gyms</li>
+                            <li>Organic Ringspun Combed Compact Cotton</li>
+                            <li>100% Cotton</li>
+                            <li>Reactive Dye, enzyme, and silicon washed</li>
+                            <li>Preshrunk to minimize shrinkage</li>
+                            <li>Design panels all are fabric and Cut & Stich</li>
                         </ul>
                     </div>
                 </div>

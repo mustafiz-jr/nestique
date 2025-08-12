@@ -114,18 +114,18 @@
     <div class="card product-card">
         <!-- Image -->
         <div class="product-image">
-            <img src="https://sportsandfitness.com.bd/wp-content/uploads/2024/12/2.5kg-hex-dumbbell.webp" alt="Product">
+            <img src="{{ asset('assets/frontend/images/product_image.jpg') }}" alt="Product">
             <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
         </div>
 
         <!-- Content -->
         <div class="product-content">
             <div>
-                <small class="text-muted ">Fitness</small>
-                <h5 class="mt-1 product-title">Hex Dumbbell(2.5kg-25kg)</h5>
+                <small class="text-muted ">Polo Shirt</small>
+                <h5 class="mt-1 product-title">Premium Designer Edition Double PK Cotton Polo</h5>
                 <div class="mt-2">
-                    <span class="text-muted text-decoration-line-through">$120</span>
-                    <span class="fw-bold price ms-2">$99<span class="mx-2 discount">(-17%)</span></span>
+                    <span class="text-muted text-decoration-line-through">$11.27</span>
+                    <span class="fw-bold price ms-2">$9.80<span class="mx-2 discount">(-15%)</span></span>
                 </div>
                 <div class="mt-2">
                     <span class="rating">
