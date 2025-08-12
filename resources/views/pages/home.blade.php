@@ -191,186 +191,43 @@
             </div>
         </div>
 
-
         <div class="container my-5">
             <h2 class="my-3">Hot Deals</h2>
             <div class="w-25 title-border"></div>
-            <div class="row">
-                <a href="{{ route('product_details') }}" class="col-md-3 text-decoration-none">
-                    <div class="card product-card">
-                        <!-- Image -->
-                        <div class="product-image">
-                            <img src="https://sportsandfitness.com.bd/wp-content/uploads/2024/12/2.5kg-hex-dumbbell.webp"
-                                alt="Product">
-                            <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
-                        </div>
-
-                        <!-- Content -->
-                        <div class="product-content">
-                            <div>
-                                <small class="text-muted ">Fitness</small>
-                                <h5 class="mt-1 product-title">Hex Dumbbell(2.5kg-25kg)</h5>
-                                <div class="mt-2">
-                                    <span class="text-muted text-decoration-line-through">$120</span>
-                                    <span class="fw-bold price ms-2">$99<span class="mx-2 discount">(-17%)</span></span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="rating">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Footer buttons -->
-                            <div class="product-footer">
-                                <button class="btn secondary-btn w-50">Add to Cart</button>
-                                <button class="btn primary-btn w-50">♡ Wishlist</button>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+            <div class="row g-3">
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
             </div>
         </div>
         <br>
         <div class="container my-5">
             <h2 class="my-3">Best Selling Products</h2>
             <div class="w-25 title-border"></div>
-            <div class="row">
-                <a href="{{ route('product_details') }}" class="col-md-3 text-decoration-none">
-                    <div class="card product-card">
-                        <!-- Image -->
-                        <div class="product-image">
-                            <img src="https://sportsandfitness.com.bd/wp-content/uploads/2024/12/2.5kg-hex-dumbbell.webp"
-                                alt="Product">
-                            <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
-                        </div>
-
-                        <!-- Content -->
-                        <div class="product-content">
-                            <div>
-                                <small class="text-muted ">Fitness</small>
-                                <h5 class="mt-1 product-title">Hex Dumbbell(2.5kg-25kg)</h5>
-                                <div class="mt-2">
-                                    <span class="text-muted text-decoration-line-through">$120</span>
-                                    <span class="fw-bold price ms-2">$99<span class="mx-2 discount">(-17%)</span></span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="rating">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Footer buttons -->
-                            <div class="product-footer">
-                                <button class="btn secondary-btn w-50">Add to Cart</button>
-                                <button class="btn primary-btn w-50">♡ Wishlist</button>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+            <div class="row g-3">
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
             </div>
         </div>
 
         <br>
         <div class="container my-5">
-            <h2 class="my-3">Sports Products</h2>
+            <h2 class="my-3">Today's Pick</h2>
             <div class="w-25 title-border"></div>
-            <div class="row">
-                <a href="{{ route('product_details') }}" class="col-md-3 text-decoration-none">
-                    <div class="card product-card">
-                        <!-- Image -->
-                        <div class="product-image">
-                            <img src="https://sportsandfitness.com.bd/wp-content/uploads/2024/12/2.5kg-hex-dumbbell.webp"
-                                alt="Product">
-                            <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
-                        </div>
-
-                        <!-- Content -->
-                        <div class="product-content">
-                            <div>
-                                <small class="text-muted ">Fitness</small>
-                                <h5 class="mt-1 product-title">Hex Dumbbell(2.5kg-25kg)</h5>
-                                <div class="mt-2">
-                                    <span class="text-muted text-decoration-line-through">$120</span>
-                                    <span class="fw-bold price ms-2">$99<span class="mx-2 discount">(-17%)</span></span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="rating">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Footer buttons -->
-                            <div class="product-footer">
-                                <button class="btn secondary-btn w-50">Add to Cart</button>
-                                <button class="btn primary-btn w-50">♡ Wishlist</button>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+            <div class="row g-3">
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
+                @include('components.product')
             </div>
         </div>
 
-        <br>
-        <div class="container my-5">
-            <h2 class="my-3">Fitness Products</h2>
-            <div class="w-25 title-border"></div>
-            <div class="row">
-                <a href="{{ route('product_details') }}" class="col-md-3 text-decoration-none">
-                    <div class="card product-card">
-                        <!-- Image -->
-                        <div class="product-image">
-                            <img src="https://sportsandfitness.com.bd/wp-content/uploads/2024/12/2.5kg-hex-dumbbell.webp"
-                                alt="Product">
-                            <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
-                        </div>
-
-                        <!-- Content -->
-                        <div class="product-content">
-                            <div>
-                                <small class="text-muted ">Fitness</small>
-                                <h5 class="mt-1 product-title">Hex Dumbbell(2.5kg-25kg)</h5>
-                                <div class="mt-2">
-                                    <span class="text-muted text-decoration-line-through">$120</span>
-                                    <span class="fw-bold price ms-2">$99<span class="mx-2 discount">(-17%)</span></span>
-                                </div>
-                                <div class="mt-2">
-                                    <span class="rating">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star-half-stroke"></i>
-                                        <i class="fa-regular fa-star"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Footer buttons -->
-                            <div class="product-footer">
-                                <button class="btn secondary-btn w-50">Add to Cart</button>
-                                <button class="btn primary-btn w-50">♡ Wishlist</button>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        {{--  --}}
     </section>
 @endsection
 

@@ -32,7 +32,8 @@
         </button>
 
         <!-- Logo -->
-        <a href="{{ route('home') }}" class="navbar-logo logo-font ps-3">Nestique</a>
+        <a href="{{ route('home') }}" class="navbar-logo logo-font ps-3"><img
+                src="{{ asset('assets/frontend/images/logo.png') }}" style="height: 100px;" alt=""></a>
 
         <!-- Search Section -->
         <div class="navbar-search">
