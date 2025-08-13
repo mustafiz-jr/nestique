@@ -34,11 +34,11 @@
 
         .category-card:hover {
             box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-            border: 1px solid var(--color-tertiary);
+            border: 1px solid var(--color-secondary);
         }
 
         .category-card:hover .category-title {
-            color: var(--color-tertiary);
+            color: var(--color-secondary);
         }
     </style>
 @endsection
@@ -90,7 +90,7 @@
                     <!-- Men -->
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/tshirt_category.png') }}" alt="T-Shirts"
+                            <img src="{{ asset('assets/frontend/images/polo-shirt.png') }}" alt="T-Shirts"
                                 class="category-icon">
                         </div>
                         <p class="category-title">T-Shirts & Polos</p>
@@ -98,15 +98,14 @@
 
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/shirt_category.png') }}" alt="Shirts"
-                                class="category-icon">
+                            <img src="{{ asset('assets/frontend/images/shirt.png') }}" alt="Shirts" class="category-icon">
                         </div>
                         <p class="category-title">Shirts</p>
                     </a>
 
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/jeans_category.png') }}" alt="Jeans"
+                            <img src="{{ asset('assets/frontend/images/trouser.png') }}" alt="Jeans"
                                 class="category-icon">
                         </div>
                         <p class="category-title">Jeans & Trousers</p>
@@ -115,7 +114,7 @@
                     <!-- Women -->
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/dress_category.png') }}" alt="Dresses"
+                            <img src="{{ asset('assets/frontend/images/dresses.png') }}" alt="Dresses"
                                 class="category-icon">
                         </div>
                         <p class="category-title">Dresses</p>
@@ -123,7 +122,7 @@
 
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/saree_category.png') }}" alt="Sarees"
+                            <img src="{{ asset('assets/frontend/images/saaree.png') }}" alt="Sarees"
                                 class="category-icon">
                         </div>
                         <p class="category-title">Sarees</p>
@@ -131,7 +130,7 @@
 
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/kurtis_category.png') }}" alt="Kurtis"
+                            <img src="{{ asset('assets/frontend/images/kurta.png') }}" alt="Kurtis"
                                 class="category-icon">
                         </div>
                         <p class="category-title">Kurtis & Tunics</p>
@@ -140,7 +139,7 @@
                     <!-- Kids -->
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/kids_boys_category.png') }}" alt="Boys' Clothing"
+                            <img src="{{ asset('assets/frontend/images/boy_cloth.png') }}" alt="Boys' Clothing"
                                 class="category-icon">
                         </div>
                         <p class="category-title">Boys' Clothing</p>
@@ -148,7 +147,7 @@
 
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/kids_girls_category.png') }}" alt="Girls' Clothing"
+                            <img src="{{ asset('assets/frontend/images/girl_cloth.png') }}" alt="Girls' Clothing"
                                 class="category-icon">
                         </div>
                         <p class="category-title">Girls' Clothing</p>
@@ -156,35 +155,19 @@
 
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/kids_shoes_category.png') }}" alt="Kids Footwear"
+                            <img src="{{ asset('assets/frontend/images/shoes.png') }}" alt="Kids Footwear"
                                 class="category-icon">
                         </div>
-                        <p class="category-title">Kids' Footwear</p>
+                        <p class="category-title"> Footwear</p>
                     </a>
 
                     <!-- Accessories -->
                     <a href="" class="category-card">
                         <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/bags_category.png') }}" alt="Bags"
+                            <img src="{{ asset('assets/frontend/images/bags.png') }}" alt="Bags"
                                 class="category-icon">
                         </div>
                         <p class="category-title">Bags & Backpacks</p>
-                    </a>
-
-                    <a href="" class="category-card">
-                        <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/watches_category.png') }}" alt="Watches"
-                                class="category-icon">
-                        </div>
-                        <p class="category-title">Watches</p>
-                    </a>
-
-                    <a href="" class="category-card">
-                        <div class="category-icon-circle">
-                            <img src="{{ asset('assets/frontend/images/sunglasses_category.png') }}" alt="Sunglasses"
-                                class="category-icon">
-                        </div>
-                        <p class="category-title">Sunglasses</p>
                     </a>
 
                 </div>
