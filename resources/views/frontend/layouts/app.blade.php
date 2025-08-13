@@ -197,9 +197,9 @@
         <a href="{{ route('shop') }}" class="navbar-link">Shop</a>
         <a href="{{ route('men_product') }}" class="navbar-link">Men</a>
         <a href="{{ route('women_product') }}" class="navbar-link">Women</a>
-        <a href="#" class="navbar-link">Contact Us</a>
-        <a href="#" class="navbar-link">About Us</a>
-        <a href="#" class="navbar-link">Offer's</a>
+        <a href="{{ route('contact') }}" class="navbar-link">Contact Us</a>
+        <a href="{{ route('about') }}" class="navbar-link">About Us</a>
+        <a href="{{ route('offer') }}" class="navbar-link">Offer's</a>
     </nav>
 
     <!-- Mobile Offcanvas Menu -->
@@ -214,9 +214,9 @@
             <a href="{{ route('shop') }}" class="mobile-nav-link">Shop</a>
             <a href="{{ route('men_product') }}" class="mobile-nav-link">Men</a>
             <a href="{{ route('women_product') }}" class="mobile-nav-link">Women</a>
-            <a href="#" class="mobile-nav-link">Contact Us</a>
-            <a href="#" class="mobile-nav-link">About Us</a>
-            <a href="#" class="mobile-nav-link">Offer's</a>
+            <a href="{{ route('contact') }}" class="mobile-nav-link">Contact Us</a>
+            <a href="{{ route('about') }}" class="mobile-nav-link">About Us</a>
+            <a href="{{ route('offer') }}" class="mobile-nav-link">Offer's</a>
         </div>
     </div>
 
@@ -258,8 +258,8 @@
 
             <!-- Cart Buttons -->
             <div class="d-grid gap-2 mt-3">
-                <button class="primary-btn">Checkout</button>
-                <button class="secondary-btn">View Cart</button>
+                <a href="{{route('checkout')}}" class="primary-btn">Checkout</a>
+                <a href="{{ route('cart') }}" class="secondary-btn">View Cart</a>
             </div>
         </div>
     </div>
@@ -286,7 +286,7 @@
                     <li><a class="footer-link" href="{{ route('shop') }}">Shop</a></li>
                     <li><a class="footer-link" href="{{ route('men_product') }}">Men</a></li>
                     <li><a class="footer-link" href="{{ route('women_product') }}">Women</a></li>
-                    <li><a class="footer-link" href="#">Mega Offer</a></li>
+                    <li><a class="footer-link" href="{{ route('offer') }}">Mega Offer</a></li>
                 </ul>
             </div>
             <div class="footer-column contact">
@@ -304,9 +304,9 @@
                 </div>
             </div>
         </div>
-        <div class="payments my-2">
+        <div class="payments my-4">
             <h4>Pay with</h4>
-            <div class="d-flex gap-1">
+            <div class="d-flex gap-1 flex-wrap g-1 justify-content-center">
                 <!-- Nagad -->
                 <img src="https://www.logo.wine/a/logo/Nagad/Nagad-Vertical-Logo.wine.svg" alt="Nagad Logo"
                     width="100">

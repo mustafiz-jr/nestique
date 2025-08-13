@@ -34,6 +34,7 @@
     .primary-btn {
         padding: 7px 10px;
         text-decoration: none;
+        text-align: center;
         font-weight: bold;
         background-color: var(--color-primary);
         color: var(--color-accent);
@@ -50,6 +51,7 @@
     .secondary-btn {
         padding: 7px 10px;
         text-decoration: none;
+        text-align: center;
         background-color: var(--color-secondary);
         color: var(--color-light);
         border-radius: 3px;

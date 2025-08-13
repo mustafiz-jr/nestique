@@ -241,7 +241,7 @@
         .apply-filters,
         .clear-filters {
             flex: 1;
-            padding: 12px;
+            padding: 5px 12px;
             border: none;
             border-radius: 4px;
             font-size: 1rem;

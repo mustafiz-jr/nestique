@@ -199,6 +199,9 @@
             </div>
         </div>
     </div>
+    <div class="container card p-3 my-3">
+        @include('frontend.components.policy')
+    </div>
 @endsection
 
 @section('js')

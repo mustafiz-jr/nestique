@@ -30,4 +30,24 @@ class PageController extends Controller
     {
         return view('frontend.pages.women_product');
     }
+
+    public function offer(){
+        return view('frontend.pages.shop');
+    }
+
+    public function contact(){
+        return view('frontend.pages.contact');
+    }
+
+    public function about(){
+        return view('frontend.pages.about');
+    }
+
+    public function cart(){
+        return view('frontend.pages.cart');
+    }
+
+    public function checkout(){
+        return view('frontend.pages.checkout');
+    }
 }
