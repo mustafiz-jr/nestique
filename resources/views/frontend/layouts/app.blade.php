@@ -33,7 +33,7 @@
 
         <!-- Logo -->
         <a href="{{ route('home') }}" class="navbar-logo logo-font ps-3"><img
-                src="{{ asset('assets/frontend/images/logo.png') }}" style="height: 100px;" alt=""></a>
+                src="{{ asset('assets/frontend/images/logo.png') }}" style="height:40px;" alt=""></a>
 
         <!-- Search Section -->
         <div class="navbar-search">
@@ -147,7 +147,7 @@
                                     <input type="checkbox" id="remember-me">
                                     <label for="remember-me">Remember me</label>
                                 </div>
-                                <button type="submit" class="primary-btn">Login</button>
+                                <button type="submit" class="secondary-btn">Login</button>
                                 <div class="form-footer">
                                     <a href="#" class="forgot-password">Forgot password?</a>
                                 </div>
@@ -182,7 +182,7 @@
                                     <label for="accept-terms">I agree to the <a href="#">Terms of
                                             Service</a></label>
                                 </div>
-                                <button type="submit" class="primary-btn">Register</button>
+                                <button type="submit" class="secondary-btn">Register</button>
                             </form>
                         </div>
                     </div>

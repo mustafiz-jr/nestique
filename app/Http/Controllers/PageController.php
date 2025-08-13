@@ -9,11 +9,11 @@ class PageController extends Controller
 
     public function home()
     {
-        return view('pages.home');
+        return view('frontend.pages.home');
     }
 
     public function product_details()
     {
-        return view('components.product_details');
+        return view('frontend.pages.product_details');
     }
 }

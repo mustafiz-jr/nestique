@@ -111,7 +111,7 @@ observer.observe(body, {
 // Get the modal and icon elements
 const modal = document.getElementById("userModal");
 const userIcon = document.getElementById("userIcon");
-const closeBtn = document.querySelector(".close");
+const close_btn = document.querySelector(".close");
 
 // Tab switching functionality
 const tabBtns = document.querySelectorAll(".tab-btn");
@@ -136,7 +136,7 @@ userIcon.onclick = function () {
 }
 
 // When the user clicks on (x), close the modal
-closeBtn.onclick = function () {
+close_btn.onclick = function () {
     modal.style.display = "none";
 }
 

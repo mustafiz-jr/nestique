@@ -61,7 +61,7 @@
                 <h2 class="banner-title" style="color:#FF4F0F; ">Men</h2>
                 <a href="" class="banner_shop_btn">Shop Now</a>
             </div>
-            <div class="col-md-4 banner"><img src="{{ asset('assets/frontend/images/banner_kid.png') }}" alt="banner_1">
+            <div class="col-md-4 banner"><img src="{{ asset('assets/frontend/images/banner_kid.jpg') }}" alt="banner_1">
                 <h2 class="banner-title" style="color:#FFA673; ">Kids</h2>
                 <a href="" class="banner_shop_btn">Shop Now</a>
             </div>
@@ -178,10 +178,10 @@
             <h2 class="my-3">Hot Deals</h2>
             <div class="w-25 title-border"></div>
             <div class="row g-3">
-                @include('components.product')
-                @include('components.product')
-                @include('components.product')
-                @include('components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
             </div>
         </div>
         <br>
@@ -189,10 +189,10 @@
             <h2 class="my-3">New Arrival</h2>
             <div class="w-25 title-border"></div>
             <div class="row g-3">
-                @include('components.product')
-                @include('components.product')
-                @include('components.product')
-                @include('components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
             </div>
         </div>
         <br>
@@ -200,13 +200,17 @@
             <h2 class="my-3">Best Selling Products</h2>
             <div class="w-25 title-border"></div>
             <div class="row g-3">
-                @include('components.product')
-                @include('components.product')
-                @include('components.product')
-                @include('components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
+                @include('frontend.components.product')
             </div>
         </div>
-
+        <br>
+        <div class="container card p-3  ">
+            @include('frontend.components.policy')
+        </div>
+        <br>
     </section>
 @endsection
 
