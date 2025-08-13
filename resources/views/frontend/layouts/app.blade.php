@@ -194,9 +194,9 @@
     <!-- Navigation Links -->
     <nav class="navbar-links">
         <a href="{{ route('home') }}" class="navbar-link">Home</a>
-        <a href="#" class="navbar-link">Shop</a>
-        <a href="#" class="navbar-link">Men</a>
-        <a href="#" class="navbar-link">Women</a>
+        <a href="{{ route('shop') }}" class="navbar-link">Shop</a>
+        <a href="{{ route('men_product') }}" class="navbar-link">Men</a>
+        <a href="{{ route('women_product') }}" class="navbar-link">Women</a>
         <a href="#" class="navbar-link">Contact Us</a>
         <a href="#" class="navbar-link">About Us</a>
         <a href="#" class="navbar-link">Offer's</a>
@@ -211,9 +211,9 @@
         </div>
         <div class="offcanvas-body">
             <a href="#" class="mobile-nav-link">Home</a>
-            <a href="#" class="mobile-nav-link">Shop</a>
-            <a href="#" class="mobile-nav-link">Men</a>
-            <a href="#" class="mobile-nav-link">Women</a>
+            <a href="{{ route('shop') }}" class="mobile-nav-link">Shop</a>
+            <a href="{{ route('men_product') }}" class="mobile-nav-link">Men</a>
+            <a href="{{ route('women_product') }}" class="mobile-nav-link">Women</a>
             <a href="#" class="mobile-nav-link">Contact Us</a>
             <a href="#" class="mobile-nav-link">About Us</a>
             <a href="#" class="mobile-nav-link">Offer's</a>
@@ -282,10 +282,10 @@
             <div class="footer-column links">
                 <h3 class="footer-title">Quick Links</h3>
                 <ul class="footer-list">
-                    <li><a class="footer-link" href="#">Home</a></li>
-                    <li><a class="footer-link" href="#">Shop</a></li>
-                    <li><a class="footer-link" href="#">Men</a></li>
-                    <li><a class="footer-link" href="#">Women</a></li>
+                    <li><a class="footer-link" href="{{ route('home') }}">Home</a></li>
+                    <li><a class="footer-link" href="{{ route('shop') }}">Shop</a></li>
+                    <li><a class="footer-link" href="{{ route('men_product') }}">Men</a></li>
+                    <li><a class="footer-link" href="{{ route('women_product') }}">Women</a></li>
                     <li><a class="footer-link" href="#">Mega Offer</a></li>
                 </ul>
             </div>

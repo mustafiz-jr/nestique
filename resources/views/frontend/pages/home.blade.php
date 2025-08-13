@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 @section('css')
     <style>
         .category-card {
@@ -177,7 +177,7 @@
         <div class="container my-5">
             <h2 class="my-3">Hot Deals</h2>
             <div class="w-25 title-border"></div>
-            <div class="row g-3">
+            <div class="d-flex gap-4 g-3">
                 @include('frontend.components.product')
                 @include('frontend.components.product')
                 @include('frontend.components.product')
@@ -188,7 +188,7 @@
         <div class="container my-5">
             <h2 class="my-3">New Arrival</h2>
             <div class="w-25 title-border"></div>
-            <div class="row g-3">
+            <div class="d-flex gap-4 g-3">
                 @include('frontend.components.product')
                 @include('frontend.components.product')
                 @include('frontend.components.product')
@@ -199,7 +199,7 @@
         <div class="container my-5">
             <h2 class="my-3">Best Selling Products</h2>
             <div class="w-25 title-border"></div>
-            <div class="row g-3">
+            <div class="d-flex gap-4 g-3">
                 @include('frontend.components.product')
                 @include('frontend.components.product')
                 @include('frontend.components.product')

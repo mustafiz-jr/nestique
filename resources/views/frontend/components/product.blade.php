@@ -6,6 +6,7 @@
         border-radius: 3px;
         height: 60vh;
         padding: 5px;
+        width: 300px;
     }
 
     .product-image {
@@ -110,7 +111,7 @@
 
     /* product card css end */
 </style>
-<a href="{{ route('product_details') }}" class="col-md-3 text-decoration-none">
+<a href="{{ route('product_details') }}" class="text-decoration-none">
     <div class="card product-card">
         <!-- Image -->
         <div class="product-image">
