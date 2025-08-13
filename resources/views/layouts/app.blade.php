@@ -117,15 +117,74 @@
                     <span class="navbar-icon__badge">3</span>
                 </div>
 
-                <!-- Login Dropdown -->
                 <div class="navbar-icon login-dropdown">
-                    <span><i class="far fa-user"></i></span>
-                    <small class="navbar-icon__text">Account</small>
-                    <div class="login-dropdown-content">
-                        <a href="#" class="login-dropdown-link">Login</a>
-                        <a href="#" class="login-dropdown-link">Register</a>
-                        <a href="#" class="login-dropdown-link">My Account</a>
-                        <a href="#" class="login-dropdown-link">Orders</a>
+                    <span id="userIcon"><i class="far fa-user"></i></span>
+                </div>
+
+                <!-- The Modal -->
+                <div id="userModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+
+                        <div class="form-tabs">
+                            <button class="tab-btn active" data-tab="login">Login</button>
+                            <button class="tab-btn" data-tab="register">Register</button>
+                        </div>
+
+                        <div id="login-form" class="form-content active">
+                            <h2>Login to Your Account</h2>
+                            <form class="auth-form">
+                                <div class="form-group">
+                                    <label for="login-email">Email</label>
+                                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password">Password</label>
+                                    <input type="password" id="login-password" placeholder="Enter your password"
+                                        required>
+                                </div>
+                                <div class="form-group remember">
+                                    <input type="checkbox" id="remember-me">
+                                    <label for="remember-me">Remember me</label>
+                                </div>
+                                <button type="submit" class="primary-btn">Login</button>
+                                <div class="form-footer">
+                                    <a href="#" class="forgot-password">Forgot password?</a>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="register-form" class="form-content">
+                            <h2>Create New Account</h2>
+                            <form class="auth-form">
+                                <div class="form-group">
+                                    <label for="register-name">Full Name</label>
+                                    <input type="text" id="register-name" placeholder="Enter your full name"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-email">Email</label>
+                                    <input type="email" id="register-email" placeholder="Enter your email"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-password">Password</label>
+                                    <input type="password" id="register-password" placeholder="Create a password"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-confirm">Confirm Password</label>
+                                    <input type="password" id="register-confirm" placeholder="Confirm your password"
+                                        required>
+                                </div>
+                                <div class="form-group terms">
+                                    <input type="checkbox" id="accept-terms" required>
+                                    <label for="accept-terms">I agree to the <a href="#">Terms of
+                                            Service</a></label>
+                                </div>
+                                <button type="submit" class="primary-btn">Register</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

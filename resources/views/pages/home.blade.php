@@ -186,7 +186,7 @@
         </div>
         <br>
         <div class="container my-5">
-            <h2 class="my-3">Best Selling Products</h2>
+            <h2 class="my-3">New Arrival</h2>
             <div class="w-25 title-border"></div>
             <div class="row g-3">
                 @include('components.product')
@@ -195,10 +195,9 @@
                 @include('components.product')
             </div>
         </div>
-
         <br>
         <div class="container my-5">
-            <h2 class="my-3">Today's Pick</h2>
+            <h2 class="my-3">Best Selling Products</h2>
             <div class="w-25 title-border"></div>
             <div class="row g-3">
                 @include('components.product')

@@ -105,3 +105,57 @@ observer.observe(body, {
     attributes: true,
     attributeFilter: ["class"]
 });
+
+
+
+// Get the modal and icon elements
+const modal = document.getElementById("userModal");
+const userIcon = document.getElementById("userIcon");
+const closeBtn = document.querySelector(".close");
+
+// Tab switching functionality
+const tabBtns = document.querySelectorAll(".tab-btn");
+const formContents = document.querySelectorAll(".form-content");
+
+tabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+        // Remove active class from all buttons and contents
+        tabBtns.forEach(btn => btn.classList.remove("active"));
+        formContents.forEach(content => content.classList.remove("active"));
+
+        // Add active class to clicked button and corresponding content
+        btn.classList.add("active");
+        const tabName = btn.getAttribute("data-tab");
+        document.getElementById(`${tabName}-form`).classList.add("active");
+    });
+});
+
+// When the user clicks the icon, open the modal 
+userIcon.onclick = function () {
+    modal.style.display = "block";
+}
+
+// When the user clicks on (x), close the modal
+closeBtn.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Form submission handlers (you would replace these with actual form handling)
+document.querySelector("#login-form form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    alert("Login form submitted!");
+    // Here you would add your actual login logic
+});
+
+document.querySelector("#register-form form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    alert("Registration form submitted!");
+    // Here you would add your actual registration logic
+});
