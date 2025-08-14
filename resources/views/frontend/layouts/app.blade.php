@@ -18,6 +18,9 @@
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
     @yield('css')
 </head>
@@ -258,7 +261,7 @@
 
             <!-- Cart Buttons -->
             <div class="d-grid gap-2 mt-3">
-                <a href="{{route('checkout')}}" class="primary-btn">Checkout</a>
+                <a href="{{ route('checkout') }}" class="primary-btn">Checkout</a>
                 <a href="{{ route('cart') }}" class="secondary-btn">View Cart</a>
             </div>
         </div>
@@ -304,8 +307,8 @@
                 </div>
             </div>
         </div>
-        <div class="payments my-4">
-            <h4>Pay with</h4>
+        <div class="payment containers my-4">
+            <h4 class="ps-5">Pay with</h4>
             <div class="d-flex gap-1 flex-wrap g-1 justify-content-center">
                 <!-- Nagad -->
                 <img src="https://www.logo.wine/a/logo/Nagad/Nagad-Vertical-Logo.wine.svg" alt="Nagad Logo"
@@ -363,6 +366,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Slick JS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <!-- custom js -->
     <script src="{{ asset('assets/frontend/js/script.js') }}"></script>
     @yield('js')

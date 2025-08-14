@@ -31,23 +31,28 @@ class PageController extends Controller
         return view('frontend.pages.women_product');
     }
 
-    public function offer(){
+    public function offer()
+    {
         return view('frontend.pages.shop');
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('frontend.pages.contact');
     }
 
-    public function about(){
+    public function about()
+    {
         return view('frontend.pages.about');
     }
 
-    public function cart(){
+    public function cart()
+    {
         return view('frontend.pages.cart');
     }
 
-    public function checkout(){
+    public function checkout()
+    {
         return view('frontend.pages.checkout');
     }
 }
