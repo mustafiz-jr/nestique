@@ -29,7 +29,12 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#F5F5F5'), // Dusty rose
+                'secondary' => Color::hex('#ac8e51'), // Sage green
+                'success' => Color::hex('#415E72'), // Muted green
+                'danger' => Color::hex('#FFA673'), // Muted red
+                'light' => Color::hex('#FFFFFF'), // Soft cream
+                'dark' => Color::hex('#222222'), // Dark text
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
