@@ -117,7 +117,7 @@
                 <!-- Cart Button with Offcanvas Trigger -->
                 <div class="navbar-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                     <span><i class="fas fa-shopping-bag"></i></span>
-                    <span class="navbar-icon__badge">3</span>
+                    <span class="navbar-icon__badge" id="cart_count">0</span>
                 </div>
 
                 <div class="navbar-icon login-dropdown">
@@ -372,6 +372,18 @@
     <!-- custom js -->
     <script src="{{ asset('assets/frontend/js/script.js') }}"></script>
     @yield('js')
+
+    <script>
+        const cart_add = document.getElementById('cart_add');
+        const cart_count = document.getElementById('cart_count');
+
+        function count_cart() {
+            let cart_count_field = parseInt(cart_count.innerText) || 0;
+            cart_count_field++;
+
+            cart_count.innerText = cart_count_field;
+        }
+    </script>
 </body>
 
 </html>

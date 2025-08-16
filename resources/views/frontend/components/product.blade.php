@@ -141,7 +141,7 @@
 
             <!-- Footer buttons -->
             <div class="product-footer">
-                <button class="btn secondary-btn w-50">Add to Cart</button>
+                <button id="cart_add" onclick="count_cart()" class="btn secondary-btn w-50">Add to Cart</button>
                 <button class="btn primary-btn w-50">♡ Wishlist</button>
             </div>
         </div>

@@ -144,7 +144,8 @@
 
                 <!-- Buttons -->
                 <div class="d-flex gap-3 mb-4">
-                    <button class="btn secondary-btn flex-fill"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="count_cart()" class="btn secondary-btn flex-fill"><i class="fas fa-cart-plus"></i> Add
+                        to Cart</button>
                     <button class="btn primary-btn flex-fill"><i class="far fa-heart"></i> Wishlist</button>
                 </div>
             </div>

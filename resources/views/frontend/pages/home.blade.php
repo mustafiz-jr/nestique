@@ -212,6 +212,8 @@
 
 @section('js')
     <script>
+       
+
         document.addEventListener('DOMContentLoaded', function() {
 
             // Category Carousel
