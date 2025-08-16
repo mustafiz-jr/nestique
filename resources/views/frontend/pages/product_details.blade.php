@@ -80,6 +80,7 @@
     <div class="container my-5">
         <div class="row g-5">
             <!-- Left: Product Images -->
+            {{-- @dd($product) --}}
             <div class="col-md-6">
                 <img id="mainProductImage" class="main-image mb-3"
                     src="https://fabrilife.com/products/64bbded722dda-square.png?v=20" alt="polo shirt" data-bs-toggle="modal"
@@ -107,8 +108,8 @@
 
             <!-- Right: Product Info -->
             <div class="col-md-6">
-                <small class="text-muted text-uppercase">Polo shirt</small>
-                <h2 class="mt-2">Premium Designer Edition Double PK Cotton Polo</h2>
+                <small class="text-muted text-uppercase">{{ $product->category }}</small>
+                <h2 class="mt-2">{{ $product->name }}</h2>
 
                 <!-- Rating -->
                 <div class="rating mb-2">
@@ -117,20 +118,19 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star-half-alt"></i>
                     <i class="far fa-star"></i>
-                    <small class="text-muted ms-2">4.5 / 5 (120 reviews)</small>
+                    <small class="text-muted ms-2">4.5 / 5 ({{ $product->views }} views)</small>
                 </div>
 
                 <!-- Price -->
                 <div class="mb-3">
                     <span class="old-price">$11.27</span>
-                    <span class="price ms-2">$9.80</span>
+                    <span class="price ms-2">${{ $product->price }}</span>
                     <span class="badge ms-2">-15% OFF</span>
                 </div>
 
                 <!-- Short Description -->
                 <p>
-                    This Polo t-shirt is made with single jersey fabric which features premium 100% combed compact organic
-                    cotton. The t-shirt has a soft touch which makes it very comfortable for day-long usage.
+                    {!! $product->description !!}
                 </p>
 
                 <!-- Quantity Selector -->
@@ -146,7 +146,8 @@
                 <div class="d-flex gap-3 mb-4">
                     <button onclick="count_cart()" class="btn secondary-btn flex-fill"><i class="fas fa-cart-plus"></i> Add
                         to Cart</button>
-                    <button class="btn primary-btn flex-fill"><i class="far fa-heart"></i> Wishlist</button>
+                    <button onclick="wish_count()" class="btn primary-btn flex-fill"><i class="far fa-heart"></i>
+                        Wishlist</button>
                 </div>
             </div>
         </div>
@@ -171,18 +172,19 @@
                 <div class="tab-content" id="productTabContent">
                     <div class="tab-pane fade show active" id="description" role="tabpanel">
                         <p>
-                            <strong>Premium Single Jersey Polo T-shirt</strong><br>
-                            This Polo t-shirt is made with single jersey fabric which features premium 100% combed compact
-                            organic cotton. The t-shirt has a soft touch which makes it very comfortable for day-long usage
+                            <strong>{{ $product->name }}</strong><br>
+                            {!! $product->description !!}
                         </p>
                     </div>
                     <div class="tab-pane fade" id="specs" role="tabpanel">
                         <ul>
-                            <li>Organic Ringspun Combed Compact Cotton</li>
-                            <li>100% Cotton</li>
-                            <li>Reactive Dye, enzyme, and silicon washed</li>
-                            <li>Preshrunk to minimize shrinkage</li>
-                            <li>Design panels all are fabric and Cut & Stich</li>
+                            <li>{{ $product->height }}CM</li>
+                            <li>{{ $product->weight }}CM</li>
+                            <li>{{ $product->width }}CM</li>
+                            <li>{{ $product->length }}CM</li>
+                            <li>{{ $product->tags }}</li>
+                            <li>{{ $product->options }}</li>
+                            <li>{{ $product->variants }}</li>
                         </ul>
                     </div>
                 </div>

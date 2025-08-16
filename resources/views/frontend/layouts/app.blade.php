@@ -117,7 +117,7 @@
                 <!-- Cart Button with Offcanvas Trigger -->
                 <div class="navbar-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
                     <span><i class="fas fa-shopping-bag"></i></span>
-                    <span class="navbar-icon__badge" id="cart_count">0</span>
+                    <span class="navbar-icon__badge cart_count" id="cart_count">0</span>
                 </div>
 
                 <div class="navbar-icon login-dropdown">
@@ -226,7 +226,7 @@
     <!-- Cart Offcanvas -->
     <div class="offcanvas offcanvas-end offcanvas-cart" tabindex="-1" id="cartOffcanvas">
         <div class="offcanvas-header" style="background-color: var(--color-accent); color: var(--color-light);">
-            <h5 class="offcanvas-title">Your Cart (3)</h5>
+            <h5 class="offcanvas-title">Your Cart <span class="cart_count">(0)</span></h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
         </div>
@@ -375,7 +375,7 @@
 
     <script>
         const cart_add = document.getElementById('cart_add');
-        const cart_count = document.getElementById('cart_count');
+        const cart_count = document.querySelector('.cart_count');
 
         function count_cart() {
             let cart_count_field = parseInt(cart_count.innerText) || 0;

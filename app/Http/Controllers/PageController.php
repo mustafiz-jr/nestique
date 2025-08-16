@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -9,31 +11,42 @@ class PageController extends Controller
 
     public function home()
     {
-        return view('frontend.pages.home');
+        $categories = Category::limit(10)->get();
+        $products = Product::all();
+        return view('frontend.pages.home', compact('categories', 'products'));
     }
 
-    public function product_details()
+    public function product_details($id)
     {
-        return view('frontend.pages.product_details');
+        $product = Product::find($id);
+        return view('frontend.pages.product_details', compact('product'));
     }
 
     public function shop()
     {
-        return view('frontend.pages.shop');
+        $categories = Category::all();
+        $products = Product::all();
+        return view('frontend.pages.shop', compact('categories', 'products'));
     }
 
     public function men_product()
     {
-        return view('frontend.pages.men_product');
+        $categories = Category::all();
+        $products = Product::all();
+        return view('frontend.pages.men_product', compact('categories', 'products'));
     }
     public function women_product()
     {
-        return view('frontend.pages.women_product');
+        $categories = Category::all();
+        $products = Product::all();
+        return view('frontend.pages.women_product', compact('categories', 'products'));
     }
 
     public function offer()
     {
-        return view('frontend.pages.shop');
+        $categories = Category::all();
+        $products = Product::all();
+        return view('frontend.pages.shop', compact('categories', 'products'));
     }
 
     public function contact()

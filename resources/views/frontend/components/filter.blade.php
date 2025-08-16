@@ -47,7 +47,10 @@
 
         .filter-group-content.show {
             max-height: 500px;
+            overflow-y: auto;
+            /* Adds vertical scrollbar if needed */
             transition: max-height 0.5s ease-in;
+            scroll-behavior: smooth;
         }
 
         /* Price Range Slider Styles */
@@ -311,22 +314,12 @@
         <div class="filter-group">
             <h3 class="filter-group-title">Category</h3>
             <div class="filter-group-content">
-                <div class="checkbox-option">
-                    <input type="checkbox" id="category1" name="category">
-                    <label for="category1">Furniture</label>
-                </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="category2" name="category">
-                    <label for="category2">Lighting</label>
-                </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="category3" name="category">
-                    <label for="category3">Decor</label>
-                </div>
-                <div class="checkbox-option">
-                    <input type="checkbox" id="category4" name="category">
-                    <label for="category4">Textiles</label>
-                </div>
+                @foreach ($categories as $category)
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="{{ $category->id }}" name="{{ $category->slug }}">
+                        <label for="category1">{{ $category->name }}</label>
+                    </div>
+                @endforeach
             </div>
         </div>
 

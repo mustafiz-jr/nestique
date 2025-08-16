@@ -111,39 +111,39 @@
 
     /* product card css end */
 </style>
-<a href="{{ route('product_details') }}" class="text-decoration-none">
-    <div class="card product-card">
-        <!-- Image -->
-        <div class="product-image">
-            <img src="{{ asset('assets/frontend/images/product_image.jpg') }}" alt="Product">
-            <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
+<div class="card product-card">
+    <!-- Image -->
+    <div class="product-image">
+        <img src="{{ asset('assets/frontend/images/product_image.jpg') }}" alt="{{ $product->name }} img">
+        <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
+    </div>
+
+    <!-- Content -->
+    <div class="product-content">
+        <div>
+            <small class="text-muted ">{{ $product->category }}</small>
+            <a href="{{ route('product_details', $product->id) }}" class="text-decoration-none">
+                <h5 class="mt-1 product-title">{{ $product->name }}</h5>
+            </a>
+            <div class="mt-2">
+                <span class="text-muted text-decoration-line-through">$11.27</span>
+                <span class="fw-bold price ms-2">${{ $product->price }}<span class="mx-2 discount">(-15%)</span></span>
+            </div>
+            <div class="mt-2">
+                <span class="rating">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                    <i class="fa-regular fa-star"></i>
+                </span>
+            </div>
         </div>
 
-        <!-- Content -->
-        <div class="product-content">
-            <div>
-                <small class="text-muted ">Polo Shirt</small>
-                <h5 class="mt-1 product-title">Premium Designer Edition Double PK Cotton Polo</h5>
-                <div class="mt-2">
-                    <span class="text-muted text-decoration-line-through">$11.27</span>
-                    <span class="fw-bold price ms-2">$9.80<span class="mx-2 discount">(-15%)</span></span>
-                </div>
-                <div class="mt-2">
-                    <span class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Footer buttons -->
-            <div class="product-footer">
-                <button id="cart_add" onclick="count_cart()" class="btn secondary-btn w-50">Add to Cart</button>
-                <button class="btn primary-btn w-50">♡ Wishlist</button>
-            </div>
+        <!-- Footer buttons -->
+        <div class="product-footer">
+            <button id="cart_add" onclick="count_cart()" class="btn secondary-btn w-50">Add to Cart</button>
+            <button class="btn primary-btn w-50">♡ Wishlist</button>
         </div>
     </div>
-</a>
+</div>

@@ -100,15 +100,9 @@
                     </div>
                 </div>
                 <div class="d-flex g-4 gap-4 justify-content-center flex-wrap flex-1">
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
-                    @include('frontend.components.product')
+                    @foreach ($products->take(12) as $product)
+                        @include('frontend.components.product', ['product' => $product])
+                    @endforeach
                 </div>
             </div>
         </div>

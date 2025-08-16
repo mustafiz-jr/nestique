@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('thumbnail')->nullable();
             $table->json('gallery')->nullable();
+            $table->decimal('regular_price', 10, 2)->default(0);
             $table->decimal('price', 10, 2)->default(0);
             $table->decimal('compare_at_price', 10, 2)->nullable();
             $table->decimal('cost_per_item', 10, 2)->nullable();
