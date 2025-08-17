@@ -27,6 +27,8 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->brandName('Nestique Admin')
+            ->brandLogo(asset('assets/frontend/images/logo.png'))
             ->login()
             ->colors([
                 'primary' => Color::hex('#F5F5F5'), // Dusty rose

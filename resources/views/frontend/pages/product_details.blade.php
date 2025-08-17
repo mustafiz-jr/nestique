@@ -182,9 +182,21 @@
                             <li>{{ $product->weight }}CM</li>
                             <li>{{ $product->width }}CM</li>
                             <li>{{ $product->length }}CM</li>
-                            <li>{{ $product->tags }}</li>
-                            <li>{{ $product->options }}</li>
-                            <li>{{ $product->variants }}</li>
+                            @foreach ($product->tags as $item)
+                                <li>
+                                    {{ $item }}
+                                </li>
+                            @endforeach
+                            @foreach ($product->options as $item)
+                                <li>
+                                    {{ $item }}
+                                </li>
+                            @endforeach
+                            @foreach ($product->variants as $item)
+                                <li>
+                                    {{ $item }}
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

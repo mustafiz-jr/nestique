@@ -115,13 +115,15 @@
     <!-- Image -->
     <div class="product-image">
         <img src="{{ asset('assets/frontend/images/product_image.jpg') }}" alt="{{ $product->name }} img">
-        <div class="quick-view" title="quick-view"><i class="fa-solid fa-eye px-1"></i></div>
+        <a href="{{ route('product_details', $product->id) }}" class="quick-view" title="quick-view"><i
+                class="fa-solid fa-eye px-1"></i></a>
     </div>
 
     <!-- Content -->
     <div class="product-content">
         <div>
-            <small class="text-muted ">{{ $product->category }}</small>
+            {{-- @dd($product) --}}
+            <small class="text-muted ">{{ $product->category->name }}</small>
             <a href="{{ route('product_details', $product->id) }}" class="text-decoration-none">
                 <h5 class="mt-1 product-title">{{ $product->name }}</h5>
             </a>

@@ -123,4 +123,19 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'providers' => [
+        /*
+     * Laravel Framework Service Providers...
+     */
+        Illuminate\Auth\AuthServiceProvider::class,
+        // ... অন্যান্য সার্ভিস প্রোভাইডার
+
+        /*
+     * Application Service Providers...
+     */
+        App\Providers\AppServiceProvider::class,
+        // ...
+        App\Providers\CustomCssServiceProvider::class, // আপনার নতুন সার্ভিস প্রোভাইডার এখানে যোগ করুন
+    ],
+
 ];
