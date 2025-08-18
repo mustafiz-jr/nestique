@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\Brands\Pages;
+namespace App\Filament\Resources\BrandResource\Pages;
 
-use App\Filament\Resources\Brands\BrandResource;
-use Filament\Actions\CreateAction;
+use App\Filament\Resources\BrandResource;
+use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListBrands extends ListRecords
@@ -13,7 +13,7 @@ class ListBrands extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            Actions\CreateAction::make()->color('accent'),
         ];
     }
 }
