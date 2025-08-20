@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nestique</title>
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/frontend/images/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/frontend/images/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/frontend/images/favicon-16x16.png') }}">
+<link rel="manifest" href="{{ asset('assets/frontend/images/site.webmanifest') }}">
+{{-- bootstrap cdn --}}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+{{-- font awsome cdn --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<!-- Slick CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nestique</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/frontend/images/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/frontend/images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/frontend/images/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('assets/frontend/images/site.webmanifest') }}">
-    {{-- bootstrap cdn --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    {{-- font awsome cdn --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Slick CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
-    <link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
-    @yield('css')
+<link rel="stylesheet" href="{{ asset('assets/frontend/css/style.css') }}">
+@yield('css')
 </head>
 
 <body>
@@ -54,17 +51,15 @@
                         </button>
 
                         <!-- Men -->
-                        <h4 tabindex="0"><span>Men</span> <i class="fas fa-chevron-right" aria-hidden="true"></i></h4>
+                        {{-- <h4 tabindex="0"><span>Men</span> <i class="fas fa-chevron-right" aria-hidden="true"></i></h4> --}}
                         <div class="catdd-links">
-                            <a href="#">T-Shirts & Polos</a>
-                            <a href="#">Shirts</a>
-                            <a href="#">Jeans & Trousers</a>
-                            <a href="#">Jackets & Coats</a>
-                            <a href="#">Ethnic Wear</a>
+                                {{-- @foreach ($categories as $category)
+                                    <a href="#">{{ $category->name }}</a>
+                                @endforeach --}}
                         </div>
 
                         <!-- Women -->
-                        <h4 tabindex="0"><span>Women</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        {{-- <h4 tabindex="0"><span>Women</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </h4>
                         <div class="catdd-links">
                             <a href="#">Tops & Blouses</a>
@@ -72,10 +67,10 @@
                             <a href="#">Sarees</a>
                             <a href="#">Salwar Kameez</a>
                             <a href="#">Kurtis & Tunics</a>
-                        </div>
+                        </div> --}}
 
                         <!-- Kids -->
-                        <h4 tabindex="0"><span>Kids</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        {{-- <h4 tabindex="0"><span>Kids</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
                         </h4>
                         <div class="catdd-links">
                             <a href="#">Boys' Clothing</a>
@@ -83,10 +78,10 @@
                             <a href="#">Footwear</a>
                             <a href="#">Ethnic Wear</a>
                             <a href="#">School Accessories</a>
-                        </div>
+                        </div> --}}
 
                         <!-- Accessories -->
-                        <h4 tabindex="0"><span>Accessories</span> <i class="fas fa-chevron-right"
+                        {{-- <h4 tabindex="0"><span>Accessories</span> <i class="fas fa-chevron-right"
                                 aria-hidden="true"></i></h4>
                         <div class="catdd-links">
                             <a href="#">Bags & Backpacks</a>
@@ -94,7 +89,7 @@
                             <a href="#">Sunglasses</a>
                             <a href="#">Jewelry</a>
                             <a href="#">Belts & Wallets</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -384,17 +379,18 @@
             cart_count.innerText = cart_count_field;
         }
 
-        const wish_add = document.getElementById('wish_add');
-        const wish_count = document.getElementById('wish_count');
 
-        wish_add.addEventListener('click', function() {
-            let currentCount = +wish_count.innerText;
+        // wishlist increament
+        document.addEventListener('DOMContentLoaded', function() {
+            const wishCount = document.getElementById('wish_count');
+            const wishlistBtn = document.getElementById('wishlist_btn');
 
-            let newCount = currentCount + 1;
+            let count = 0;
 
-            wish_count.textContent = newCount;
-
-            console.log('Wishlist count is now: ' + newCount);
+            wishlistBtn.addEventListener('click', function() {
+                count++;
+                wishCount.textContent = count;
+            });
         });
     </script>
 </body>

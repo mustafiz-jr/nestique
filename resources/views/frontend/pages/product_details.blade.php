@@ -82,27 +82,16 @@
             <!-- Left: Product Images -->
             {{-- @dd($product) --}}
             <div class="col-md-6">
-                <img id="mainProductImage" class="main-image mb-3"
-                    src="https://fabrilife.com/products/64bbded722dda-square.png?v=20" alt="polo shirt" data-bs-toggle="modal"
-                    data-bs-target="#imageModal" onclick="openModal(this.src)">
+                <img id="mainProductImage" class="main-image mb-3" src="{{ asset('storage/' . $product->thumbnail) }}"
+                    alt="polo shirt" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal(this.src)">
 
                 <div class="row g-2 product-gallery">
-                    <div class="col-3">
-                        <img src="https://fabrilife.com/products/64944f852b247-square.jpg?v=20" class="img-fluid"
-                            onclick="changeMainImage(this.src)">
-                    </div>
-                    <div class="col-3">
-                        <img src="https://fabrilife.com/products/632c5f39def34-square.jpg?v=20" class="img-fluid"
-                            onclick="changeMainImage(this.src)">
-                    </div>
-                    <div class="col-3">
-                        <img src="https://fabrilife.com/products/632c5f39def34-square.jpg?v=20" class="img-fluid"
-                            onclick="changeMainImage(this.src)">
-                    </div>
-                    <div class="col-3">
-                        <img src="https://fabrilife.com/products/655705370a351-square.jpg?v=20" class="img-fluid"
-                            onclick="changeMainImage(this.src)">
-                    </div>
+                    @foreach ($product->gallery as $item)
+                        <div class="col-3">
+                            <img src="{{ asset('storage/' . $item) }}" class="img-fluid"
+                                onclick="changeMainImage(this.src)">
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -146,8 +135,9 @@
                 <div class="d-flex gap-3 mb-4">
                     <button onclick="count_cart()" class="btn secondary-btn flex-fill"><i class="fas fa-cart-plus"></i> Add
                         to Cart</button>
-                    <button id="wish_count" class="btn primary-btn flex-fill"><i class="far fa-heart"></i>
-                        Wishlist</button>
+                    <button id="wishlist_btn" class="btn primary-btn flex-fill">
+                        <i class="far fa-heart"></i>Wishlist
+                    </button>
                 </div>
             </div>
         </div>
@@ -178,25 +168,25 @@
                     </div>
                     <div class="tab-pane fade" id="specs" role="tabpanel">
                         <ul>
-                            <li>{{ $product->height }}CM</li>
-                            <li>{{ $product->weight }}CM</li>
-                            <li>{{ $product->width }}CM</li>
-                            <li>{{ $product->length }}CM</li>
-                            @foreach ($product->tags as $item)
-                                <li>
+                            <li><span class="fw-bold">Height:</span> {{ $product->height }}CM</li>
+                            <li><span class="fw-bold">Weight:</span> {{ $product->weight }}CM</li>
+                            <li><span class="fw-bold">Width:</span> {{ $product->width }}CM</li>
+                            <li><span class="fw-bold">Lenght:</span> {{ $product->length }}CM</li>
+                            <li><span class="fw-bold">Tags:</span>
+                                @foreach ($product->tags as $item)
+                                    {{ $item }},
+                                @endforeach
+                            </li>
+                            <li><span class="fw-bold">Options:</span>
+                                @foreach ($product->options as $item)
                                     {{ $item }}
-                                </li>
-                            @endforeach
-                            @foreach ($product->options as $item)
-                                <li>
+                                @endforeach
+                            </li>
+                            <li><span class="fw-bold">Variants:</span>
+                                @foreach ($product->variants as $item)
                                     {{ $item }}
-                                </li>
-                            @endforeach
-                            @foreach ($product->variants as $item)
-                                <li>
-                                    {{ $item }}
-                                </li>
-                            @endforeach
+                                @endforeach
+                            </li>
                         </ul>
                     </div>
                 </div>

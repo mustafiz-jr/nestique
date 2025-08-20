@@ -114,7 +114,7 @@
 <div class="card product-card">
     <!-- Image -->
     <div class="product-image">
-        <img src="{{ asset('assets/frontend/images/product_image.jpg') }}" alt="{{ $product->name }} img">
+        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }} img">
         <a href="{{ route('product_details', $product->id) }}" class="quick-view" title="quick-view"><i
                 class="fa-solid fa-eye px-1"></i></a>
     </div>
@@ -145,7 +145,9 @@
         <!-- Footer buttons -->
         <div class="product-footer">
             <button id="cart_add" onclick="count_cart()" class="btn secondary-btn w-50">Add to Cart</button>
-            <button id="wish_add" class="btn primary-btn w-50">♡ Wishlist</button>
+            <button id="wishlist_btn" class="btn primary-btn flex-fill">
+                <i class="far fa-heart mx-1"></i>Wishlist
+            </button>
         </div>
     </div>
 </div>
