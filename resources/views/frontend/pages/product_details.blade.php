@@ -108,7 +108,7 @@
 
             <!-- Right: Product Info -->
             <div class="col-md-6">
-                <small class="text-muted text-uppercase">{{ $product->category }}</small>
+                <small class="text-muted text-uppercase">{{ $product->category->name }}</small>
                 <h2 class="mt-2">{{ $product->name }}</h2>
 
                 <!-- Rating -->
@@ -146,7 +146,7 @@
                 <div class="d-flex gap-3 mb-4">
                     <button onclick="count_cart()" class="btn secondary-btn flex-fill"><i class="fas fa-cart-plus"></i> Add
                         to Cart</button>
-                    <button onclick="wish_count()" class="btn primary-btn flex-fill"><i class="far fa-heart"></i>
+                    <button id="wish_count" class="btn primary-btn flex-fill"><i class="far fa-heart"></i>
                         Wishlist</button>
                 </div>
             </div>

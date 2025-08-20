@@ -2,44 +2,35 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PermissionResource\Pages;
-use App\Filament\Resources\PermissionResource\RelationManagers;
-use App\Models\Permission;
+use App\Filament\Resources\ShippingMethodResource\Pages;
+use App\Filament\Resources\ShippingMethodResource\RelationManagers;
+use App\Models\ShippingMethod;
 use Filament\Forms;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Str;
 
-
-class PermissionResource extends Resource
+class ShippingMethodResource extends Resource
 {
-    protected static ?string $model = Permission::class;
+    protected static ?string $model = ShippingMethod::class;
 
-    protected static ?string $navigationGroup = 'User Management';
-
+    protected static ?string $navigationGroup = 'Sales Management';
+   
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel(Permission::class)::count();
+        return static::getModel(ShippingMethod::class)::count();
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('display_name')
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('name', Str::slug($state))),
-                TextInput::make('name'),
-                TextInput::make('group')->columnSpan(2),
-                MarkdownEditor::make('description')->columnSpan(2),
+                TextInput::make('name')->required(),
             ]);
     }
 
@@ -47,10 +38,7 @@ class PermissionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('display_name'),
                 TextColumn::make('name'),
-                TextColumn::make('description')->words(20)->wrap(),
-                TextColumn::make('group')->default('general')
             ])
             ->filters([
                 //
@@ -76,9 +64,9 @@ class PermissionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPermissions::route('/'),
-            'create' => Pages\CreatePermission::route('/create'),
-            'edit' => Pages\EditPermission::route('/{record}/edit'),
+            'index' => Pages\ListShippingMethods::route('/'),
+            'create' => Pages\CreateShippingMethod::route('/create'),
+            'edit' => Pages\EditShippingMethod::route('/{record}/edit'),
         ];
     }
 }

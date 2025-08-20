@@ -23,6 +23,11 @@ class RoleResource extends Resource
 
     protected static ?string $navigationGroup = 'User Management';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel(Role::class)::count();
+    }
+
 
     public static function form(Form $form): Form
     {

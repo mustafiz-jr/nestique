@@ -49,8 +49,8 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-users'),
 
                 NavigationGroup::make()
-                    ->label('Content Management')
-                    ->icon('heroicon-o-document-text'),
+                    ->label('Sales Management')
+                    ->icon('heroicon-o-currency-dollar'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

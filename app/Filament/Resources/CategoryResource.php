@@ -30,6 +30,11 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Product Management';
 
+     public static function getNavigationBadge(): ?string
+    {
+        return static::getModel(Category::class)::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form

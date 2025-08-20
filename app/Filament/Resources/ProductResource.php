@@ -30,6 +30,11 @@ class ProductResource extends Resource
 
     protected static ?string $navigationGroup = 'Product Management';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel(Product::class)::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -57,9 +62,7 @@ class ProductResource extends Resource
                                 Select::make('category_id')
                                     ->relationship('category', 'name')
                                     ->label("Category")
-                                    ->multiple()
                                     ->preload()
-                                    ->searchable()
                                     ->required(),
 
                                 Select::make('brand_id')
@@ -140,6 +143,8 @@ class ProductResource extends Resource
                                 FileUpload::make('thumbnail')
                                     ->label('Main Image')
                                     ->image()
+                                    ->acceptedFileTypes(['image/*'])
+                                    ->imageEditor()
                                     ->disk('public')
                                     ->directory('assets/backend/products')
                                     ->helperText('Main product image'),
@@ -155,7 +160,7 @@ class ProductResource extends Resource
                             ]),
 
 
-                        Tabs\Tab::make('Shipping')
+                        Tabs\Tab::make('Sizing')
                             ->icon('heroicon-o-truck')
                             ->schema([
                                 TextInput::make('weight')

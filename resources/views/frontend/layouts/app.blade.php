@@ -111,7 +111,7 @@
             <div class="navbar-icons__group">
                 <div class="navbar-icon">
                     <span><i class="far fa-heart"></i></span>
-                    <span class="navbar-icon__badge">0</span>
+                    <span id="wish_count" class="navbar-icon__badge">0</span>
                 </div>
 
                 <!-- Cart Button with Offcanvas Trigger -->
@@ -383,6 +383,19 @@
 
             cart_count.innerText = cart_count_field;
         }
+
+        const wish_add = document.getElementById('wish_add');
+        const wish_count = document.getElementById('wish_count');
+
+        wish_add.addEventListener('click', function() {
+            let currentCount = +wish_count.innerText;
+
+            let newCount = currentCount + 1;
+
+            wish_count.textContent = newCount;
+
+            console.log('Wishlist count is now: ' + newCount);
+        });
     </script>
 </body>
 

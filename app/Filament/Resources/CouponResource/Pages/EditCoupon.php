@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\ProductResource\Pages;
+namespace App\Filament\Resources\CouponResource\Pages;
 
-use App\Filament\Resources\ProductResource;
+use App\Filament\Resources\CouponResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditProduct extends EditRecord
+class EditCoupon extends EditRecord
 {
-    protected static string $resource = ProductResource::class;
+    protected static string $resource = CouponResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -17,7 +17,7 @@ class EditProduct extends EditRecord
         ];
     }
 
-    protected function getRedirectUrl(): string
+    protected function getRedirectUrl(): ?string
     {
         return $this->getResource()::geturl('index');
     }
