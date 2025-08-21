@@ -1,3 +1,6 @@
+<?php
+$categories = App\Models\Category::all();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <meta charset="UTF-8">
@@ -53,9 +56,9 @@
                         <!-- Men -->
                         {{-- <h4 tabindex="0"><span>Men</span> <i class="fas fa-chevron-right" aria-hidden="true"></i></h4> --}}
                         <div class="catdd-links">
-                                {{-- @foreach ($categories as $category)
-                                    <a href="#">{{ $category->name }}</a>
-                                @endforeach --}}
+                            @foreach ($categories as $category)
+                                <a href="#">{{ $category->name }}</a>
+                            @endforeach
                         </div>
 
                         <!-- Women -->
@@ -105,7 +108,7 @@
         <div class="navbar-icons">
             <div class="navbar-icons__group">
                 <div class="navbar-icon">
-                    <span><i class="far fa-heart"></i></span>
+                    <span><a class="text-dark" href="{{ route('wish_list') }}"><i class="far fa-heart"></i></a></span>
                     <span id="wish_count" class="navbar-icon__badge">0</span>
                 </div>
 

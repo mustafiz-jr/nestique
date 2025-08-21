@@ -16,6 +16,7 @@ Route::get('contact', [PageController::class, 'contact'])->name('contact');
 Route::get('about', [PageController::class, 'about'])->name('about');
 Route::get('cart', [PageController::class, 'cart'])->name('cart');
 Route::get('checkout', [PageController::class, 'checkout'])->name('checkout');
+Route::get('wish/list' , [PageController::class , 'wish_list'])->name('wish_list');
 // Route::get('/cart',[CartController::class , 'add_cart'])->name('cart.add');
 
 // Route::get('ajax/get_cart_count', [AjaxController::class, 'get_cart_count'])->name('get_cart_count');

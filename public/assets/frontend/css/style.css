@@ -315,10 +315,12 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-        color: var(--color-dark);
+        color: var(--color-dark) !important;
         transition: color 0.2s;
         font-size: 20px;
     }
+
+    
 
     .navbar-icon:hover {
         color: var(--color-accent);

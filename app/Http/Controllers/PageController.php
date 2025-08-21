@@ -68,4 +68,8 @@ class PageController extends Controller
     {
         return view('frontend.pages.checkout');
     }
+
+    public function wish_list(){
+        return view('frontend.pages.wish_list');
+    }
 }

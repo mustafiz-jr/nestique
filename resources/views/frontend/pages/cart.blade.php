@@ -1,6 +1,22 @@
 @extends('frontend.layouts.app')
 @section('css')
     <style>
+        :root {
+            --color-primary: #F5F5F5;
+            --color-secondary: #ac8e51;
+            --color-accent: #415E72;
+            --color-tertiary: #FFA673;
+            --color-dark: #222222;
+            --color-light: #FFFFFF;
+
+
+            --primary-font: "Inter", sans-serif;
+            --secondary-font: "Playfair Display", serif;
+            --logo-font: "Mr Dafoe", cursive;
+        }
+
+
+
         /* Main Container */
         .nestique-cart-page {
             padding: 40px 20px;
