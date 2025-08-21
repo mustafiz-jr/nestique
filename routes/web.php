@@ -14,9 +14,19 @@ Route::get('women_products', [PageController::class, 'women_product'])->name('wo
 Route::get('offer', [PageController::class, 'offer'])->name('offer');
 Route::get('contact', [PageController::class, 'contact'])->name('contact');
 Route::get('about', [PageController::class, 'about'])->name('about');
-Route::get('cart', [PageController::class, 'cart'])->name('cart');
+// Route::get('cart', [PageController::class, 'cart'])->name('cart');
 Route::get('checkout', [PageController::class, 'checkout'])->name('checkout');
-Route::get('wish/list' , [PageController::class , 'wish_list'])->name('wish_list');
-// Route::get('/cart',[CartController::class , 'add_cart'])->name('cart.add');
+Route::get('wish/list', [PageController::class, 'wish_list'])->name('wish_list');
 
-// Route::get('ajax/get_cart_count', [AjaxController::class, 'get_cart_count'])->name('get_cart_count');
+
+Route::controller(CartController::class)->group(function () {
+    Route::get('/cart', 'show_cart')->name('cart.show');
+
+    Route::post('/add-to-cart', 'add_cart')->name('cart.add');
+
+    Route::post('/cart/update', 'update_cart')->name('cart.update');
+
+    Route::post('/cart/remove', 'remove_cart')->name('cart.remove');
+
+    Route::post('/cart/clear', 'clear_cart')->name('cart.clear');
+});

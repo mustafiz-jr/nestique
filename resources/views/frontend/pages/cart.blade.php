@@ -8,14 +8,10 @@
             --color-tertiary: #FFA673;
             --color-dark: #222222;
             --color-light: #FFFFFF;
-
-
             --primary-font: "Inter", sans-serif;
             --secondary-font: "Playfair Display", serif;
             --logo-font: "Mr Dafoe", cursive;
         }
-
-
 
         /* Main Container */
         .nestique-cart-page {
@@ -286,7 +282,6 @@
             }
         }
     </style>
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 @endsection
 
@@ -294,111 +289,100 @@
     <div class="nestique-cart-page">
         <div class="nestique-cart-container">
             <h1 class="nestique-cart-header">Nestique Cart</h1>
+
+            @if (session('success'))
+                <div class="alert" style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px;">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="nestique-cart-layout">
                 <div class="nestique-cart-items-column">
-                    <!-- Cart Item 1 -->
-                    <div class="nestique-cart-item">
-                        <img src="https://placehold.co/100x100/ac8e51/ffffff?text=Hat" alt="Gradient Graphic T-shirt"
-                            class="nestique-cart-item-image">
-                        <div class="nestique-cart-item-details">
-                            <h4>Gradient Graphic T-shirt</h4>
-                            <p>Size: Large</p>
-                            <p>Color: White</p>
-                            <div class="nestique-cart-item-price">$145</div>
+                    @if ($cartItems->isEmpty())
+                        <div style="text-align: center; padding: 50px;">
+                            <p>Empty Cart</p>
+                            <a href="{{ route('home') }}"
+                                style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: var(--color-accent); color: white; text-decoration: none; border-radius: 5px;">Go
+                                TO shop</a>
                         </div>
-                        <div class="nestique-cart-item-actions">
-                            <div class="nestique-quantity-control">
-                                <button class="nestique-quantity-btn"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()"><i
-                                        class="fas fa-minus"></i></button>
-                                <input class="nestique-quantity-input" type="number" value="1" min="1">
-                                <button class="nestique-quantity-btn"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i
-                                        class="fas fa-plus"></i></button>
-                            </div>
-                            <button class="nestique-remove-btn"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
+                    @else
+                        @foreach ($cartItems as $item)
+                            <div class="nestique-cart-item">
+                                <img src="{{ asset($item->model->thumbnail) }}" alt="{{ $item->name }}"
+                                    class="nestique-cart-item-image">
+                                <div class="nestique-cart-item-details">
+                                    <h4>{{ $item->name }}</h4>
+                                    @if ($item->options->has('size'))
+                                        <p>Size: {{ $item->options->size }}</p>
+                                    @endif
+                                    @if ($item->options->has('color'))
+                                        <p>Color: {{ $item->options->color }}</p>
+                                    @endif
+                                    <div class="nestique-cart-item-price">{{ number_format((float) $item->price, 2) }} TK
+                                    </div>
+                                </div>
+                                <div class="nestique-cart-item-actions">
+                                    <form action="{{ route('cart.update') }}" method="POST"
+                                        style="display: flex; align-items: center;">
+                                        @csrf
+                                        <input type="hidden" name="rowId" value="{{ $item->rowId }}">
+                                        <div class="nestique-quantity-control">
+                                            <button type="submit" name="quantity" value="{{ $item->qty - 1 }}"
+                                                class="nestique-quantity-btn">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input class="nestique-quantity-input" type="number" name="quantity_display"
+                                                value="{{ $item->qty }}" min="1" readonly>
+                                            <button type="submit" name="quantity" value="{{ $item->qty + 1 }}"
+                                                class="nestique-quantity-btn">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </form>
 
-                    <!-- Cart Item 2 -->
-                    <div class="nestique-cart-item">
-                        <img src="https://placehold.co/100x100/415E72/ffffff?text=Shirt" alt="Checkered Shirt"
-                            class="nestique-cart-item-image">
-                        <div class="nestique-cart-item-details">
-                            <h4>Checkered Shirt</h4>
-                            <p>Size: Medium</p>
-                            <p>Color: Red</p>
-                            <div class="nestique-cart-item-price">$180</div>
-                        </div>
-                        <div class="nestique-cart-item-actions">
-                            <div class="nestique-quantity-control">
-                                <button class="nestique-quantity-btn"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()"><i
-                                        class="fas fa-minus"></i></button>
-                                <input class="nestique-quantity-input" type="number" value="1" min="1">
-                                <button class="nestique-quantity-btn"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i
-                                        class="fas fa-plus"></i></button>
+                                    <form action="{{ route('cart.remove') }}" method="POST"
+                                        style="display: inline-block;">
+                                        @csrf
+                                        <input type="hidden" name="rowId" value="{{ $item->rowId }}">
+                                        <button type="submit" class="nestique-remove-btn"><i
+                                                class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </div>
                             </div>
-                            <button class="nestique-remove-btn"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Cart Item 3 -->
-                    <div class="nestique-cart-item">
-                        <img src="https://placehold.co/100x100/222222/ffffff?text=Jeans" alt="Skinny Fit Jeans"
-                            class="nestique-cart-item-image">
-                        <div class="nestique-cart-item-details">
-                            <h4>Skinny Fit Jeans</h4>
-                            <p>Size: Large</p>
-                            <p>Color: Blue</p>
-                            <div class="nestique-cart-item-price">$240</div>
-                        </div>
-                        <div class="nestique-cart-item-actions">
-                            <div class="nestique-quantity-control">
-                                <button class="nestique-quantity-btn"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()"><i
-                                        class="fas fa-minus"></i></button>
-                                <input class="nestique-quantity-input" type="number" value="1" min="1">
-                                <button class="nestique-quantity-btn"
-                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()"><i
-                                        class="fas fa-plus"></i></button>
-                            </div>
-                            <button class="nestique-remove-btn"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
                 </div>
+                {{-- কার্ট খালি থাকলে সামারি সেকশন দেখাবে না --}}
+                @if (!$cartItems->isEmpty())
+                    <div class="nestique-order-summary-column">
+                        <h3>Order Summary</h3>
+                        <div class="nestique-summary-line">
+                            <span>Sub Total</span>
+                            <span>{{ number_format((float)$subtotal, 2) }} TK</span>
+                        </div>
+                        <div class="nestique-summary-line">
+                            <span>Tax</span>
+                            <span>{{ number_format((float)$tax, 2) }} TK</span>
+                        </div>
+                        <div class="nestique-summary-line total">
+                            <span>Total</span>
+                            <span>{{ number_format((float)$total, 2) }} TK</span>
+                        </div>
 
-                <!-- Order Summary Column -->
-                <div class="nestique-order-summary-column">
-                    <h3>Order Summary</h3>
-                    <div class="nestique-summary-line">
-                        <span>Subtotal</span>
-                        <span>$565</span>
-                    </div>
-                    <div class="nestique-summary-line discount">
-                        <span>Discount (-20%)</span>
-                        <span>-$113</span>
-                    </div>
-                    <div class="nestique-summary-line">
-                        <span>Delivery Fee</span>
-                        <span>$15</span>
-                    </div>
-                    <div class="nestique-summary-line total">
-                        <span>Total</span>
-                        <span>$467</span>
-                    </div>
+                        <a href="{{ route('checkout') }}" class="nestique-checkout-btn">
+                            Checkout
+                            <span class="fas fa-arrow-right"></span>
+                        </a>
 
-                    <form class="nestique-promo-form">
-                        <input type="text" class="nestique-promo-input" placeholder="Add promo code">
-                        <button type="submit" class="nestique-promo-btn">Apply</button>
-                    </form>
-
-                    <a href="{{ route('checkout') }}" class="nestique-checkout-btn">
-                        Go to Checkout
-                        <span class="fas fa-arrow-right"></span>
-                    </a>
-                </div>
+                        <form action="{{ route('cart.clear') }}" method="POST"
+                            style="margin-top: 20px; text-align: center;">
+                            @csrf
+                            <button type="submit"
+                                style="background: none; border: none; color: #dc3545; text-decoration: underline; cursor: pointer;">Clear
+                                Cart</button>
+                        </form>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

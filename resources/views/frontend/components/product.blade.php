@@ -114,7 +114,7 @@
 <div class="card product-card">
     <!-- Image -->
     <div class="product-image">
-        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }} img">
+        <img src="{{ asset($product->thumbnail) }}" alt="{{ $product->name }} img">
         <a href="{{ route('product_details', $product->id) }}" class="quick-view" title="quick-view"><i
                 class="fa-solid fa-eye px-1"></i></a>
     </div>
@@ -143,11 +143,28 @@
         </div>
 
         <!-- Footer buttons -->
-        <div class="product-footer">
-            <button id="cart_add" onclick="count_cart()" class="btn secondary-btn w-50">Add to Cart</button>
-            <button id="wishlist_btn" class="btn primary-btn flex-fill">
-                <i class="far fa-heart mx-1"></i>Wishlist
-            </button>
+        <div class="product-footer d-flex justify-content-between">
+
+            <div class="w-50">
+                <form action="{{ route('cart.add') }}" method="POST">
+                    @csrf
+
+                    <!-- পণ্যের ID লুকানো ইনপুট ফিল্ড হিসেবে পাঠানো হচ্ছে -->
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                    <input type="hidden" name="quantity" value="1" min="1"
+                        max="{{ $product->stock_quantity }}">
+
+                    <button type="submit" id="cart_add" onclick="count_cart()" class="btn secondary-btn w-100">Add to
+                        Cart</button>
+                </form>
+            </div>
+
+            <div class="w-50">
+                <button id="wishlist_btn" class="btn primary-btn w-100">
+                    <i class="far fa-heart mx-1"></i>Wishlist
+                </button>
+            </div>
         </div>
     </div>
 </div>

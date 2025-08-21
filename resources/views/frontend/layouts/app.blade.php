@@ -260,7 +260,7 @@ $categories = App\Models\Category::all();
             <!-- Cart Buttons -->
             <div class="d-grid gap-2 mt-3">
                 <a href="{{ route('checkout') }}" class="primary-btn">Checkout</a>
-                <a href="{{ route('cart') }}" class="secondary-btn">View Cart</a>
+                <a href="{{ route('cart.show') }}" class="secondary-btn">View Cart</a>
             </div>
         </div>
     </div>

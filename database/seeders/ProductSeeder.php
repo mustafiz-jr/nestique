@@ -60,8 +60,13 @@ class ProductSeeder extends Seeder
                     'views' => rand(0, 100),
                     'category_id' => $category->id,
                     'brand_id' => $brands[array_rand($brands)] ?? null,
-                    'thumbnail' => null,
-                    'gallery' => json_encode([]),
+                    'thumbnail' => 'assets/frontend/images/jersey_01.webp',
+                    'gallery' => json_encode([
+                        'assets/frontend/images/jersey_02.webp',
+                        'assets/frontend/images/jersey_03.webp',
+                        'assets/frontend/images/jersey_04.webp',
+                        'assets/frontend/images/jersey_05.webp'
+                    ]),
                     'price' => rand(500, 5000),
                     'compare_at_price' => rand(5500, 7000),
                     'cost_per_item' => rand(300, 1000),

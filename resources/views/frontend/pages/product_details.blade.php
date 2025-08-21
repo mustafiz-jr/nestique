@@ -82,14 +82,13 @@
             <!-- Left: Product Images -->
             {{-- @dd($product) --}}
             <div class="col-md-6">
-                <img id="mainProductImage" class="main-image mb-3" src="{{ asset('storage/' . $product->thumbnail) }}"
-                    alt="polo shirt" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal(this.src)">
+                <img id="mainProductImage" class="main-image mb-3" src="{{ asset($product->thumbnail) }}" alt="polo shirt"
+                    data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal(this.src)">
 
                 <div class="row g-2 product-gallery">
                     @foreach ($product->gallery as $item)
                         <div class="col-3">
-                            <img src="{{ asset('storage/' . $item) }}" class="img-fluid"
-                                onclick="changeMainImage(this.src)">
+                            <img src="{{ asset($item) }}" class="img-fluid" onclick="changeMainImage(this.src)">
                         </div>
                     @endforeach
                 </div>
@@ -132,12 +131,28 @@
                 </div>
 
                 <!-- Buttons -->
-                <div class="d-flex gap-3 mb-4">
-                    <button onclick="count_cart()" class="btn secondary-btn flex-fill"><i class="fas fa-cart-plus"></i> Add
-                        to Cart</button>
-                    <button id="wishlist_btn" class="btn primary-btn flex-fill">
-                        <i class="far fa-heart"></i>Wishlist
-                    </button>
+                <div class="d-flex justify-content-between gap-1 mb-4">
+                    <div class="w-50">
+                        <form action="{{ route('cart.add') }}" method="POST">
+                            @csrf
+
+                            <!-- পণ্যের ID লুকানো ইনপুট ফিল্ড হিসেবে পাঠানো হচ্ছে -->
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                            <input type="hidden" name="quantity" value="1" min="1"
+                                max="{{ $product->stock_quantity }}">
+
+                            <button type="submit" id="cart_add" onclick="count_cart()" class="btn secondary-btn w-100">Add to
+                                Cart</button>
+                        </form>
+                    </div>
+
+                    <div class="w-50">
+                        <button id="wishlist_btn" class="btn primary-btn w-100">
+                            <i class="far fa-heart"></i>Wishlist
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>
