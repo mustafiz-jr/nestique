@@ -32,7 +32,7 @@ class CategorySeeder extends Seeder
                 "Boys' Clothing",
                 "Girls' Clothing",
                 'Footwear',
-                'Ethnic Wear', // Same name as in Men
+                'Ethnic Wear',
                 'School Accessories',
             ],
             // Accessories
@@ -45,10 +45,36 @@ class CategorySeeder extends Seeder
             ],
         ];
 
+        // Map category names to their corresponding image file names
+        $imageMap = [
+            'T-Shirts & Polos' => 'polo-shirt.png',
+            'Shirts' => 'shirt.png',
+            'Jeans & Trousers' => 'pant_category.png',
+            'Jackets & Coats' => null, // No specific image provided
+            'Ethnic Wear' => 'kurta.png',
+            'Tops & Blouses' => null, // No specific image provided
+            'Dresses' => 'dresses.png',
+            'Sarees' => 'saaree.png',
+            'Salwar Kameez' => 'kurta.png', // Reusing an image
+            'Kurtis & Tunics' => 'kurta.png', // Reusing an image
+            "Boys' Clothing" => 'boy_cloth.png',
+            "Girls' Clothing" => 'girl_cloth.png',
+            'Footwear' => 'shoes.png',
+            'School Accessories' => 'bags.png',
+            'Bags & Backpacks' => 'bags.png',
+            'Watches' => null, // No specific image provided
+            'Sunglasses' => null, // No specific image provided
+            'Jewelry' => null, // No specific image provided
+            'Belts & Wallets' => null, // No specific image provided
+        ];
+
         $usedSlugs = [];
 
         foreach ($categories as $main => $subcategories) {
             foreach ($subcategories as $sub) {
+                // Determine the correct image path
+                $imagePath = isset($imageMap[$sub]) ? 'assets/frontend/images/categories/' . $imageMap[$sub] : null;
+
                 // Make a unique slug: e.g. men-ethnic-wear
                 $baseSlug = Str::slug($main . '-' . $sub);
                 $slug = $baseSlug;
@@ -63,7 +89,7 @@ class CategorySeeder extends Seeder
                 DB::table('categories')->insert([
                     'name' => $sub,
                     'slug' => $slug,
-                    'image' => null,
+                    'image' => $imagePath,
                     'description' => "This is a subcategory of $main.",
                     'created_at' => now(),
                     'updated_at' => now(),

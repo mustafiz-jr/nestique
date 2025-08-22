@@ -79,7 +79,7 @@
                             <!-- Accessories -->
                             <a href="" class="category-card swiper-slide">
                                 <div class="category-icon-circle">
-                                    <img src="{{ asset('storage/' . $item->image) }}" alt="Bags" class="category-icon">
+                                    <img src="{{ asset($item->image) }}" alt="Bags" class="category-icon">
                                 </div>
                                 <p class="category-title">{{ $item->name }}</p>
                             </a>

@@ -14,45 +14,100 @@ class ProductSeeder extends Seeder
     {
         $categoryStructure = [
             // Men
-            'T-Shirts & Polos',
-            'Shirts',
-            'Jeans & Trousers',
-            'Jackets & Coats',
-            'Ethnic Wear',
+            'T-Shirts & Polos' => [
+                'Men\'s Classic V-Neck T-Shirt',
+                'Casual Polo Shirt with Pocket',
+            ],
+            'Shirts' => [
+                'Slim-Fit Oxford Shirt',
+                'Linen Blend Short Sleeve Shirt',
+            ],
+            'Jeans & Trousers' => [
+                'Distressed Skinny Jeans',
+                'Comfort-Fit Khaki Trousers',
+            ],
+            'Jackets & Coats' => [
+                'Fleece-Lined Winter Jacket',
+                'Lightweight Windbreaker Coat',
+            ],
+            'Ethnic Wear' => [
+                'Traditional Kurta Pajama Set',
+                'Embroidered Sherwani Jacket',
+            ],
 
             // Women
-            'Tops & Blouses',
-            'Dresses',
-            'Sarees',
-            'Salwar Kameez',
-            'Kurtis & Tunics',
+            'Tops & Blouses' => [
+                'Floral Print Blouse',
+                'Elegant Silk Camisole',
+            ],
+            'Dresses' => [
+                'Summer Sundress with Pockets',
+                'Evening Gown with Sequins',
+            ],
+            'Sarees' => [
+                'Handloom Cotton Saree',
+                'Banarasi Silk Saree',
+            ],
+            'Salwar Kameez' => [
+                'Printed Cotton Salwar Suit',
+                'Designer Anarkali Suit',
+            ],
+            'Kurtis & Tunics' => [
+                'Casual A-Line Kurti',
+                'Embroidered Georgette Tunic',
+            ],
 
             // Kids
-            "Boys' Clothing",
-            "Girls' Clothing",
-            'Footwear',
-            'School Accessories',
+            "Boys' Clothing" => [
+                'Graphic Print T-Shirt for Boys',
+                'Dinosaur Hoodie for Kids',
+            ],
+            "Girls' Clothing" => [
+                'Glittery Unicorn Dress for Girls',
+                'Pink Tutu Skirt',
+            ],
+            'Footwear' => [
+                'Velcro Strap Sneakers',
+                'Cartoon Character Sandals',
+            ],
+            'School Accessories' => [
+                'Waterproof School Backpack',
+                'Lunch Box with Padded Holder',
+            ],
 
             // Accessories
-            'Bags & Backpacks',
-            'Watches',
-            'Sunglasses',
-            'Jewelry',
-            'Belts & Wallets',
+            'Bags & Backpacks' => [
+                'Laptop Backpack with USB Port',
+                'Leather Messenger Bag',
+            ],
+            'Watches' => [
+                'Digital Sports Watch',
+                'Classic Analog Leather Watch',
+            ],
+            'Sunglasses' => [
+                'Aviator Style Sunglasses',
+                'Cat-Eye Frame Sunglasses',
+            ],
+            'Jewelry' => [
+                'Silver Plated Chain Necklace',
+                'Rose Gold Stud Earrings',
+            ],
+            'Belts & Wallets' => [
+                'Genuine Leather Belt',
+                'Bifold Wallet with RFID Protection',
+            ],
         ];
 
         $brands = Brand::pluck('id')->toArray(); // Random brand_id pick
 
-        foreach ($categoryStructure as $categoryName) {
+        foreach ($categoryStructure as $categoryName => $productNames) {
             $category = Category::where('name', $categoryName)->first();
 
             if (!$category) {
                 continue;
             }
 
-            for ($i = 1; $i <= 2; $i++) {
-                $productName = $categoryName . " Product " . $i;
-
+            foreach ($productNames as $productName) {
                 DB::table('products')->insert([
                     'name' => $productName,
                     'slug' => Str::slug($productName) . '-' . uniqid(),

@@ -30,3 +30,7 @@ Route::controller(CartController::class)->group(function () {
 
     Route::post('/cart/clear', 'clear_cart')->name('cart.clear');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

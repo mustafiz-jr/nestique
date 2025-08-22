@@ -1,3 +1,5 @@
+// category dropdown js start
+
 // js for category dropdown toggle 
 const toggleBtn = document.getElementById("catddToggle");
 const dropdown = document.getElementById("catddDropdown");
@@ -105,8 +107,10 @@ observer.observe(body, {
     attributes: true,
     attributeFilter: ["class"]
 });
+// category dropdown js end
 
 
+// user form modal start
 
 // Get the modal and icon elements
 const modal = document.getElementById("userModal");
@@ -159,3 +163,69 @@ document.querySelector("#register-form form").addEventListener("submit", functio
     alert("Registration form submitted!");
     // Here you would add your actual registration logic
 });
+// user form modal end
+
+
+// register form password matching js start
+
+const passwordInput = document.getElementById('register-password');
+const confirmPasswordInput = document.getElementById('register-confirm');
+const messageContainer = document.getElementById('password-match-message');
+
+// Function to check if passwords match
+function checkPasswords() {
+    // Get the current values of the two fields
+    const passwordValue = passwordInput.value;
+    const confirmValue = confirmPasswordInput.value;
+
+    // Only show a message if both fields have a value
+    if (passwordValue.length > 0 && confirmValue.length > 0) {
+        if (passwordValue === confirmValue) {
+            // Passwords match
+            messageContainer.textContent = '';
+            messageContainer.style.color = 'green';
+        } else {
+            // Passwords do not match
+            messageContainer.textContent = 'Passwords do not match!';
+            messageContainer.style.color = 'red';
+        }
+    } else {
+        // Clear the message if one of the fields is empty
+        messageContainer.textContent = '';
+    }
+}
+
+// Add event listeners to both input fields for real-time validation
+passwordInput.addEventListener('keyup', checkPasswords);
+confirmPasswordInput.addEventListener('keyup', checkPasswords);
+
+// register form password matching js end
+
+
+
+// wish and cart increament js start
+
+const cart_add = document.getElementById('cart_add');
+const cart_count = document.querySelector('.cart_count');
+
+function count_cart() {
+    let cart_count_field = parseInt(cart_count.innerText) || 0;
+    cart_count_field++;
+
+    cart_count.innerText = cart_count_field;
+}
+
+// wishlist increament
+document.addEventListener('DOMContentLoaded', function () {
+    const wishCount = document.getElementById('wish_count');
+    const wishlistBtn = document.getElementById('wishlist_btn');
+
+    let count = 0;
+
+    wishlistBtn.addEventListener('click', function () {
+        count++;
+        wishCount.textContent = count;
+    });
+});
+
+// wish and cart increament js end 

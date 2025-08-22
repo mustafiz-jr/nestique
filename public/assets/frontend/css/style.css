@@ -320,7 +320,18 @@
         font-size: 20px;
     }
 
-    
+    .navbar-icon a {
+        color: var(--color-dark);
+    }
+
+    .navbar-icon a:hover {
+        color: var(--color-accent);
+    }
+
+
+
+
+
 
     .navbar-icon:hover {
         color: var(--color-accent);

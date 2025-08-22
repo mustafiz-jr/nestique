@@ -108,13 +108,13 @@ $categories = App\Models\Category::all();
         <div class="navbar-icons">
             <div class="navbar-icons__group">
                 <div class="navbar-icon">
-                    <span><a class="text-dark" href="{{ route('wish_list') }}"><i class="far fa-heart"></i></a></span>
+                    <a href="{{ route('wish_list') }}"><i class="far fa-heart"></i></a>
                     <span id="wish_count" class="navbar-icon__badge">0</span>
                 </div>
 
                 <!-- Cart Button with Offcanvas Trigger -->
                 <div class="navbar-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                    <span><i class="fas fa-shopping-bag"></i></span>
+                    <a href="{{ route('cart.show') }}"><i class="fas fa-shopping-bag"></i></a>
                     <span class="navbar-icon__badge cart_count" id="cart_count">0</span>
                 </div>
 
@@ -160,13 +160,13 @@ $categories = App\Models\Category::all();
                             <form class="auth-form">
                                 <div class="form-group">
                                     <label for="register-name">Full Name</label>
-                                    <input type="text" id="register-name" placeholder="Enter your full name"
-                                        required>
+                                    <input type="text" id="register-name" name="name"
+                                        placeholder="Enter your full name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="register-email">Email</label>
-                                    <input type="email" id="register-email" placeholder="Enter your email"
-                                        required>
+                                    <input type="email" id="register-email" name="email"
+                                        placeholder="Enter your email" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="register-password">Password</label>
@@ -175,9 +175,10 @@ $categories = App\Models\Category::all();
                                 </div>
                                 <div class="form-group">
                                     <label for="register-confirm">Confirm Password</label>
-                                    <input type="password" id="register-confirm" placeholder="Confirm your password"
-                                        required>
+                                    <input type="password" name="password" id="register-confirm"
+                                        placeholder="Confirm your password" required>
                                 </div>
+                                <div id="password-match-message"></div>
                                 <div class="form-group terms">
                                     <input type="checkbox" id="accept-terms" required>
                                     <label for="accept-terms">I agree to the <a href="#">Terms of
@@ -222,7 +223,7 @@ $categories = App\Models\Category::all();
     </div>
 
     <!-- Cart Offcanvas -->
-    <div class="offcanvas offcanvas-end offcanvas-cart" tabindex="-1" id="cartOffcanvas">
+    {{-- <div class="offcanvas offcanvas-end offcanvas-cart" tabindex="-1" id="cartOffcanvas">
         <div class="offcanvas-header" style="background-color: var(--color-accent); color: var(--color-light);">
             <h5 class="offcanvas-title">Your Cart <span class="cart_count">(0)</span></h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
@@ -263,7 +264,7 @@ $categories = App\Models\Category::all();
                 <a href="{{ route('cart.show') }}" class="secondary-btn">View Cart</a>
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- nav bar end --}}
 
 
@@ -371,31 +372,6 @@ $categories = App\Models\Category::all();
     <script src="{{ asset('assets/frontend/js/script.js') }}"></script>
     @yield('js')
 
-    <script>
-        const cart_add = document.getElementById('cart_add');
-        const cart_count = document.querySelector('.cart_count');
-
-        function count_cart() {
-            let cart_count_field = parseInt(cart_count.innerText) || 0;
-            cart_count_field++;
-
-            cart_count.innerText = cart_count_field;
-        }
-
-
-        // wishlist increament
-        document.addEventListener('DOMContentLoaded', function() {
-            const wishCount = document.getElementById('wish_count');
-            const wishlistBtn = document.getElementById('wishlist_btn');
-
-            let count = 0;
-
-            wishlistBtn.addEventListener('click', function() {
-                count++;
-                wishCount.textContent = count;
-            });
-        });
-    </script>
 </body>
 
 </html>
