@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
 
+    public function guest()
+    {
+        $categories = Category::limit(10)->get();
+        $products = Product::all();
+        return view('frontend.pages.home', compact('categories', 'products'));
+    }
+
     public function home()
     {
         $categories = Category::limit(10)->get();
@@ -69,7 +76,8 @@ class PageController extends Controller
         return view('frontend.pages.checkout');
     }
 
-    public function wish_list(){
+    public function wish_list()
+    {
         return view('frontend.pages.wish_list');
     }
 }

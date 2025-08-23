@@ -119,76 +119,101 @@ $categories = App\Models\Category::all();
                 </div>
 
                 <div class="navbar-icon login-dropdown">
-                    <span id="userIcon"><i class="far fa-user"></i></span>
+                    @guest
+                        <span id="userIcon" class="user-icon-link" data-modal="login">
+                            <i class="far fa-user"></i>
+                        </span>
+                    @endguest
+
+                    @auth
+                        <div class="dropdown">
+                            <span class="dropdown-toggle" type="" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="far fa-user"></i>
+                            </span>
+                            <ul class="dropdown-menu p-3">
+                                <li> <a class="text-decoration-none" href="{{ route('home') }}">Profile</a></li>
+                                <li> <a class="text-decoration-none" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @endauth
                 </div>
 
-                <!-- The Modal -->
-                <div id="userModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-
-                        <div class="form-tabs">
-                            <button class="tab-btn active" data-tab="login">Login</button>
-                            <button class="tab-btn" data-tab="register">Register</button>
-                        </div>
-
-                        <div id="login-form" class="form-content active">
-                            <h2>Login to Your Account</h2>
-                            <form class="auth-form">
-                                <div class="form-group">
-                                    <label for="login-email">Email</label>
-                                    <input type="email" id="login-email" placeholder="Enter your email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="login-password">Password</label>
-                                    <input type="password" id="login-password" placeholder="Enter your password"
-                                        required>
-                                </div>
-                                <div class="form-group remember">
-                                    <input type="checkbox" id="remember-me">
-                                    <label for="remember-me">Remember me</label>
-                                </div>
-                                <button type="submit" class="secondary-btn">Login</button>
-                                <div class="form-footer">
-                                    <a href="#" class="forgot-password">Forgot password?</a>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div id="register-form" class="form-content">
-                            <h2>Create New Account</h2>
-                            <form class="auth-form">
-                                <div class="form-group">
-                                    <label for="register-name">Full Name</label>
-                                    <input type="text" id="register-name" name="name"
-                                        placeholder="Enter your full name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-email">Email</label>
-                                    <input type="email" id="register-email" name="email"
-                                        placeholder="Enter your email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-password">Password</label>
-                                    <input type="password" id="register-password" placeholder="Create a password"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-confirm">Confirm Password</label>
-                                    <input type="password" name="password" id="register-confirm"
-                                        placeholder="Confirm your password" required>
-                                </div>
-                                <div id="password-match-message"></div>
-                                <div class="form-group terms">
-                                    <input type="checkbox" id="accept-terms" required>
-                                    <label for="accept-terms">I agree to the <a href="#">Terms of
-                                            Service</a></label>
-                                </div>
-                                <button type="submit" class="secondary-btn">Register</button>
-                            </form>
+                @guest
+                    <div id="userModal" class="modal logged_out_modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <div class="form-tabs">
+                                <button class="tab-btn active" data-tab="login">Login</button>
+                                <button class="tab-btn" data-tab="register">Register</button>
+                            </div>
+                            <div id="login-form" class="form-content active">
+                                <h2>Login to Your Account</h2>
+                                <form class="auth-form" method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="login-email">Email</label>
+                                        <input type="email" id="login-email" name="email"
+                                            placeholder="Enter your email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="login-password">Password</label>
+                                        <input type="password" id="login-password" name="password"
+                                            placeholder="Enter your password" required>
+                                    </div>
+                                    <div class="form-group remember">
+                                        <input type="checkbox" id="remember-me" name="remember">
+                                        <label for="remember-me">Remember me</label>
+                                    </div>
+                                    <button type="submit" class="secondary-btn">Login</button>
+                                    <div class="form-footer">
+                                        <a href="{{ route('password.request') }}" class="forgot-password">Forgot
+                                            password?</a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="register-form" class="form-content">
+                                <h2>Create New Account</h2>
+                                <form class="auth-form" method="POST" action="{{ route('register') }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="register-name">Full Name</label>
+                                        <input type="text" id="register-name" name="name"
+                                            placeholder="Enter your full name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="register-email">Email</label>
+                                        <input type="email" id="register-email" name="email"
+                                            placeholder="Enter your email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="register-password">Password</label>
+                                        <input type="password" id="register-password" name="password"
+                                            placeholder="Create a password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="register-confirm">Confirm Password</label>
+                                        <input type="password" name="password_confirmation" id="register-confirm"
+                                            placeholder="Confirm your password" required>
+                                    </div>
+                                    <div id="password-match-message"></div>
+                                    <div class="form-group terms">
+                                        <input type="checkbox" id="accept-terms" required>
+                                        <label for="accept-terms">I agree to the <a href="#">Terms of
+                                                Service</a></label>
+                                    </div>
+                                    <input type="hidden" name="role_id" value="2">
+                                    <button type="submit" class="secondary-btn">Register</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endguest
             </div>
         </div>
     </header>

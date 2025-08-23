@@ -110,61 +110,70 @@ observer.observe(body, {
 // category dropdown js end
 
 
-// user form modal start
+// user modal js start
+document.addEventListener('DOMContentLoaded', function () {
+    const userIcon = document.getElementById("userIcon");
 
-// Get the modal and icon elements
-const modal = document.getElementById("userModal");
-const userIcon = document.getElementById("userIcon");
-const close_btn = document.querySelector(".close");
+    if (userIcon) {
+        userIcon.addEventListener('click', function (e) {
+            e.preventDefault();
 
-// Tab switching functionality
-const tabBtns = document.querySelectorAll(".tab-btn");
-const formContents = document.querySelectorAll(".form-content");
+            // Check if the user is a guest or logged in using the data attribute
+            const isGuest = this.getAttribute('data-modal') === 'login';
 
-tabBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        // Remove active class from all buttons and contents
-        tabBtns.forEach(btn => btn.classList.remove("active"));
-        formContents.forEach(content => content.classList.remove("active"));
+            if (isGuest) {
+                // Show the login modal
+                const userModal = document.getElementById("userModal");
+                userModal.style.display = "block";
+            } else {
+                // Toggle the logged-in menu
+                const loggedInDropdown = document.getElementById("loggedInDropdown");
+                loggedInDropdown.classList.toggle('active');
+            }
+        });
 
-        // Add active class to clicked button and corresponding content
-        btn.classList.add("active");
-        const tabName = btn.getAttribute("data-tab");
-        document.getElementById(`${tabName}-form`).classList.add("active");
-    });
-});
+        // Hide the logged-in menu when clicking outside
+        const loggedInDropdown = document.getElementById("loggedInDropdown");
+        document.addEventListener('click', function (e) {
+            if (loggedInDropdown && !userIcon.contains(e.target) && !loggedInDropdown.contains(e.target)) {
+                loggedInDropdown.classList.remove('active');
+            }
+        });
 
-// When the user clicks the icon, open the modal 
-userIcon.onclick = function () {
-    modal.style.display = "block";
-}
+        // Modal specific functions for guests
+        const userModal = document.getElementById("userModal");
+        if (userModal) {
+            const closeModalBtn = document.querySelector("#userModal .close");
+            const tabBtns = document.querySelectorAll("#userModal .tab-btn");
+            const formContents = document.querySelectorAll("#userModal .form-content");
 
-// When the user clicks on (x), close the modal
-close_btn.onclick = function () {
-    modal.style.display = "none";
-}
+            // Close modal when 'x' is clicked
+            closeModalBtn.onclick = function () {
+                userModal.style.display = "none";
+            };
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+            // Close modal when clicking outside
+            window.onclick = function (event) {
+                if (event.target == userModal) {
+                    userModal.style.display = "none";
+                }
+            };
+
+            // Tab switching functionality
+            tabBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    tabBtns.forEach(btn => btn.classList.remove("active"));
+                    formContents.forEach(content => content.classList.remove("active"));
+                    btn.classList.add("active");
+                    const tabName = btn.getAttribute("data-tab");
+                    document.getElementById(`${tabName}-form`).classList.add("active");
+                });
+            });
+        }
     }
-}
-
-// Form submission handlers (you would replace these with actual form handling)
-document.querySelector("#login-form form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    alert("Login form submitted!");
-    // Here you would add your actual login logic
 });
 
-document.querySelector("#register-form form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    alert("Registration form submitted!");
-    // Here you would add your actual registration logic
-});
-// user form modal end
-
+// user modal js end
 
 // register form password matching js start
 
