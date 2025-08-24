@@ -17,6 +17,16 @@ class CartController extends Controller
         return view('frontend.pages.checkout', compact('cartItems', 'shippingMethods'));
     }
 
+
+
+    public function shipping()
+    {
+        $cartItems  = Cart::content();
+        return view('frontend.pages.thanks', compact('cartItems'));
+    }
+
+
+
     public function show_cart()
     {
         $cartItems = Cart::content();

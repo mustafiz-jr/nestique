@@ -338,7 +338,7 @@
                 <!-- Checkout Form Column -->
                 <div class="nestique-checkout-form-column">
                     <h2>Shipping Address</h2>
-                    <form>
+                    <form action="{{ route('shipping') }}" method="POST">
                         <div class="nestique-form-group">
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email" placeholder="Email" required>
@@ -386,85 +386,86 @@
                             <input type="checkbox" id="save-info" name="save-info">
                             <label class="save-info" for="save-info">Save this information for next time</label>
                         </div>
-                    </form>
 
-                    <div class="nestique-form-separator"></div>
-
-                    <h2>Shipping Method</h2>
-                    <div class="nestique-form-group nestique-shipping-options">
-                        <div class="radio-option selected">
-                            <input type="radio" id="shipping-standard" name="shipping-method" value="standard"
-                                data-price="5.00" checked>
-                            <div class="details">
-                                <label for="shipping-standard" class="h5">Standard Shipping</label>
-                                <p>5-7 business days</p>
-                            </div>
-                            <div class="price">$5.00</div>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="shipping-express" name="shipping-method" value="express"
-                                data-price="20.00">
-                            <div class="details">
-                                <label for="shipping-express" class="h5">Express Shipping</label>
-                                <p>1-2 business days</p>
-                            </div>
-                            <div class="price">$20.00</div>
-                        </div>
-                    </div>
-
-                    <div class="nestique-form-separator"></div>
-
-                    <h2>Payment Method</h2>
-                    <div class="nestique-form-group nestique-payment-options">
-                        <div class="radio-option selected">
-                            <input type="radio" id="payment-online" name="payment-method" value="online" checked>
-                            <div class="details">
-                                <label for="payment-online">Online Payment</label>
-                            </div>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="payment-cod" name="payment-method" value="cod">
-                            <div class="details">
-                                <label for="payment-cod">Cash on Delivery (COD)</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="online-payment-details" class="nestique-payment-details-container">
                         <div class="nestique-form-separator"></div>
-                        <h2>Payment Details</h2>
-                        <div class="nestique-form-group">
-                            <label for="card-number">Card Number</label>
-                            <div class="nestique-payment-icons">
-                                <i class="fab fa-cc-visa"></i>
-                                <i class="fab fa-cc-mastercard"></i>
-                                <i class="fab fa-cc-amex"></i>
-                                <i class="fab fa-cc-discover"></i>
+
+                        <h2>Shipping Method</h2>
+                        <div class="nestique-form-group nestique-shipping-options">
+                            <div class="radio-option selected">
+                                <input type="radio" id="shipping-standard" name="shipping-method" value="standard"
+                                    data-price="5.00" checked>
+                                <div class="details">
+                                    <label for="shipping-standard" class="h5">Standard Shipping</label>
+                                    <p>5-7 business days</p>
+                                </div>
+                                <div class="price">$5.00</div>
                             </div>
-                            <input type="text" id="card-number" name="card-number" placeholder="Card Number"
-                                required>
+                            <div class="radio-option">
+                                <input type="radio" id="shipping-express" name="shipping-method" value="express"
+                                    data-price="20.00">
+                                <div class="details">
+                                    <label for="shipping-express" class="h5">Express Shipping</label>
+                                    <p>1-2 business days</p>
+                                </div>
+                                <div class="price">$20.00</div>
+                            </div>
                         </div>
-                        <div class="nestique-form-group form-row">
-                            <div>
-                                <label for="exp-date">Expiration Date</label>
-                                <input type="text" id="exp-date" name="exp-date" placeholder="MM/YY" required>
+
+                        <div class="nestique-form-separator"></div>
+
+                        <h2>Payment Method</h2>
+                        <div class="nestique-form-group nestique-payment-options">
+                            <div class="radio-option selected">
+                                <input type="radio" id="payment-online" name="payment-method" value="online" checked>
+                                <div class="details">
+                                    <label for="payment-online">Online Payment</label>
+                                </div>
                             </div>
-                            <div>
-                                <label for="cvv">CVV</label>
-                                <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+                            <div class="radio-option">
+                                <input type="radio" id="payment-cod" name="payment-method" value="cod">
+                                <div class="details">
+                                    <label for="payment-cod">Cash on Delivery (COD)</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('cart.show') }}" class="primary-btn px-3 ">
-                            <span class="fas fa-arrow-left"></span>
-                            Return to Cart
-                        </a>
-                        <button type="submit" class="secondary-btn px-5" id="checkout-button">
-                            Pay now
-                            <span class="fas fa-arrow-right"></span>
-                        </button>
-                    </div>
+
+                        <div id="online-payment-details" class="nestique-payment-details-container">
+                            <div class="nestique-form-separator"></div>
+                            <h2>Payment Details</h2>
+                            <div class="nestique-form-group">
+                                <label for="card-number">Card Number</label>
+                                <div class="nestique-payment-icons">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                    <i class="fab fa-cc-amex"></i>
+                                    <i class="fab fa-cc-discover"></i>
+                                </div>
+                                <input type="text" id="card-number" name="card-number" placeholder="Card Number"
+                                    required>
+                            </div>
+                            <div class="nestique-form-group form-row">
+                                <div>
+                                    <label for="exp-date">Expiration Date</label>
+                                    <input type="text" id="exp-date" name="exp-date" placeholder="MM/YY" required>
+                                </div>
+                                <div>
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('cart.show') }}" class="primary-btn px-3 ">
+                                <span class="fas fa-arrow-left"></span>
+                                Return to Cart
+                            </a>
+                            <button type="submit" class="secondary-btn px-5" id="checkout-button">
+                                Pay now
+                                <span class="fas fa-arrow-right"></span>
+                            </button>
+                            <a href="{{ route('shipping') }}">Shipping</a>
+                        </div>
+                    </form>
 
                 </div>
 
@@ -484,7 +485,6 @@
                     <div class="nestique-form-separator"></div>
 
                     <div class="nestique-summary-line">
-                        @dd($shippingMethods)
                         <span>Subtotal</span>
                         <span id="subtotal-price">{{ $item->subtotal() }} </span>
                     </div>

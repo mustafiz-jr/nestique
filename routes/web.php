@@ -24,7 +24,7 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     // Pages
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
-
+    Route::get('shipping' , [CartController::class , 'shipping'])->name('shipping');
     // Cart and Ajax actions
     Route::controller(CartController::class)->group(function () {
         Route::get('/cart', 'show_cart')->name('cart.show');
