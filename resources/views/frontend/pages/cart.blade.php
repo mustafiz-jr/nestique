@@ -358,15 +358,15 @@
                         <h3>Order Summary</h3>
                         <div class="nestique-summary-line">
                             <span>Sub Total</span>
-                            <span>{{ number_format((float)$subtotal, 2) }} TK</span>
+                            <span>{{ $item->subtotal() }} TK</span>
                         </div>
                         <div class="nestique-summary-line">
                             <span>Tax</span>
-                            <span>{{ number_format((float)$tax, 2) }} TK</span>
+                            <span>{{ $item->tax() }} TK</span>
                         </div>
                         <div class="nestique-summary-line total">
                             <span>Total</span>
-                            <span>{{ number_format((float)$total, 2) }} TK</span>
+                            <span>{{$item->total}} TK</span>
                         </div>
 
                         <a href="{{ route('checkout') }}" class="nestique-checkout-btn">
@@ -377,7 +377,7 @@
                         <form action="{{ route('cart.clear') }}" method="POST"
                             style="margin-top: 20px; text-align: center;">
                             @csrf
-                            <button type="submit"
+                            <button type="submit" 
                                 style="background: none; border: none; color: #dc3545; text-decoration: underline; cursor: pointer;">Clear
                                 Cart</button>
                         </form>

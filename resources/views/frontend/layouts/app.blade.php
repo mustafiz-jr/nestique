@@ -1,5 +1,6 @@
 <?php
 $categories = App\Models\Category::all();
+$cartItems = Cart::content();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,38 +62,7 @@ $categories = App\Models\Category::all();
                             @endforeach
                         </div>
 
-                        <!-- Women -->
-                        {{-- <h4 tabindex="0"><span>Women</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                        </h4>
-                        <div class="catdd-links">
-                            <a href="#">Tops & Blouses</a>
-                            <a href="#">Dresses</a>
-                            <a href="#">Sarees</a>
-                            <a href="#">Salwar Kameez</a>
-                            <a href="#">Kurtis & Tunics</a>
-                        </div> --}}
 
-                        <!-- Kids -->
-                        {{-- <h4 tabindex="0"><span>Kids</span> <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                        </h4>
-                        <div class="catdd-links">
-                            <a href="#">Boys' Clothing</a>
-                            <a href="#">Girls' Clothing</a>
-                            <a href="#">Footwear</a>
-                            <a href="#">Ethnic Wear</a>
-                            <a href="#">School Accessories</a>
-                        </div> --}}
-
-                        <!-- Accessories -->
-                        {{-- <h4 tabindex="0"><span>Accessories</span> <i class="fas fa-chevron-right"
-                                aria-hidden="true"></i></h4>
-                        <div class="catdd-links">
-                            <a href="#">Bags & Backpacks</a>
-                            <a href="#">Watches</a>
-                            <a href="#">Sunglasses</a>
-                            <a href="#">Jewelry</a>
-                            <a href="#">Belts & Wallets</a>
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -108,32 +78,51 @@ $categories = App\Models\Category::all();
         <div class="navbar-icons">
             <div class="navbar-icons__group">
                 <div class="navbar-icon">
-                    <a href="{{ route('wish_list') }}"><i class="far fa-heart"></i></a>
-                    <span id="wish_count" class="navbar-icon__badge">0</span>
+                    <div class="dropdown">
+                        <span class="dropdown-toggle language" type="" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-language"></i>
+                        </span>
+                        <ul class="dropdown-menu p-2 g-2">
+                            <li>Bangla</li>
+                            <li> English
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
                 <!-- Cart Button with Offcanvas Trigger -->
                 <div class="navbar-icon" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
-                    <a href="{{ route('cart.show') }}"><i class="fas fa-shopping-bag"></i></a>
-                    <span class="navbar-icon__badge cart_count" id="cart_count">0</span>
+                    @guest
+                        <span id="userIcon" class="user-icon-link" onclick="handleUserIconClick(event)" data-modal="login">
+                            <span><i class="fas fa-shopping-bag"></i></span>
+                            <span class="navbar-icon__badge cart_count" id="cart_count">0</span>
+                        </span>
+                    @endguest
+                    @auth
+                        <a href="{{ route('cart.show') }}"><i class="fas fa-shopping-bag"></i></a>
+                        <span class="navbar-icon__badge cart_count" id="cart_count">{{ $cartItems->count() }}</span>
+                    @endauth
                 </div>
 
                 <div class="navbar-icon login-dropdown">
                     @guest
-                        <span id="userIcon" class="user-icon-link" data-modal="login">
+                        <span id="userIcon" class="user-icon-link" onclick="handleUserIconClick(event)" data-modal="login">
                             <i class="far fa-user"></i>
                         </span>
                     @endguest
 
                     @auth
                         <div class="dropdown">
-                            <span class="dropdown-toggle" type="" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="dropdown-toggle" type="" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="far fa-user"></i>
                             </span>
-                            <ul class="dropdown-menu p-3">
-                                <li> <a class="text-decoration-none" href="{{ route('home') }}">Profile</a></li>
+                            <ul class="dropdown-menu p-3 gap-2">
+                                <li> <a class="text-decoration-none" href="{{ route('home') }}"><i
+                                            class="fa-regular fa-user mx-1"></i> Profile</a></li>
                                 <li> <a class="text-decoration-none" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+                                            class="fa-solid fa-right-from-bracket mx-1"></i> Logout</a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                         style="display: none;">
                                         @csrf
@@ -147,7 +136,7 @@ $categories = App\Models\Category::all();
                 @guest
                     <div id="userModal" class="modal logged_out_modal">
                         <div class="modal-content">
-                            <span class="close">&times;</span>
+                            <span class="close" onclick="handleModalClose()">&times;</span>
                             <div class="form-tabs">
                                 <button class="tab-btn active" data-tab="login">Login</button>
                                 <button class="tab-btn" data-tab="register">Register</button>

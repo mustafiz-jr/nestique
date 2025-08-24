@@ -373,7 +373,7 @@
         <div class="nestique-cta">
             <h2>Ready to start your story?</h2>
             <p>Explore our latest collections and find the perfect pieces to make your home uniquely yours.</p>
-            <a href="#">Explore Collections</a>
+            <a href="{{ route('shop') }}">Explore Collections</a>
         </div>
     </div>
 @endsection

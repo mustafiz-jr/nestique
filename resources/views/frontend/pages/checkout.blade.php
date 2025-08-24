@@ -456,7 +456,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('cart') }}" class="primary-btn px-3 ">
+                        <a href="{{ route('cart.show') }}" class="primary-btn px-3 ">
                             <span class="fas fa-arrow-left"></span>
                             Return to Cart
                         </a>
@@ -471,39 +471,22 @@
                 <!-- Order Summary Column -->
                 <div class="nestique-order-summary-column">
                     <h3>Order Summary</h3>
-
-                    <div class="nestique-summary-item">
-                        <img src="https://placehold.co/60x60/ac8e51/ffffff?text=Hat" alt="Gradient Graphic T-shirt">
-                        <div class="nestique-summary-item-details">
-                            <h4>Gradient Graphic T-shirt</h4>
-                            <p>x1</p>
+                    @foreach ($cartItems as $item)
+                        <div class="nestique-summary-item">
+                            <img src="{{ asset($item->model->thumbnail) }}" alt="Gradient Graphic T-shirt">
+                            <div class="nestique-summary-item-details">
+                                <h4>{{ $item->name }}</h4>
+                                <p>{{ $item->qty }}</p>
+                            </div>
+                            <div class="nestique-summary-item-price">${{ $item->price }} </div>
                         </div>
-                        <div class="nestique-summary-item-price">$145</div>
-                    </div>
-
-                    <div class="nestique-summary-item">
-                        <img src="https://placehold.co/60x60/415E72/ffffff?text=Shirt" alt="Checkered Shirt">
-                        <div class="nestique-summary-item-details">
-                            <h4>Checkered Shirt</h4>
-                            <p>x1</p>
-                        </div>
-                        <div class="nestique-summary-item-price">$180</div>
-                    </div>
-
-                    <div class="nestique-summary-item">
-                        <img src="https://placehold.co/60x60/222222/ffffff?text=Jeans" alt="Skinny Fit Jeans">
-                        <div class="nestique-summary-item-details">
-                            <h4>Skinny Fit Jeans</h4>
-                            <p>x1</p>
-                        </div>
-                        <div class="nestique-summary-item-price">$240</div>
-                    </div>
-
+                    @endforeach
                     <div class="nestique-form-separator"></div>
 
                     <div class="nestique-summary-line">
+                        @dd($shippingMethods)
                         <span>Subtotal</span>
-                        <span id="subtotal-price">$565</span>
+                        <span id="subtotal-price">{{ $item->subtotal() }} </span>
                     </div>
                     <div class="nestique-summary-line shipping">
                         <span>Shipping</span>

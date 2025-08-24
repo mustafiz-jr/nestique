@@ -40,28 +40,7 @@
     }
 
     /* Quick view button */
-    .quick-view {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: var(--color-accent);
-        color: var(--color-light);
-        padding: 10px;
-        font-size: 18px;
-        border-radius: 50%;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-        cursor: pointer;
-    }
 
-    .product-card:hover .quick-view {
-        opacity: 1;
-    }
-
-    .quick-view:hover {
-        color: var(--color-accent);
-        background: var(--color-secondary)
-    }
 
     .product-content {
         height: 50%;
@@ -115,8 +94,7 @@
     <!-- Image -->
     <div class="product-image">
         <img src="{{ asset($product->thumbnail) }}" alt="{{ $product->name }} img">
-        <a href="{{ route('product_details', $product->id) }}" class="quick-view" title="quick-view"><i
-                class="fa-solid fa-eye px-1"></i></a>
+
     </div>
 
     <!-- Content -->
@@ -144,26 +122,35 @@
 
         <!-- Footer buttons -->
         <div class="product-footer d-flex justify-content-between">
+            @guest
+                <div class="w-50">
+                    <span id="userIcon" class="user-icon-link" onclick="handleUserIconClick(event)" data-modal="login">
+                        <button id="cart_add" onclick="count_cart()" class="btn secondary-btn w-100">Add to
+                            Cart</button>
+                    </span>
+                </div>
+            @endguest
+
+            @auth
+                <div class="w-50">
+                    <form action="{{ route('cart.add') }}" method="POST">
+                        @csrf
+
+                        <!-- পণ্যের ID লুকানো ইনপুট ফিল্ড হিসেবে পাঠানো হচ্ছে -->
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                        <input type="hidden" name="quantity" value="1" min="1"
+                            max="{{ $product->stock_quantity }}">
+
+                        <button type="submit" id="cart_add" onclick="count_cart()" class="btn secondary-btn w-100">Add to
+                            Cart</button>
+                    </form>
+                </div>
+            @endauth
 
             <div class="w-50">
-                <form action="{{ route('cart.add') }}" method="POST">
-                    @csrf
-
-                    <!-- পণ্যের ID লুকানো ইনপুট ফিল্ড হিসেবে পাঠানো হচ্ছে -->
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-
-                    <input type="hidden" name="quantity" value="1" min="1"
-                        max="{{ $product->stock_quantity }}">
-
-                    <button type="submit" id="cart_add" onclick="count_cart()" class="btn secondary-btn w-100">Add to
-                        Cart</button>
-                </form>
-            </div>
-
-            <div class="w-50">
-                <button id="wishlist_btn" class="btn primary-btn w-100">
-                    <i class="far fa-heart mx-1"></i>Wishlist
-                </button>
+                <a href="{{ route('product_details', $product->id) }}" class="btn primary-btn w-100"
+                    title="quick-view">Quick view</a>
             </div>
         </div>
     </div>

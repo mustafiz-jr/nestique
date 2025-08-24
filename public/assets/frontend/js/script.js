@@ -111,67 +111,55 @@ observer.observe(body, {
 
 
 // user modal js start
-document.addEventListener('DOMContentLoaded', function () {
-    const userIcon = document.getElementById("userIcon");
+document.addEventListener('DOMContentLoaded', initializeUserInteraction);
 
-    if (userIcon) {
-        userIcon.addEventListener('click', function (e) {
-            e.preventDefault();
+function initializeUserInteraction() {
+    const userModal = document.getElementById("userModal");
 
-            // Check if the user is a guest or logged in using the data attribute
-            const isGuest = this.getAttribute('data-modal') === 'login';
+    // Event listener for closing modal by clicking outside of it
+    window.addEventListener('click', handleWindowClick);
+}
 
-            if (isGuest) {
-                // Show the login modal
-                const userModal = document.getElementById("userModal");
-                userModal.style.display = "block";
-            } else {
-                // Toggle the logged-in menu
-                const loggedInDropdown = document.getElementById("loggedInDropdown");
-                loggedInDropdown.classList.toggle('active');
-            }
-        });
+function handleUserIconClick(e) {
+    e.preventDefault();
+    const isGuest = e.target.closest('#userIcon').getAttribute('data-modal') === 'login';
 
-        // Hide the logged-in menu when clicking outside
-        const loggedInDropdown = document.getElementById("loggedInDropdown");
-        document.addEventListener('click', function (e) {
-            if (loggedInDropdown && !userIcon.contains(e.target) && !loggedInDropdown.contains(e.target)) {
-                loggedInDropdown.classList.remove('active');
-            }
-        });
-
-        // Modal specific functions for guests
+    if (isGuest) {
         const userModal = document.getElementById("userModal");
         if (userModal) {
-            const closeModalBtn = document.querySelector("#userModal .close");
-            const tabBtns = document.querySelectorAll("#userModal .tab-btn");
-            const formContents = document.querySelectorAll("#userModal .form-content");
-
-            // Close modal when 'x' is clicked
-            closeModalBtn.onclick = function () {
-                userModal.style.display = "none";
-            };
-
-            // Close modal when clicking outside
-            window.onclick = function (event) {
-                if (event.target == userModal) {
-                    userModal.style.display = "none";
-                }
-            };
-
-            // Tab switching functionality
-            tabBtns.forEach(btn => {
-                btn.addEventListener("click", () => {
-                    tabBtns.forEach(btn => btn.classList.remove("active"));
-                    formContents.forEach(content => content.classList.remove("active"));
-                    btn.classList.add("active");
-                    const tabName = btn.getAttribute("data-tab");
-                    document.getElementById(`${tabName}-form`).classList.add("active");
-                });
-            });
+            userModal.style.display = "block";
         }
     }
-});
+}
+
+function handleModalClose() {
+    const userModal = document.getElementById("userModal");
+    if (userModal) {
+        userModal.style.display = "none";
+    }
+}
+
+function handleWindowClick(event) {
+    const userModal = document.getElementById("userModal");
+    if (userModal && event.target === userModal) {
+        userModal.style.display = "none";
+    }
+}
+
+function handleTabClick(clickedButton) {
+    const userModal = document.getElementById("userModal");
+    const tabBtns = userModal.querySelectorAll(".tab-btn");
+    const formContents = userModal.querySelectorAll(".form-content");
+
+    // Remove 'active' class from all tabs and forms
+    tabBtns.forEach(btn => btn.classList.remove("active"));
+    formContents.forEach(content => content.classList.remove("active"));
+
+    // Add 'active' class to the clicked tab and its corresponding form
+    clickedButton.classList.add("active");
+    const tabName = clickedButton.getAttribute("data-tab");
+    document.getElementById(`${tabName}-form`).classList.add("active");
+}
 
 // user modal js end
 

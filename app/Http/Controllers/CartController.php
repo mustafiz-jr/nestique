@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
+use App\Models\ShippingMethod;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    public function checkout()
+    {
+        $cartItems = Cart::content();
+        $shippingMethods =  ShippingMethod::all();
+        // Pass the cart items to the view.
+        return view('frontend.pages.checkout', compact('cartItems', 'shippingMethods'));
+    }
 
     public function show_cart()
     {

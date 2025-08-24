@@ -15,6 +15,7 @@ Route::get('women_products', [PageController::class, 'women_product'])->name('wo
 Route::get('offer', [PageController::class, 'offer'])->name('offer');
 Route::get('contact', [PageController::class, 'contact'])->name('contact');
 Route::get('about', [PageController::class, 'about'])->name('about');
+Route::get('product_details/{id}', [PageController::class, 'product_details'])->name('product_details');
 
 // Authentication routes (login, register, logout)
 Auth::routes();
@@ -22,10 +23,7 @@ Auth::routes();
 // Protected routes (login required)
 Route::middleware(['auth'])->group(function () {
     // Pages
-    Route::get('wish/list', [PageController::class, 'wish_list'])->name('wish_list');
-    Route::get('product_details/{id}', [PageController::class, 'product_details'])->name('product_details');
-    Route::get('checkout', [PageController::class, 'checkout'])->name('checkout');
-    Route::get('cart', [PageController::class, 'cart'])->name('cart');
+    Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 
     // Cart and Ajax actions
     Route::controller(CartController::class)->group(function () {

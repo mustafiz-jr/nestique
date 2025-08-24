@@ -133,18 +133,33 @@
                 <!-- Buttons -->
                 <div class="d-flex justify-content-between gap-1 mb-4">
                     <div class="w-50">
-                        <form action="{{ route('cart.add') }}" method="POST">
-                            @csrf
+                        @guest
+                            <div class="w-100">
+                                <span id="userIcon" class="user-icon-link" onclick="handleUserIconClick(event)"
+                                    data-modal="login">
+                                    <button id="cart_add" onclick="count_cart()" class="btn secondary-btn w-100">Add to
+                                        Cart</button>
+                                </span>
+                            </div>
+                        @endguest
 
-                            <!-- পণ্যের ID লুকানো ইনপুট ফিল্ড হিসেবে পাঠানো হচ্ছে -->
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        @auth
+                            <div class="w-100">
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
 
-                            <input type="hidden" name="quantity" value="1" min="1"
-                                max="{{ $product->stock_quantity }}">
+                                    <!-- পণ্যের ID লুকানো ইনপুট ফিল্ড হিসেবে পাঠানো হচ্ছে -->
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                            <button type="submit" id="cart_add" onclick="count_cart()" class="btn secondary-btn w-100">Add to
-                                Cart</button>
-                        </form>
+                                    <input type="hidden" name="quantity" value="1" min="1"
+                                        max="{{ $product->stock_quantity }}">
+
+                                    <button type="submit" id="cart_add" onclick="count_cart()"
+                                        class="btn secondary-btn w-100">Add to
+                                        Cart</button>
+                                </form>
+                            </div>
+                        @endauth
                     </div>
 
                     <div class="w-50">

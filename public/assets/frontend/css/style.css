@@ -329,9 +329,23 @@
     }
 
 
+    .dropdown-toggle::after {
+        display: none !important;
+    }
 
+    .language::after {
+        display: inline-block !important;
+    }
 
+    .dropdown-menu li {
+        color: black;
+        padding: 5px;
+        border: none;
+    }
 
+    .dropdown-menu li:hover {
+        border-left: var(--color-accent) solid 1px;
+    }
 
     .navbar-icon:hover {
         color: var(--color-accent);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -71,13 +72,5 @@ class PageController extends Controller
         return view('frontend.pages.cart');
     }
 
-    public function checkout()
-    {
-        return view('frontend.pages.checkout');
-    }
-
-    public function wish_list()
-    {
-        return view('frontend.pages.wish_list');
-    }
+   
 }
