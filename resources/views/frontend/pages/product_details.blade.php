@@ -161,12 +161,12 @@
                             </div>
                         @endauth
                     </div>
-
+                    {{-- 
                     <div class="w-50">
                         <button id="wishlist_btn" class="btn primary-btn w-100">
                             <i class="far fa-heart"></i>Wishlist
                         </button>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

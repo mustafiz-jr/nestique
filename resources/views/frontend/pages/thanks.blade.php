@@ -2,11 +2,6 @@
 
 @section('css')
     <style>
-        /*
-                     * You can add any page-specific CSS here.
-                     * For example, you might want to add custom styles
-                     * for the thank you page elements.
-                     */
         .card-custom {
             border-top: 8px solid var(--color-tertiary);
             border-radius: 0.5rem;
@@ -43,6 +38,18 @@
             background-color: #354e5b;
             color: var(--color-light);
         }
+
+        .fa-check-circle {
+            color: var(--color-secondary);
+        }
+
+        .font-secondary {
+            color: var(--color-accent);
+        }
+
+        .font-primary {
+            color: var(--color-accent);
+        }
     </style>
 @endsection
 
@@ -51,16 +58,20 @@
         <!-- Thank You Header Section -->
         <div class="card bg-white p-4 p-md-5 text-center mb-4 card-custom shadow-lg">
             <div class="d-flex flex-column align-items-center mb-3">
-                <i class="fa-solid fa-check-circle text-tertiary display-3 mb-4"></i>
-                <h1 class="font-secondary text-accent fw-bold mb-2">Thank You for Your Order!</h1>
+                <i class="fa-solid fa-check-circle  display-3 mb-4"></i>
+                <h1 class="font-secondary fw-bold mb-2">Thank You for Your Order!</h1>
                 <p class="h5 font-primary text-gray-700">
                     Your order has been placed successfully and is being processed.
+                </p>
+                <p class="text-center">
+                    <br>
+                    <a class="secondary-btn" href="{{ route('shop') }}">Explore More Collections</a>
                 </p>
             </div>
         </div>
 
         <!-- Main Order Details Row -->
-        <div class="row g-4">
+        {{-- <div class="row g-4">
             <!-- Order Details & Addresses Column -->
             <div class="col-lg-8">
                 <!-- Order Details Card -->
@@ -171,7 +182,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection
 

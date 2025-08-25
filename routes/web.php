@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,9 +23,10 @@ Auth::routes();
 
 // Protected routes (login required)
 Route::middleware(['auth'])->group(function () {
+    Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
     // Pages
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
-    Route::get('shipping' , [CartController::class , 'shipping'])->name('shipping');
+    Route::get('shipping', [CartController::class, 'shipping'])->name('shipping');
     // Cart and Ajax actions
     Route::controller(CartController::class)->group(function () {
         Route::get('/cart', 'show_cart')->name('cart.show');

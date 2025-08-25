@@ -115,6 +115,26 @@ document.addEventListener('DOMContentLoaded', initializeUserInteraction);
 
 function initializeUserInteraction() {
     const userModal = document.getElementById("userModal");
+    const userIcon = document.getElementById("userIcon");
+    const closeBtn = userModal?.querySelector(".close");
+    const tabButtons = userModal?.querySelectorAll(".tab-btn");
+
+    // Add event listener to the user icon to open the modal
+    if (userIcon) {
+        userIcon.addEventListener('click', handleUserIconClick);
+    }
+
+    // Add event listener to the close button inside the modal
+    if (closeBtn) {
+        closeBtn.addEventListener('click', handleModalClose);
+    }
+
+    // Add event listeners to the tab buttons (Login and Register)
+    if (tabButtons) {
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => handleTabClick(button));
+        });
+    }
 
     // Event listener for closing modal by clicking outside of it
     window.addEventListener('click', handleWindowClick);
@@ -122,7 +142,7 @@ function initializeUserInteraction() {
 
 function handleUserIconClick(e) {
     e.preventDefault();
-    const isGuest = e.target.closest('#userIcon').getAttribute('data-modal') === 'login';
+    const isGuest = e.target.closest('#userIcon')?.getAttribute('data-modal') === 'login';
 
     if (isGuest) {
         const userModal = document.getElementById("userModal");
@@ -148,6 +168,8 @@ function handleWindowClick(event) {
 
 function handleTabClick(clickedButton) {
     const userModal = document.getElementById("userModal");
+    if (!userModal) return;
+
     const tabBtns = userModal.querySelectorAll(".tab-btn");
     const formContents = userModal.querySelectorAll(".form-content");
 
@@ -158,7 +180,10 @@ function handleTabClick(clickedButton) {
     // Add 'active' class to the clicked tab and its corresponding form
     clickedButton.classList.add("active");
     const tabName = clickedButton.getAttribute("data-tab");
-    document.getElementById(`${tabName}-form`).classList.add("active");
+    const formElement = document.getElementById(`${tabName}-form`);
+    if (formElement) {
+        formElement.classList.add("active");
+    }
 }
 
 // user modal js end
