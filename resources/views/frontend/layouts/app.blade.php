@@ -118,7 +118,7 @@ $cartItems = Cart::content();
                                 <i class="far fa-user"></i>
                             </span>
                             <ul class="dropdown-menu p-3 gap-2">
-                                <li> <a class="text-decoration-none" href="{{ route('profile') }}"><i
+                                <li> <a class="text-decoration-none" href="{{ route('profile.index') }}"><i
                                             class="fa-regular fa-user mx-1"></i> Profile</a></li>
                                 <li> <a class="text-decoration-none" href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i

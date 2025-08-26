@@ -14,7 +14,8 @@
         }
 
         .btn-custom:hover {
-            background-color: #927542;
+            background-color: var(--color-accent);
+            color: var(--color-tertiary);
             /* A slightly darker shade for hover */
         }
 
@@ -34,6 +35,12 @@
 
 @section('content')
     <div class="container py-5">
+        @if (session('success'))
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <!-- Header -->
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
             <div class="d-flex align-items-center mb-3 mb-md-0">
@@ -43,6 +50,7 @@
                     <path fill-rule="evenodd"
                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                 </svg>
+
                 <div>
                     <h1 class="h3 fw-bold mb-0">Edit Profile</h1>
                     <p class="text-muted mb-0">Update your personal information and account settings.</p>
@@ -62,11 +70,10 @@
                     <div class="d-flex align-items-center mb-4">
                         <h2 class="h5 fw-bold mb-0">Personal Information</h2>
                     </div>
-
-                    <form method="POST" action="/profile/update">
+                    <form id="update-profile-form" method="POST" action="{{ route('profile.update', Auth::user()) }}">
                         @csrf
                         @method('PATCH')
-
+                        <input type="hidden" value="{{ old('id', $user->id) }}">
                         <div class="row g-3">
                             <!-- Full Name -->
                             <div class="col-md-6">
@@ -149,33 +156,43 @@
                         </div>
 
                         <div class="mt-4 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-custom rounded-pill">
+                            <button type="submit" form="update-profile-form" class="btn btn-custom rounded-pill">
                                 Update Profile
                             </button>
                         </div>
                     </form>
+
+
+
                 </div>
             </div>
+
 
             <!-- Right Column -->
             <div class="col-lg-4 d-flex flex-column gap-4">
 
-                <!-- Change Password Card -->
+                {{-- <a href="{{ route('password.form') }}" class="secondary-btn">Change Password</a> --}}
+
+
                 <div class="card p-4">
-                    <div class="d-flex align-items-center mb-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
                         <h2 class="h5 fw-bold mb-0">Change Password</h2>
+                        {{-- <a href="{{ route('profile.index') }}" class="primary-btn"><i
+                                class="fa-solid fa-arrow-left"></i> Back to
+                            Profile</a> --}}
+
                     </div>
 
-                    <form method="POST" action="/password/update">
+                    <form method="POST" id="update_password_form" action="{{ route('profile.password.update') }}">
                         @csrf
-                        @method('PATCH')
+                        @method('POST')
 
                         <div class="row g-3">
                             <!-- Current Password -->
                             <div class="col-12">
                                 <label for="current_password" class="form-label">Current Password</label>
                                 <input type="password" name="current_password" id="current_password"
-                                    class="form-control" required>
+                                    class="form-control" required autocomplete="current-password">
                                 @error('current_password')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
@@ -183,29 +200,33 @@
 
                             <!-- New Password -->
                             <div class="col-12">
-                                <label for="new_password" class="form-label">New Password</label>
-                                <input type="password" name="new_password" id="new_password" class="form-control"
-                                    required>
-                                @error('new_password')
+                                <label for="password" class="form-label">New Password</label>
+                                <input type="password" name="password" id="password" class="form-control" required
+                                    autocomplete="new-password">
+                                @error('password')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Confirm New Password -->
                             <div class="col-12">
-                                <label for="new_password_confirmation" class="form-label">Confirm New Password</label>
-                                <input type="password" name="new_password_confirmation" id="new_password_confirmation"
-                                    class="form-control" required>
+                                <label for="password_confirmation" class="form-label">Confirm New Password</label>
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    class="form-control" required autocomplete="new-password">
+                                @error('password_confirmation')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-custom rounded-pill w-100">
+                        <div class="mt-4 w-50">
+                            <button type="submit" form="update_password_form" class="btn btn-custom rounded-pill ">
                                 Change Password
                             </button>
                         </div>
                     </form>
                 </div>
+
 
                 <!-- Account Information Card -->
                 <div class="card p-4">

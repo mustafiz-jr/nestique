@@ -330,7 +330,7 @@
 
 
     .dropdown-toggle::after {
-        display: none !important;
+        /* display: none !important; */
     }
 
     .language::after {

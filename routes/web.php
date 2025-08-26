@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,8 @@ Auth::routes();
 
 // Protected routes (login required)
 Route::middleware(['auth'])->group(function () {
-    Route::get('profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::resource('profile', ProfileController::class);
+    Route::post('profile/password', [PasswordController::class, 'updatePassword'])->name('profile.password.update');
     // Pages
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::get('shipping', [CartController::class, 'shipping'])->name('shipping');

@@ -93,7 +93,7 @@
 <div class="card product-card">
     <!-- Image -->
     <div class="product-image">
-        <img src="{{ asset($product->thumbnail) }}" alt="{{ $product->name }} img">
+        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="{{ $product->name }} img">
 
     </div>
 
