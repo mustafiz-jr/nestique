@@ -15,7 +15,6 @@ class PasswordController extends Controller
 
     public function updatePassword(Request $request)
     {
-        // dd('is it working');
         $request->validate([
             'current_password' => 'required|current_password',
             'password' => 'required|string|min:8|confirmed',

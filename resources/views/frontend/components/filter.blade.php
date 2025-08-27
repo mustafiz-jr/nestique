@@ -283,111 +283,140 @@
             }
         }
     </style>
-    <div class="filter-section">
-        <h2 class="filter-title">Filters</h2>
+    <form action="{{ route('shop') }}">
+        <div class="filter-section">
+            <h2 class="filter-title">Filters</h2>
 
-        <!-- Price Range Filter -->
-        <div class="filter-group">
-            <h3 class="filter-group-title">Price Range</h3>
-            <div class="filter-group-content show">
-                <div class="price-slider-container">
-                    <div class="price-slider">
-                        <div class="track"></div>
-                        <div class="thumb min"></div>
-                        <div class="thumb max"></div>
-                    </div>
-                    <div class="price-values">
-                        <span>$0</span>
-                        <span>$10000</span>
-                    </div>
-                    <div class="price-inputs">
-                        <input type="number" class="price-input" id="minPrice" placeholder="Min" min="0"
-                            max="10000" value="0">
-                        <input type="number" class="price-input" id="maxPrice" placeholder="Max" min="0"
-                            max="10000" value="10000">
+            <!-- Price Range Filter -->
+            <div class="filter-group">
+                <h3 class="filter-group-title">Price Range</h3>
+                <div class="filter-group-content show">
+                    <div class="price-slider-container">
+                        <div class="price-slider">
+                            <div class="track"></div>
+                            <div class="thumb min"></div>
+                            <div class="thumb max"></div>
+                        </div>
+                        <div class="price-values">
+                            <span>$0</span>
+                            <span>$10000</span>
+                        </div>
+                        <div class="price-inputs">
+                            <input type="number" class="price-input" id="minPrice" placeholder="Min" min="0"
+                                max="10000" value="0">
+                            <input type="number" class="price-input" id="maxPrice" placeholder="Max" min="0"
+                                max="10000" value="10000">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Category Filter -->
-        <div class="filter-group">
-            <h3 class="filter-group-title">Category</h3>
-            <div class="filter-group-content">
-                @foreach ($categories as $category)
+            <div class="filter-group">
+                <h3 class="filter-group-title">Availability</h3>
+                <div class="filter-group-content">
                     <div class="checkbox-option">
-                        <input type="checkbox" id="{{ $category->id }}" name="{{ $category->slug }}">
-                        <label for="category1">{{ $category->name }}</label>
+                        <input type="checkbox" name="">
+                        <label for="">In stock</label>
                     </div>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Color Filter -->
-        <div class="filter-group">
-            <h3 class="filter-group-title">Color</h3>
-            <div class="filter-group-content">
-                <div class="color-options">
-                    <div class="color-option">
-                        <input type="radio" id="color1" name="color">
-                        <span class="checkmark" style="background-color: #415E72;"></span>
-                    </div>
-                    <div class="color-option">
-                        <input type="radio" id="color2" name="color">
-                        <span class="checkmark" style="background-color: #ac8e51;"></span>
-                    </div>
-                    <div class="color-option">
-                        <input type="radio" id="color3" name="color">
-                        <span class="checkmark" style="background-color: #FFA673;"></span>
-                    </div>
-                    <div class="color-option">
-                        <input type="radio" id="color4" name="color">
-                        <span class="checkmark" style="background-color: #222222;"></span>
-                    </div>
-                    <div class="color-option">
-                        <input type="radio" id="color5" name="color">
-                        <span class="checkmark" style="background-color: #F5F5F5; border: 1px solid #ddd;"></span>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="">
+                        <label for="">Out of Stock</label>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Size Filter -->
-        <div class="filter-group">
-            <h3 class="filter-group-title">Size</h3>
-            <div class="filter-group-content">
-                <div class="size-options">
-                    <div class="size-option">
-                        <input type="radio" id="size1" name="size">
-                        <label for="size1">S</label>
-                    </div>
-                    <div class="size-option">
-                        <input type="radio" id="size2" name="size">
-                        <label for="size2">M</label>
-                    </div>
-                    <div class="size-option">
-                        <input type="radio" id="size3" name="size">
-                        <label for="size3">L</label>
-                    </div>
-                    <div class="size-option">
-                        <input type="radio" id="size4" name="size">
-                        <label for="size4">XL</label>
-                    </div>
-                    <div class="size-option">
-                        <input type="radio" id="size5" name="size">
-                        <label for="size5">XXL</label>
+            <!-- Category Filter -->
+            <div class="filter-group">
+                <h3 class="filter-group-title">Category</h3>
+                <div class="filter-group-content">
+                    @foreach ($categories as $category)
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="{{ $category->id }}" value="{{ $category->slug }}"
+                                name="{{ $category->slug }}">
+                            <label for="category1">{{ $category->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h3 class="filter-group-title">Brand</h3>
+                <div class="filter-group-content">
+                    @foreach ($brands as $brand)
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="{{ $brand->id }}" value="{{ $brand->slug }}"
+                                name="{{ $brand->slug }}">
+                            <label for="category1">{{ $brand->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Color Filter -->
+            <div class="filter-group">
+                <h3 class="filter-group-title">Color</h3>
+                <div class="filter-group-content">
+                    <div class="color-options">
+                        <div class="color-option">
+                            <input type="radio" id="color1" name="color">
+                            <span class="checkmark" style="background-color: #415E72;"></span>
+                        </div>
+                        <div class="color-option">
+                            <input type="radio" id="color2" name="color">
+                            <span class="checkmark" style="background-color: #ac8e51;"></span>
+                        </div>
+                        <div class="color-option">
+                            <input type="radio" id="color3" name="color">
+                            <span class="checkmark" style="background-color: #FFA673;"></span>
+                        </div>
+                        <div class="color-option">
+                            <input type="radio" id="color4" name="color">
+                            <span class="checkmark" style="background-color: #222222;"></span>
+                        </div>
+                        <div class="color-option">
+                            <input type="radio" id="color5" name="color">
+                            <span class="checkmark" style="background-color: #F5F5F5; border: 1px solid #ddd;"></span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Filter Buttons -->
-        <div class="filter-buttons">
-            <button class="apply-filters">Apply</button>
-            <button class="clear-filters">Clear</button>
-        </div>
-    </div>
+            <!-- Size Filter -->
+            <div class="filter-group">
+                <h3 class="filter-group-title">Size</h3>
+                <div class="filter-group-content">
+                    <div class="size-options">
+                        <div class="size-option">
+                            <input type="radio" id="size1" name="size">
+                            <label for="size1">S</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="size2" name="size">
+                            <label for="size2">M</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="size3" name="size">
+                            <label for="size3">L</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="size4" name="size">
+                            <label for="size4">XL</label>
+                        </div>
+                        <div class="size-option">
+                            <input type="radio" id="size5" name="size">
+                            <label for="size5">XXL</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button type="submit" class="apply-filters">Apply</button>
+                <a href="{{ route('shop') }}" class="clear-filters">Clear</a>
+            </div>
+        </div>
+    </form>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Collapsible sections
@@ -412,6 +441,8 @@
             const maxValue = 10000;
             let minPrice = 0;
             let maxPrice = 10000;
+
+
 
             // Initialize slider
             function initSlider() {
@@ -486,46 +517,46 @@
             }
 
             // Clear Filters Functionality
-            const clearButton = document.querySelector('.clear-filters');
-            clearButton.addEventListener('click', function() {
-                // Reset price range
-                minPrice = minValue;
-                maxPrice = maxValue;
-                updateSlider();
+            // const clearButton = document.querySelector('.clear-filters');
+            // clearButton.addEventListener('click', function() {
+            //     // Reset price range
+            //     minPrice = minValue;
+            //     maxPrice = maxValue;
+            //     updateSlider();
 
-                // Uncheck all category checkboxes
-                document.querySelectorAll('input[name="category"]').forEach(checkbox => {
-                    checkbox.checked = false;
-                });
+            //     // Uncheck all category checkboxes
+            //     document.querySelectorAll('input[name="category"]').forEach(checkbox => {
+            //         checkbox.checked = false;
+            //     });
 
-                // Unselect color
-                document.querySelectorAll('input[name="color"]').forEach(radio => {
-                    radio.checked = false;
-                });
+            //     // Unselect color
+            //     document.querySelectorAll('input[name="color"]').forEach(radio => {
+            //         radio.checked = false;
+            //     });
 
-                // Unselect size
-                document.querySelectorAll('input[name="size"]').forEach(radio => {
-                    radio.checked = false;
-                });
-            });
+            //     // Unselect size
+            //     document.querySelectorAll('input[name="size"]').forEach(radio => {
+            //         radio.checked = false;
+            //     });
+            // });
 
             // Apply Filters Functionality (would connect to your actual filtering logic)
-            const applyButton = document.querySelector('.apply-filters');
-            applyButton.addEventListener('click', function() {
-                // Here you would implement your actual filtering logic
-                const filters = {
-                    minPrice: minPrice,
-                    maxPrice: maxPrice,
-                    categories: Array.from(document.querySelectorAll('input[name="category"]:checked'))
-                        .map(el => el.id),
-                    color: document.querySelector('input[name="color"]:checked')?.id,
-                    size: document.querySelector('input[name="size"]:checked')?.id
-                };
+            // const applyButton = document.querySelector('.apply-filters');
+            // applyButton.addEventListener('click', function() {
+            //     // Here you would implement your actual filtering logic
+            //     const filters = {
+            //         minPrice: minPrice,
+            //         maxPrice: maxPrice,
+            //         categories: Array.from(document.querySelectorAll('input[name="category"]:checked'))
+            //             .map(el => el.id),
+            //         color: document.querySelector('input[name="color"]:checked')?.id,
+            //         size: document.querySelector('input[name="size"]:checked')?.id
+            //     };
 
-                console.log('Applying filters:', filters);
-                alert('Filters applied! Check console for details.');
-            });
+            //     console.log('Applying filters:', filters);
+            //     alert('Filters applied! Check console for details.');
+            // });
 
-            initSlider();
+            // initSlider();
         });
     </script>

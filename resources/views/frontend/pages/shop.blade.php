@@ -85,7 +85,7 @@
     <section class="container mb-5">
         <div class="row my-3">
             <div class="col-md-3" style="margin-top: 35px;">
-                @include('frontend.components.filter', ['categories' => $categories])
+                @include('frontend.components.filter', ['categories' => $categories, 'brands' => $brands])
             </div>
             <div class="col-md-9">
                 <div class="d-flex justify-content-between align-items-center p-2">
@@ -96,6 +96,7 @@
                             <option value="newest">Date: Newest</option>
                             <option value="price-low">Price: Low to High</option>
                             <option value="price-high">Price: High to Low</option>
+                            <option value="popular"> Popular</option>
                         </select>
                     </div>
                 </div>
