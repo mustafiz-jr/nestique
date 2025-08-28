@@ -72,25 +72,26 @@ class PageController extends Controller
         }
 
         //  short products
-        $short = $request->get('sort', 'name');
+        $sort = $request->get('sort', 'name');
 
-        // shorting with _desc suffix 
-        if (str_ends_with($short, '_desc')) {
-            $short = str_replace('_desc', '', $short);
+        // Determine the sorting direction (ascending by default)
+        $direction = 'asc';
+        if (str_ends_with($sort, '_desc')) {
+            $sort = str_replace('_desc', '', $sort);
             $direction = 'desc';
-        } else {
-            $direction = 'asc';
         }
 
-        switch ($short) {
+        switch ($sort) {
             case 'price':
                 $query->orderBy('price', $direction);
                 break;
             case 'newest':
-                $query->orderBy('created_at', '_desc');
+                // Newest products should always be descending regardless of user input
+                $query->orderBy('created_at', 'desc');
                 break;
             case 'popular':
-                $query->orderBy('views', '_desc');
+                // Popular products should always be descending regardless of user input
+                $query->orderBy('views', 'desc');
                 break;
             case 'name':
             default:

@@ -77,8 +77,7 @@
                                 <div class="catdd-links">
                                     @foreach ($categories as $category)
                                         <div>
-                                            <label for="{{ $category->id }}"
-                                                >{{ $category->name }}</label>
+                                            <label for="{{ $category->id }}">{{ $category->name }}</label>
                                             <input type="submit" id="{{ $category->id }}"
                                                 value="{{ $category->slug }}" name="category"
                                                 class="search_category_item d-none">
