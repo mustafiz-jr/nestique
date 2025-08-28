@@ -48,7 +48,9 @@ class PageController extends Controller
 
         // filter by brand 
         if ($request->has('brand') && $request->brand) {
-            $query->where('brand_id', $request->brand);
+            $query->whereHas('brand', function ($q) {
+                $q->where('slug', request()->brand);
+            });
         }
 
         // search by name/description

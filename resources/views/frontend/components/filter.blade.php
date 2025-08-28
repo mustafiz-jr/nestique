@@ -283,7 +283,7 @@
             }
         }
     </style>
-    <form action="{{ route('shop') }}">
+    <form action="{{ route('shop') }}" method="GET">
         <div class="filter-section">
             <h2 class="filter-title">Filters</h2>
 
@@ -303,9 +303,9 @@
                         </div>
                         <div class="price-inputs">
                             <input type="number" class="price-input" id="minPrice" placeholder="Min" min="0"
-                                max="10000" value="0">
+                                max="10000" value="{{ request('min_price') }}" name="min_price">
                             <input type="number" class="price-input" id="maxPrice" placeholder="Max" min="0"
-                                max="10000" value="10000">
+                                name="max_price" max="10000" value="{{ request('max_price') }}">
                         </div>
                     </div>
                 </div>
@@ -331,9 +331,10 @@
                 <div class="filter-group-content">
                     @foreach ($categories as $category)
                         <div class="checkbox-option">
-                            <input type="checkbox" id="{{ $category->id }}" value="{{ $category->slug }}"
-                                name="{{ $category->slug }}">
-                            <label for="category1">{{ $category->name }}</label>
+                            <input type="checkbox" id="{{ $category->id }}"
+                                value="{{ $category->slug }}"{{ request('category') == $category->slug ? 'checked' : '' }}
+                                name="category">
+                            <label for="{{ $category->id }}">{{ $category->name }}</label>
                         </div>
                     @endforeach
                 </div>
@@ -345,7 +346,7 @@
                     @foreach ($brands as $brand)
                         <div class="checkbox-option">
                             <input type="checkbox" id="{{ $brand->id }}" value="{{ $brand->slug }}"
-                                name="{{ $brand->slug }}">
+                                {{ request('brand') == $category->slug ? 'checked' : '' }} name="brand">
                             <label for="category1">{{ $brand->name }}</label>
                         </div>
                     @endforeach
@@ -413,7 +414,7 @@
             <!-- Filter Buttons -->
             <div class="filter-buttons">
                 <button type="submit" class="apply-filters">Apply</button>
-                <a href="{{ route('shop') }}" class="clear-filters">Clear</a>
+                <a href="{{ route('shop') }}" class="clear-filters primary-btn">Clear</a>
             </div>
         </div>
     </form>

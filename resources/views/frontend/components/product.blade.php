@@ -101,7 +101,10 @@
     <div class="product-content">
         <div>
             {{-- @dd($product) --}}
-            <small class="text-muted ">{{ $product->category->name }}</small>
+            <div class="d-flex justify-content-between">
+                <small class="text-muted ">{{ $product->category->name }}</small>
+                <small class="text-muted ">{{ $product->brand->name }}</small>
+            </div>
             <a href="{{ route('product_details', $product->id) }}" class="text-decoration-none">
                 <h5 class="mt-1 product-title">{{ $product->name }}</h5>
             </a>

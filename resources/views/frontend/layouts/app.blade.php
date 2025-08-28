@@ -39,39 +39,45 @@ $cartItems = Cart::content();
         <a href="{{ route('home') }}" class="navbar-logo logo-font ps-3"><img
                 src="{{ asset('assets/frontend/images/logo.png') }}" style="height:40px;" alt=""></a>
 
-        <!-- Search Section -->
-        <div class="navbar-search">
-            <div class="navbar-search__catdd align-items-center d-flex dropdown">
-                <div class="catdd-wrapper">
-                    <div class="catdd-button" id="catddToggle" aria-expanded="true" aria-controls="catddDropdown"
-                        role="button" tabindex="0">
-                        <i class="fas fa-th" aria-hidden="true"></i>
-                        <span>Category</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="catdd-dropdown" id="catddDropdown" role="region" aria-label="Category Dropdown">
-                        <button class="catdd-close-btn" aria-label="Close category dropdown" style="display:none;">
-                            <i class="fas fa-times"></i> Close
-                        </button>
-
-                        <!-- Men -->
-                        {{-- <h4 tabindex="0"><span>Men</span> <i class="fas fa-chevron-right" aria-hidden="true"></i></h4> --}}
-                        <div class="catdd-links">
-                            @foreach ($categories as $category)
-                                <a href="#">{{ $category->name }}</a>
-                            @endforeach
+        <form action="{{ route('shop') }}" method="GET">
+            <!-- Search Section -->
+            <div class="navbar-search">
+                <div class="navbar-search__catdd align-items-center d-flex dropdown">
+                    <div class="catdd-wrapper">
+                        <div class="catdd-button" id="catddToggle" aria-expanded="true" aria-controls="catddDropdown"
+                            role="button" tabindex="0">
+                            <i class="fas fa-th" aria-hidden="true"></i>
+                            <span>Category</span>
+                            <i class="fas fa-chevron-down"></i>
                         </div>
+                        <div class="catdd-dropdown" id="catddDropdown" role="region" aria-label="Category Dropdown">
+                            <button class="catdd-close-btn" aria-label="Close category dropdown" style="display:none;">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+
+                            <!-- Men -->
+                            {{-- <h4 tabindex="0"><span>Men</span> <i class="fas fa-chevron-right" aria-hidden="true"></i></h4> --}}
+                            <div class="catdd-links">
+                                <select class="catdd-links">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->slug }}" name="category">{{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
 
+                        </div>
                     </div>
                 </div>
-            </div>
 
+                <input type="text" class="navbar-search__input" name="search" value="{{ request('search') }}"
+                    placeholder="I'm shopping for..." />
+                <button class="navbar-search__button" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+        </form>
 
-            <input type="text" class="navbar-search__input" placeholder="I'm shopping for..." />
-            <button class="navbar-search__button">
-                <i class="fas fa-search"></i>
-            </button>
         </div>
 
         <!-- Icons Section -->
@@ -106,7 +112,8 @@ $cartItems = Cart::content();
 
                 <div class="navbar-icon login-dropdown">
                     @guest
-                        <span id="userIcon" class="user-icon-link" onclick="handleUserIconClick(event)" data-modal="login">
+                        <span id="userIcon" class="user-icon-link" onclick="handleUserIconClick(event)"
+                            data-modal="login">
                             <i class="far fa-user"></i>
                         </span>
                     @endguest
