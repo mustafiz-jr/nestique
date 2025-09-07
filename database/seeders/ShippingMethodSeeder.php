@@ -13,7 +13,30 @@ class ShippingMethodSeeder extends Seeder
      */
     public function run(): void
     {
-        $methods = [['name' => 'FedEx'], ['name' => 'UPS'], ['name' => 'USPS'], ['name' => 'DHL']];
+        // Add price and duration according to the database table schema.
+        $methods = [
+            [
+                'name' => 'FedEx',
+                'price' => '15.99',
+                'duration' => '3-5 business days'
+            ],
+            [
+                'name' => 'UPS',
+                'price' => '12.50',
+                'duration' => '4-6 business days'
+            ],
+            [
+                'name' => 'USPS',
+                'price' => '7.25',
+                'duration' => '5-7 business days'
+            ],
+            [
+                'name' => 'DHL',
+                'price' => '25.00',
+                'duration' => '2-3 business days'
+            ]
+        ];
+
         foreach ($methods as $method) {
             ShippingMethod::create($method);
         }

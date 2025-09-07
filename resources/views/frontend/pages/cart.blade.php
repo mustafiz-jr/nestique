@@ -1,18 +1,7 @@
 @extends('frontend.layouts.app')
+
 @section('css')
     <style>
-        :root {
-            --color-primary: #F5F5F5;
-            --color-secondary: #ac8e51;
-            --color-accent: #415E72;
-            --color-tertiary: #FFA673;
-            --color-dark: #222222;
-            --color-light: #FFFFFF;
-            --primary-font: "Inter", sans-serif;
-            --secondary-font: "Playfair Display", serif;
-            --logo-font: "Mr Dafoe", cursive;
-        }
-
         /* Main Container */
         .nestique-cart-page {
             padding: 40px 20px;
@@ -352,21 +341,20 @@
                         @endforeach
                     @endif
                 </div>
-                {{-- কার্ট খালি থাকলে সামারি সেকশন দেখাবে না --}}
                 @if (!$cartItems->isEmpty())
                     <div class="nestique-order-summary-column">
                         <h3>Order Summary</h3>
                         <div class="nestique-summary-line">
                             <span>Sub Total</span>
-                            <span>{{ $item->subtotal() }} TK</span>
+                            <span>{{ Cart::subtotal(2, '.', '') }} TK</span>
                         </div>
                         <div class="nestique-summary-line">
                             <span>Tax</span>
-                            <span>{{ $item->tax() }} TK</span>
+                            <span>{{ Cart::tax(2, '.', '') }} TK</span>
                         </div>
                         <div class="nestique-summary-line total">
                             <span>Total</span>
-                            <span>{{$item->total}} TK</span>
+                            <span>{{ Cart::total(2, '.', '') }} TK</span>
                         </div>
 
                         <a href="{{ route('checkout') }}" class="nestique-checkout-btn">
@@ -377,7 +365,7 @@
                         <form action="{{ route('cart.clear') }}" method="POST"
                             style="margin-top: 20px; text-align: center;">
                             @csrf
-                            <button type="submit" 
+                            <button type="submit"
                                 style="background: none; border: none; color: #dc3545; text-decoration: underline; cursor: pointer;">Clear
                                 Cart</button>
                         </form>

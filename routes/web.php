@@ -28,7 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profile/password', [PasswordController::class, 'updatePassword'])->name('profile.password.update');
     // Pages
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
-    Route::get('shipping', [CartController::class, 'shipping'])->name('shipping');
+    Route::get('order', [CartController::class, 'order'])->name('order');
+    Route::get('thanks', [PageController::class, 'thanks'])->name('thanks');
     // Cart and Ajax actions
     Route::controller(CartController::class)->group(function () {
         Route::get('/cart', 'show_cart')->name('cart.show');

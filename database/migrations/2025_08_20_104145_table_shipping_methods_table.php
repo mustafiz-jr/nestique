@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('shipping_methods', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('price')->nullable();
+            $table->string('duration')->nullable();
             $table->timestamps();
         });
     }

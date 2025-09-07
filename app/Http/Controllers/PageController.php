@@ -149,4 +149,9 @@ class PageController extends Controller
     {
         return view('frontend.pages.cart');
     }
+
+    public function thanks()
+    {
+        return view('frontend.pages.thanks');
+    }
 }

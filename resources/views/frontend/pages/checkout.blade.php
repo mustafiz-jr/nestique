@@ -1,7 +1,8 @@
 @extends('frontend.layouts.app')
+
 @section('css')
     <style>
-        /* Main Container */
+        /* All your CSS styles */
         .nestique-checkout-page {
             padding: 40px 20px;
             background-color: var(--color-light);
@@ -76,7 +77,6 @@
         .nestique-form-group .form-row {
             display: flex;
             gap: 20px;
-            /* Adjusted gap for a more professional look */
         }
 
         .nestique-form-group .form-row>* {
@@ -230,10 +230,8 @@
             align-items: center;
             gap: 15px;
             padding-bottom: 15px;
-            /* Added padding to separate border */
             margin-bottom: 15px;
             border-bottom: 1px solid #e0e0e0;
-            /* Added bottom border */
         }
 
         /* Remove border from the last summary item for a cleaner look */
@@ -335,84 +333,79 @@
         <div class="nestique-checkout-container">
             <h1 class="nestique-checkout-header">Checkout</h1>
             <div class="nestique-checkout-layout">
-                <!-- Checkout Form Column -->
                 <div class="nestique-checkout-form-column">
                     <h2>Shipping Address</h2>
-                    <form action="{{ route('shipping') }}" method="POST">
+                    <form action="{{ route('order') }}" method="POST">
+                        @csrf
                         <div class="nestique-form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Email" required>
+                            <input type="email" id="email" name="email" placeholder="Email"
+                                value="{{ $customer->email }}" required>
                         </div>
                         <div class="nestique-form-group">
                             <label for="country">Country</label>
                             <select id="country" name="country">
-                                <option value="usa">United States</option>
-                                <option value="canada">Canada</option>
-                                <option value="uk">United Kingdom</option>
+                                <option {{ $customer->country == 'usa' ? 'selected' : '' }} value="usa">United States
+                                </option>
+                                <option {{ $customer->country == 'canada' ? 'selected' : '' }} value="canada">Canada
+                                </option>
+                                <option {{ $customer->country == 'uk' ? 'selected' : '' }} value="uk">United Kingdom
+                                </option>
+                                <option {{ $customer->country == 'Bangladesh' ? 'selected' : '' }} value="bangladesh">
+                                    Bangladesh</option>
                             </select>
                         </div>
                         <div class="nestique-form-group form-row">
                             <div>
-                                <label for="first-name">First name</label>
-                                <input type="text" id="first-name" name="first-name" placeholder="First name" required>
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" value="{{ $customer->name }}"
+                                    placeholder="name" required>
                             </div>
-                            <br>
                             <div>
-                                <label for="last-name">Last name</label>
-                                <input type="text" id="last-name" name="last-name" placeholder="Last name" required>
+                                <label for="address">Address</label>
+                                <input type="text" id="address" name="address" value="{{ $customer->address }}"
+                                    placeholder="Address" required>
                             </div>
-                        </div>
-                        <div class="nestique-form-group">
-                            <label for="address">Address</label>
-                            <input type="text" id="address" name="address" placeholder="Address" required>
                         </div>
                         <div class="nestique-form-group">
                             <label for="city">City</label>
-                            <input type="text" id="city" name="city" placeholder="City" required>
+                            <input type="text" id="city" name="city" value="{{ $customer->city }}"
+                                placeholder="City" required>
                         </div>
                         <div class="nestique-form-group form-row">
                             <div>
-                                <label for="postal-code">Postal Code</label>
-                                <input type="text" id="postal-code" name="postal-code" placeholder="Postal Code"
-                                    required>
+                                <label for="zip-code">Zip Code</label>
+                                <input type="text" id="zip-code" name="zip" value="{{ $customer->zip }}"
+                                    placeholder="Zip Code" required>
                             </div>
-                            <br>
                             <div>
                                 <label for="phone">Phone</label>
-                                <input type="tel" id="phone" name="phone" placeholder="Phone" required>
+                                <input type="tel" id="phone" name="phone" value="{{ $customer->phone }}"
+                                    placeholder="Phone" required>
                             </div>
                         </div>
                         <div class="gap-1 fw-bold d-flex">
                             <input type="checkbox" id="save-info" name="save-info">
                             <label class="save-info" for="save-info">Save this information for next time</label>
                         </div>
-
                         <div class="nestique-form-separator"></div>
-
                         <h2>Shipping Method</h2>
                         <div class="nestique-form-group nestique-shipping-options">
-                            <div class="radio-option selected">
-                                <input type="radio" id="shipping-standard" name="shipping-method" value="standard"
-                                    data-price="5.00" checked>
-                                <div class="details">
-                                    <label for="shipping-standard" class="h5">Standard Shipping</label>
-                                    <p>5-7 business days</p>
+                            @foreach ($shippingMethods as $method)
+                                <div class="radio-option {{ $loop->first ? 'selected' : '' }}">
+                                    <input type="radio" id="shipping-{{ $method->id }}" name="shipping-method"
+                                        value="{{ $method->name }}" data-price="{{ $method->price }}"
+                                        {{ $loop->first ? 'checked' : '' }}>
+                                    <div class="details">
+                                        <label for="shipping-{{ $method->id }}"
+                                            class="h5">{{ $method->name }}</label>
+                                        <p>{{ $method->duration }}</p>
+                                    </div>
+                                    <div class="price">${{ number_format($method->price, 2) }}</div>
                                 </div>
-                                <div class="price">$5.00</div>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="shipping-express" name="shipping-method" value="express"
-                                    data-price="20.00">
-                                <div class="details">
-                                    <label for="shipping-express" class="h5">Express Shipping</label>
-                                    <p>1-2 business days</p>
-                                </div>
-                                <div class="price">$20.00</div>
-                            </div>
+                            @endforeach
                         </div>
-
                         <div class="nestique-form-separator"></div>
-
                         <h2>Payment Method</h2>
                         <div class="nestique-form-group nestique-payment-options">
                             <div class="radio-option selected">
@@ -428,7 +421,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div id="online-payment-details" class="nestique-payment-details-container">
                             <div class="nestique-form-separator"></div>
                             <h2>Payment Details</h2>
@@ -455,7 +447,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('cart.show') }}" class="primary-btn px-3 ">
+                            <a href="{{ route('cart.show') }}" class="primary-btn px-3">
                                 <span class="fas fa-arrow-left"></span>
                                 Return to Cart
                             </a>
@@ -463,38 +455,34 @@
                                 Pay now
                                 <span class="fas fa-arrow-right"></span>
                             </button>
-                            <a href="{{ route('shipping') }}">Shipping</a>
                         </div>
                     </form>
-
                 </div>
-
-                <!-- Order Summary Column -->
                 <div class="nestique-order-summary-column">
                     <h3>Order Summary</h3>
                     @foreach ($cartItems as $item)
                         <div class="nestique-summary-item">
-                            <img src="{{ asset($item->model->thumbnail) }}" alt="Gradient Graphic T-shirt">
+                            <img src="{{ asset($item->model->thumbnail) }}" alt="{{ $item->name }}">
                             <div class="nestique-summary-item-details">
                                 <h4>{{ $item->name }}</h4>
-                                <p>{{ $item->qty }}</p>
+                                <p>Qty: {{ $item->qty }}</p>
                             </div>
-                            <div class="nestique-summary-item-price">${{ $item->price }} </div>
+                            <div class="nestique-summary-item-price">${{ number_format($item->price, 2) }}</div>
                         </div>
                     @endforeach
                     <div class="nestique-form-separator"></div>
-
                     <div class="nestique-summary-line">
                         <span>Subtotal</span>
-                        <span id="subtotal-price">{{ $item->subtotal() }} </span>
+                        <span id="subtotal-price">${{ number_format(str_replace(',', '', $subtotal), 2) }}</span>
                     </div>
                     <div class="nestique-summary-line shipping">
                         <span>Shipping</span>
-                        <span id="shipping-price">$5.00</span>
+                        <span id="shipping-price">${{ number_format($shippingMethods->first()->price, 2) }}</span>
                     </div>
                     <div class="nestique-summary-line total">
                         <span>Total</span>
-                        <span id="total-price">$570.00</span>
+                        <span
+                            id="total-price">${{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2) }}</span>
                     </div>
                 </div>
             </div>
@@ -508,49 +496,50 @@
             const shippingOptions = document.querySelectorAll('input[name="shipping-method"]');
             const paymentOptions = document.querySelectorAll('input[name="payment-method"]');
             const onlinePaymentDetails = document.getElementById('online-payment-details');
-            const subtotalPrice = 565; // This should be dynamic based on your cart
-
+            const subtotalPriceElement = document.getElementById('subtotal-price');
             const shippingPriceElement = document.getElementById('shipping-price');
             const totalPriceElement = document.getElementById('total-price');
             const checkoutButton = document.getElementById('checkout-button');
 
+            // Function to update the summary based on selections
             const updateSummary = () => {
+                const subtotalText = subtotalPriceElement.textContent;
+                const subtotal = parseFloat(subtotalText.replace('$', '').replace(',', ''));
                 let selectedShippingPrice = 0;
                 let shippingIsFree = false;
 
-                // Update shipping price based on selection
                 const selectedShipping = document.querySelector('input[name="shipping-method"]:checked');
                 if (selectedShipping) {
                     selectedShippingPrice = parseFloat(selectedShipping.getAttribute('data-price'));
                 }
 
-                // Check if COD is selected, shipping becomes free
                 const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
                 if (selectedPayment && selectedPayment.value === 'cod') {
                     shippingIsFree = true;
                 }
 
                 const currentShippingCost = shippingIsFree ? 0 : selectedShippingPrice;
-                const newTotal = subtotalPrice + currentShippingCost;
+                const newTotal = subtotal + currentShippingCost;
 
-                // Update text content
                 shippingPriceElement.textContent = shippingIsFree ? 'Free' :
                     `$${currentShippingCost.toFixed(2)}`;
                 totalPriceElement.textContent = `$${newTotal.toFixed(2)}`;
             };
 
+            // Function to toggle payment details and button text
             const togglePaymentDetails = () => {
                 const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
                 if (selectedPayment && selectedPayment.value === 'online') {
                     onlinePaymentDetails.style.display = 'block';
-                    checkoutButton.textContent = 'Pay now';
+                    checkoutButton.innerHTML = 'Pay now <span class="fas fa-arrow-right"></span>';
                 } else {
                     onlinePaymentDetails.style.display = 'none';
-                    checkoutButton.textContent = 'Place Order';
+                    checkoutButton.innerHTML = 'Place Order <span class="fas fa-arrow-right"></span>';
                 }
                 updateSummary();
             };
 
+            // Event listeners
             shippingOptions.forEach(option => {
                 option.addEventListener('change', () => {
                     document.querySelectorAll('.nestique-shipping-options .radio-option').forEach(
@@ -569,8 +558,13 @@
                 });
             });
 
-            // Initial call to set the correct state on page load
-            togglePaymentDetails();
+            // Initial state on page load
+            const initialOnlinePayment = document.getElementById('payment-online').checked;
+            if (initialOnlinePayment) {
+                onlinePaymentDetails.style.display = 'block';
+                document.getElementById('payment-online').closest('.radio-option').classList.add('selected');
+            }
+            togglePaymentDetails(); // Call on page load to set the correct initial state and total
         });
     </script>
 @endsection
