@@ -33,13 +33,13 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogo(asset('assets/backend/images/logo.png'))
             ->brandLogoHeight('70px')
             ->favicon(asset('assets/frontend/images/favicon.ico'))
-            ->login()
             ->colors([
                 'secondary' => Color::hex("#ac8e51"),
                 'accent' => Color::hex('#415E72'),
                 'primary' => Color::hex('#415E72'),
                 'tertiary' => Color::hex('#FFA673'),
             ])
+            ->login()
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Product Management')
