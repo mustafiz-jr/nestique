@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -10,16 +11,11 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-
-    public function show(User $user)
-    {
-        $user =  Auth::user();
-        return view('frontend.pages.profile.index', compact('user'));
-    }
-    public function index()
+    public function index(Order $orders)
     {
         $user = Auth::user();
-        return view('frontend.pages.profile.index', compact('user'));
+        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        return view('frontend.pages.customer_profile.index', compact('user', 'orders'));
     }
 
     public function update(Request $request)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Product;
 use App\Models\ShippingMethod;
@@ -97,6 +98,20 @@ class CartController extends Controller
         $order->shipping_method = $shippingMethodName;
         $order->tracking = null;
         $order->save();
+        // Step 5.1: Save each cart item to the order_items table
+        foreach ($cartItems as $item) {
+            $orderItem = new OrderItem();
+            $orderItem->order_id = $order->id;
+            $orderItem->product_id = $item->id;
+            $orderItem->product_name = $item->name;
+            $orderItem->sku = $item->options->sku ?? null;
+            $orderItem->price = $item->price;
+            $orderItem->quantity = $item->qty;
+            $orderItem->total = $item->price * $item->qty;
+            $orderItem->variant = json_encode($item->options ?? []);
+            $orderItem->notes = null;
+            $orderItem->save();
+        }
 
         // Step 6: Clear the cart
         Cart::destroy();

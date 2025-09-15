@@ -166,11 +166,11 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="{{ asset('assets/frontend/images/banner_men.jpg') }}" alt="Men's Fashion">
-                {{-- <div class="slide-content">
+                <div class="slide-content">
                     <h2 class="slide-title">Men's Fashion</h2>
                     <p class="slide-subtitle">Elevate Your Wardrobe with Timeless Looks</p>
                     <a href="#" class="shop-now-btn">Shop Now</a>
-                </div> --}}
+                </div>
             </div>
             <div class="swiper-slide">
                 <img src="{{ asset('assets/frontend/images/banner_women.jpeg') }}" alt="Women's Fashion">

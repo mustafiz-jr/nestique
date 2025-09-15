@@ -10,19 +10,16 @@
             background-color: var(--color-secondary);
             color: var(--color-light);
             border: none;
-            transition: background-color 0.3s;
         }
 
         .btn-custom:hover {
             background-color: var(--color-accent);
             color: var(--color-tertiary);
-            /* A slightly darker shade for hover */
         }
 
         .card {
-            border-radius: 1rem;
+            border-radius: 0.3rem;
             border: 1px solid #e0e0e0;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
         }
 
         .form-control {
@@ -30,9 +27,141 @@
             padding: 0.75rem;
             border: 1px solid #ced4da;
         }
+
+
+
+
+        /* PREVIOUS ORDERS STYLES */
+        .previous-orders-container {
+            font-family: var(--primary-font);
+            background-color: var(--color-primary);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .previous-orders-header {
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            margin: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .order-card {
+            background-color: var(--color-light);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .order-card-header {
+            padding: 15px 20px;
+            background-color: var(--color-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .order-card-header .order-details p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .order-card-header .order-details strong {
+            color: var(--color-dark);
+        }
+
+        .order-status {
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 20px;
+            color: white;
+        }
+
+        .status-shipped {
+            background-color: var(--color-tertiary);
+            color: var(--color-dark);
+        }
+
+        .order-card-body {
+            padding: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .order-item:not(:last-child) {
+            margin-bottom: 15px;
+        }
+
+        .order-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .order-item-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+            color: var(--color-dark);
+        }
+
+        .order-item-details p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .order-card-footer {
+            padding: 15px 20px;
+            background-color: var(--color-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .order-total {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--color-dark);
+        }
+
+        .btn-order-action {
+            background-color: var(--color-secondary);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-order-action.secondary {
+            background-color: var(--color-accent);
+        }
+
+        .btn-order-action:hover {
+            background-color: #634a42;
+        }
+
+        .btn-order-action.secondary:hover {
+            background-color: #5a6268;
+        }
     </style>
 @endsection
-
 @section('content')
     <div class="container py-5">
         @if (session('success'))
@@ -167,20 +296,11 @@
                 </div>
             </div>
 
-
             <!-- Right Column -->
             <div class="col-lg-4 d-flex flex-column gap-4">
-
-                {{-- <a href="{{ route('password.form') }}" class="secondary-btn">Change Password</a> --}}
-
-
                 <div class="card p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h2 class="h5 fw-bold mb-0">Change Password</h2>
-                        {{-- <a href="{{ route('profile.index') }}" class="primary-btn"><i
-                                class="fa-solid fa-arrow-left"></i> Back to
-                            Profile</a> --}}
-
                     </div>
 
                     <form method="POST" id="update_password_form" action="{{ route('profile.password.update') }}">
@@ -226,46 +346,49 @@
                         </div>
                     </form>
                 </div>
-
-
-                <!-- Account Information Card -->
-                <div class="card p-4">
-                    <div class="d-flex align-items-center mb-4">
-                        <h2 class="h5 fw-bold mb-0">Account Information</h2>
+            </div>
+        </div>
+        <div class="row my-5">
+            <div class="previous-orders-container">
+                <h3 class="previous-orders-header">Previous Orders</h3>
+                @foreach ($orders as $order)
+                    <div class="order-card">
+                        <div class="order-card-header">
+                            <div class="order-details">
+                                <p>Order Number: <strong>#{{ $order->order_number }}</strong></p>
+                                <p>Date Placed: <strong>{{ $order->created_at }}</strong></p>
+                            </div>
+                            <span
+                                class="p-1 text-white rounded-2 
+                                {{ $order->status == 'pending' ? 'bg-warning' : '' }}
+                                {{ $order->status == 'processing' ? 'bg-primary' : '' }}
+                                {{ $order->status == 'shipped' ? 'bg-info-subtle' : '' }}
+                                {{ $order->status == 'cancelled' ? 'bg-danger' : '' }}
+                                {{ $order->status == 'completed' ? 'bg-success' : 'text-dark' }}
+                                ">{{ $order->status }}</span>
+                        </div>
+                        <div class="order-card-body">
+                            <div class="order-item">
+                                <img src="https://via.placeholder.com/150/EEEEEE/808080?Text=Product" alt="Product Image">
+                                <div class="order-item-details">
+                                    <h4>Wireless Ergonomic Mouse</h4>
+                                    <p>Quantity: 1</p>
+                                </div>
+                            </div>
+                            <div class="order-item">
+                                <img src="https://via.placeholder.com/150/EEEEEE/808080?Text=Product" alt="Product Image">
+                                <div class="order-item-details">
+                                    <h4>Mechanical Keyboard</h4>
+                                    <p>Quantity: 1</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-card-footer">
+                            <span class="order-total">Total: $124.50</span>
+                            <a href="#" class="btn-order-action">View Details</a>
+                        </div>
                     </div>
-
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <p class="text-muted mb-0">Member Since</p>
-                            <p class="fw-bold mb-0">{{ $user->created_at->format('F d, Y') }}</p>
-                        </div>
-
-                        <div class="col-12">
-                            <p class="text-muted mb-0">Email Verified</p>
-                            <p class="fw-bold mb-0">
-                                @if ($user->hasVerifiedEmail())
-                                    <span class="text-success">✔ Verified</span>
-                                @else
-                                    <span class="text-warning">▲ Not Verified</span>
-                                @endif
-                            </p>
-                        </div>
-
-                        <div class="col-12">
-                            <p class="text-muted mb-0">Role</p>
-                            <p class="fw-bold mb-0">
-                                @if ($user->role)
-                                    {{ $user->role->name }}
-                                @else
-                                    N/A
-                                @endif
-                            </p>
-                        </div>
-                        <div class="col-12">
-                            <a href="#" class="primary-btn">Customer Dashboard</a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
