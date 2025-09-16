@@ -28,9 +28,6 @@
             border: 1px solid #ced4da;
         }
 
-
-
-
         /* PREVIOUS ORDERS STYLES */
         .previous-orders-container {
             font-family: var(--primary-font);
@@ -160,8 +157,81 @@
         .btn-order-action.secondary:hover {
             background-color: #5a6268;
         }
+
+        /* Order Table Styles */
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .orders-table th {
+            background-color: var(--color-primary);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-dark);
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .orders-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .orders-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .order-status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-processing {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-shipped {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-completed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .view-details-btn {
+            background-color: transparent;
+            color: var(--color-secondary);
+            border: 1px solid var(--color-secondary);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .view-details-btn:hover {
+            background-color: var(--color-secondary);
+            color: white;
+        }
     </style>
 @endsection
+
 @section('content')
     <div class="container py-5">
         @if (session('success'))
@@ -290,9 +360,6 @@
                             </button>
                         </div>
                     </form>
-
-
-
                 </div>
             </div>
 
@@ -348,47 +415,54 @@
                 </div>
             </div>
         </div>
+
+        <!-- Previous Orders Section -->
         <div class="row my-5">
             <div class="previous-orders-container">
                 <h3 class="previous-orders-header">Previous Orders</h3>
-                @foreach ($orders as $order)
-                    <div class="order-card">
-                        <div class="order-card-header">
-                            <div class="order-details">
-                                <p>Order Number: <strong>#{{ $order->order_number }}</strong></p>
-                                <p>Date Placed: <strong>{{ $order->created_at }}</strong></p>
-                            </div>
-                            <span
-                                class="p-1 text-white rounded-2 
-                                {{ $order->status == 'pending' ? 'bg-warning' : '' }}
-                                {{ $order->status == 'processing' ? 'bg-primary' : '' }}
-                                {{ $order->status == 'shipped' ? 'bg-info-subtle' : '' }}
-                                {{ $order->status == 'cancelled' ? 'bg-danger' : '' }}
-                                {{ $order->status == 'completed' ? 'bg-success' : 'text-dark' }}
-                                ">{{ $order->status }}</span>
-                        </div>
-                        <div class="order-card-body">
-                            <div class="order-item">
-                                <img src="https://via.placeholder.com/150/EEEEEE/808080?Text=Product" alt="Product Image">
-                                <div class="order-item-details">
-                                    <h4>Wireless Ergonomic Mouse</h4>
-                                    <p>Quantity: 1</p>
-                                </div>
-                            </div>
-                            <div class="order-item">
-                                <img src="https://via.placeholder.com/150/EEEEEE/808080?Text=Product" alt="Product Image">
-                                <div class="order-item-details">
-                                    <h4>Mechanical Keyboard</h4>
-                                    <p>Quantity: 1</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="order-card-footer">
-                            <span class="order-total">Total: $124.50</span>
-                            <a href="#" class="btn-order-action">View Details</a>
-                        </div>
+
+                @if ($orders && count($orders) > 0)
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Date</th>
+                                <th>Product Quantity</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($orders as $order)
+                                @php
+                                    $totalQuantity = $order->orderItems->sum('quantity');
+
+                                    $totalAmount = $order->orderItems->sum('total');
+                                @endphp
+                                <tr>
+                                    <td>#{{ $order->order_number }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y') }}</td>
+                                    <td>{{ $totalQuantity }}</td> <!-- Use the calculated variable -->
+                                    <td>${{ number_format($totalAmount, 2) }}</td> <!-- Use the calculated variable -->
+                                    <td>
+                                        <span class="order-status-badge status-{{ $order->status }}">
+                                            {{ ucfirst($order->status) }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('invoice', $order->id) }}" class="primary-btn">Details</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="text-center py-4">
+                        <p class="text-muted">You haven't placed any orders yet.</p>
+                        <a href="{{ url('/home') }}" class="btn btn-custom mt-2">Start Shopping</a>
                     </div>
-                @endforeach
+                @endif
             </div>
         </div>
     </div>

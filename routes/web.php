@@ -26,6 +26,7 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::resource('profile', ProfileController::class);
     Route::post('profile/password', [PasswordController::class, 'updatePassword'])->name('profile.password.update');
+    Route::get('/customer/invoice/{id}', [ProfileController::class, 'invoice'])->name('invoice');
     // Pages
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::post('order', [CartController::class, 'order'])->name('order');

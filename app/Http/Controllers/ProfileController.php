@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,10 @@ class ProfileController extends Controller
     public function index(Order $orders)
     {
         $user = Auth::user();
-        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $orders = Order::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->with('orderItems')
+            ->get();
         return view('frontend.pages.customer_profile.index', compact('user', 'orders'));
     }
 
@@ -45,5 +49,17 @@ class ProfileController extends Controller
         ]));
 
         return redirect()->route('profile.index')->with('success', 'Profile information updated!');
+    }
+
+    public function invoice($id)
+    {
+        $user = Auth::user();
+
+        $order = Order::where('id', $id)
+            ->where('user_id', $user->id)
+            ->with('orderItems')
+            ->firstOrFail(); // returns 404 if not found
+
+        return view('frontend.pages.customer_profile.invoice', compact('user', 'order'));
     }
 }
