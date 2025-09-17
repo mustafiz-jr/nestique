@@ -454,17 +454,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ route('cart.show') }}" class="primary-btn px-3">
-                                <span class="fas fa-arrow-left"></span>
-                                Return to Cart
-                            </a>
-                            <button type="submit" class="secondary-btn px-5" id="checkout-button">
-                                Place Order
-                                <span class="fas fa-arrow-right"></span>
-                            </button>
-                        </div>
-                    </form>
                 </div>
                 <div class="nestique-order-summary-column">
                     <h3>Order Summary</h3>
@@ -478,6 +467,10 @@
                             <div class="nestique-summary-item-price">${{ number_format($item->price, 2) }}</div>
                         </div>
                     @endforeach
+                    <div class="nestique-form-group form-row">
+                        <label for="coupon">coupon</label>
+                        <input type="text" id="coupon" placeholder="COUPON">
+                    </div>
                     <div class="nestique-form-separator"></div>
                     <div class="nestique-summary-line">
                         <span>Subtotal</span>
@@ -492,6 +485,17 @@
                         <span
                             id="total-price">${{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2) }}</span>
                     </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('cart.show') }}" class="primary-btn px-3">
+                            <span class="fas fa-arrow-left"></span>
+                            Return to Cart
+                        </a>
+                        <button type="submit" class="secondary-btn px-5" id="checkout-button">
+                            Place Order
+                            <span class="fas fa-arrow-right"></span>
+                        </button>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>
