@@ -468,182 +468,189 @@
                         </div>
                     @endforeach
                     <div class="nestique-form-group form-row">
-                        <label for="coupon">coupon</label>
-                        <input type="text" id="coupon" placeholder="COUPON">
+                        <label for="coupon">Coupon Code</label>
+                        <input type="text" id="coupon" name="coupon_code" placeholder="COUPON CODE"
+                            value="{{ session('applied_coupon') ? session('applied_coupon')['code'] : '' }}">
+                        @if (session('applied_coupon'))
+                            <span class="coupon-success">Coupon applied: {{ session('applied_coupon')['code'] }}
+                                (-${{ number_format(session('applied_coupon')['discount'], 2) }})</span>
+                        @endif
+                        @if (session('error'))
+                            <span class="coupon-error">{{ session('error') }}</span>
+                        @endif
+                        <div class="nestique-form-separator"></div>
+                        <div class="nestique-summary-line">
+                            <span>Subtotal</span>
+                            <span id="subtotal-price">${{ number_format(str_replace(',', '', $subtotal), 2) }}</span>
+                        </div>
+                        <div class="nestique-summary-line shipping">
+                            <span>Shipping</span>
+                            <span id="shipping-price">${{ number_format($shippingMethods->first()->price, 2) }}</span>
+                        </div>
+                        <div class="nestique-summary-line total">
+                            <span>Total</span>
+                            <span
+                                id="total-price">${{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('cart.show') }}" class="primary-btn px-3">
+                                <span class="fas fa-arrow-left"></span>
+                                Return to Cart
+                            </a>
+                            <button type="submit" class="secondary-btn px-5" id="checkout-button">
+                                Place Order
+                                <span class="fas fa-arrow-right"></span>
+                            </button>
+                        </div>
+                        </form>
                     </div>
-                    <div class="nestique-form-separator"></div>
-                    <div class="nestique-summary-line">
-                        <span>Subtotal</span>
-                        <span id="subtotal-price">${{ number_format(str_replace(',', '', $subtotal), 2) }}</span>
-                    </div>
-                    <div class="nestique-summary-line shipping">
-                        <span>Shipping</span>
-                        <span id="shipping-price">${{ number_format($shippingMethods->first()->price, 2) }}</span>
-                    </div>
-                    <div class="nestique-summary-line total">
-                        <span>Total</span>
-                        <span
-                            id="total-price">${{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2) }}</span>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('cart.show') }}" class="primary-btn px-3">
-                            <span class="fas fa-arrow-left"></span>
-                            Return to Cart
-                        </a>
-                        <button type="submit" class="secondary-btn px-5" id="checkout-button">
-                            Place Order
-                            <span class="fas fa-arrow-right"></span>
-                        </button>
-                    </div>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
-@section('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle payment details based on payment method
-            const onlinePayment = document.getElementById('payment-online');
-            const codPayment = document.getElementById('payment-cod');
-            const paymentDetails = document.getElementById('online-payment-details');
+    @section('js')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Toggle payment details based on payment method
+                const onlinePayment = document.getElementById('payment-online');
+                const codPayment = document.getElementById('payment-cod');
+                const paymentDetails = document.getElementById('online-payment-details');
 
-            function togglePaymentDetails() {
-                if (onlinePayment.checked) {
-                    paymentDetails.style.display = 'block';
-                    // Make card fields required for online payment
-                    document.getElementById('card-number').setAttribute('required', 'true');
-                    document.getElementById('exp-date').setAttribute('required', 'true');
-                    document.getElementById('cvv').setAttribute('required', 'true');
-                } else {
-                    paymentDetails.style.display = 'none';
-                    // Remove required attribute for COD
-                    document.getElementById('card-number').removeAttribute('required');
-                    document.getElementById('exp-date').removeAttribute('required');
-                    document.getElementById('cvv').removeAttribute('required');
-                }
-            }
-
-            onlinePayment.addEventListener('change', togglePaymentDetails);
-            codPayment.addEventListener('change', togglePaymentDetails);
-
-            // Initialize on page load
-            togglePaymentDetails();
-
-            // Shipping method selection
-            const shippingOptions = document.querySelectorAll('.nestique-shipping-options .radio-option');
-            shippingOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options
-                    shippingOptions.forEach(opt => opt.classList.remove('selected'));
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    // Check the radio button
-                    this.querySelector('input[type="radio"]').checked = true;
-                });
-            });
-
-            // Payment method selection
-            const paymentOptions = document.querySelectorAll('.nestique-payment-options .radio-option');
-            paymentOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options
-                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    // Check the radio button
-                    this.querySelector('input[type="radio"]').checked = true;
-                    // Toggle payment details
-                    togglePaymentDetails();
-                });
-            });
-
-            // Form validation
-            const form = document.getElementById('checkout-form');
-            form.addEventListener('submit', function(e) {
-                let isValid = true;
-
-                // Basic validation for required fields
-                const requiredFields = [{
-                        id: 'email',
-                        error: 'email-error'
-                    },
-                    {
-                        id: 'name',
-                        error: 'name-error'
-                    },
-                    {
-                        id: 'address',
-                        error: 'address-error'
-                    },
-                    {
-                        id: 'city',
-                        error: 'city-error'
-                    },
-                    {
-                        id: 'zip-code',
-                        error: 'zip-error'
-                    },
-                    {
-                        id: 'phone',
-                        error: 'phone-error'
-                    }
-                ];
-
-                requiredFields.forEach(field => {
-                    const input = document.getElementById(field.id);
-                    const error = document.getElementById(field.error);
-
-                    if (!input.value.trim()) {
-                        error.style.display = 'block';
-                        isValid = false;
+                function togglePaymentDetails() {
+                    if (onlinePayment.checked) {
+                        paymentDetails.style.display = 'block';
+                        // Make card fields required for online payment
+                        document.getElementById('card-number').setAttribute('required', 'true');
+                        document.getElementById('exp-date').setAttribute('required', 'true');
+                        document.getElementById('cvv').setAttribute('required', 'true');
                     } else {
-                        error.style.display = 'none';
-                    }
-                });
-
-                // Additional validation for online payment
-                if (onlinePayment.checked) {
-                    const cardNumber = document.getElementById('card-number');
-                    const expDate = document.getElementById('exp-date');
-                    const cvv = document.getElementById('cvv');
-
-                    if (!cardNumber.value.trim()) {
-                        document.getElementById('card-error').style.display = 'block';
-                        isValid = false;
-                    } else {
-                        document.getElementById('card-error').style.display = 'none';
-                    }
-
-                    if (!expDate.value.trim()) {
-                        document.getElementById('exp-error').style.display = 'block';
-                        isValid = false;
-                    } else {
-                        document.getElementById('exp-error').style.display = 'none';
-                    }
-
-                    if (!cvv.value.trim()) {
-                        document.getElementById('cvv-error').style.display = 'block';
-                        isValid = false;
-                    } else {
-                        document.getElementById('cvv-error').style.display = 'none';
+                        paymentDetails.style.display = 'none';
+                        // Remove required attribute for COD
+                        document.getElementById('card-number').removeAttribute('required');
+                        document.getElementById('exp-date').removeAttribute('required');
+                        document.getElementById('cvv').removeAttribute('required');
                     }
                 }
 
-                if (!isValid) {
-                    e.preventDefault();
-                    // Scroll to the first error
-                    const firstError = document.querySelector('.error-message[style="display: block"]');
-                    if (firstError) {
-                        firstError.closest('.nestique-form-group').scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
+                onlinePayment.addEventListener('change', togglePaymentDetails);
+                codPayment.addEventListener('change', togglePaymentDetails);
+
+                // Initialize on page load
+                togglePaymentDetails();
+
+                // Shipping method selection
+                const shippingOptions = document.querySelectorAll('.nestique-shipping-options .radio-option');
+                shippingOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Remove selected class from all options
+                        shippingOptions.forEach(opt => opt.classList.remove('selected'));
+                        // Add selected class to clicked option
+                        this.classList.add('selected');
+                        // Check the radio button
+                        this.querySelector('input[type="radio"]').checked = true;
+                    });
+                });
+
+                // Payment method selection
+                const paymentOptions = document.querySelectorAll('.nestique-payment-options .radio-option');
+                paymentOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Remove selected class from all options
+                        paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                        // Add selected class to clicked option
+                        this.classList.add('selected');
+                        // Check the radio button
+                        this.querySelector('input[type="radio"]').checked = true;
+                        // Toggle payment details
+                        togglePaymentDetails();
+                    });
+                });
+
+                // Form validation
+                const form = document.getElementById('checkout-form');
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+
+                    // Basic validation for required fields
+                    const requiredFields = [{
+                            id: 'email',
+                            error: 'email-error'
+                        },
+                        {
+                            id: 'name',
+                            error: 'name-error'
+                        },
+                        {
+                            id: 'address',
+                            error: 'address-error'
+                        },
+                        {
+                            id: 'city',
+                            error: 'city-error'
+                        },
+                        {
+                            id: 'zip-code',
+                            error: 'zip-error'
+                        },
+                        {
+                            id: 'phone',
+                            error: 'phone-error'
+                        }
+                    ];
+
+                    requiredFields.forEach(field => {
+                        const input = document.getElementById(field.id);
+                        const error = document.getElementById(field.error);
+
+                        if (!input.value.trim()) {
+                            error.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            error.style.display = 'none';
+                        }
+                    });
+
+                    // Additional validation for online payment
+                    if (onlinePayment.checked) {
+                        const cardNumber = document.getElementById('card-number');
+                        const expDate = document.getElementById('exp-date');
+                        const cvv = document.getElementById('cvv');
+
+                        if (!cardNumber.value.trim()) {
+                            document.getElementById('card-error').style.display = 'block';
+                            isValid = false;
+                        } else {
+                            document.getElementById('card-error').style.display = 'none';
+                        }
+
+                        if (!expDate.value.trim()) {
+                            document.getElementById('exp-error').style.display = 'block';
+                            isValid = false;
+                        } else {
+                            document.getElementById('exp-error').style.display = 'none';
+                        }
+
+                        if (!cvv.value.trim()) {
+                            document.getElementById('cvv-error').style.display = 'block';
+                            isValid = false;
+                        } else {
+                            document.getElementById('cvv-error').style.display = 'none';
+                        }
                     }
-                }
+
+                    if (!isValid) {
+                        e.preventDefault();
+                        // Scroll to the first error
+                        const firstError = document.querySelector('.error-message[style="display: block"]');
+                        if (firstError) {
+                            firstError.closest('.nestique-form-group').scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center'
+                            });
+                        }
+                    }
+                });
             });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection
