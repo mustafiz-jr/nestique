@@ -28,15 +28,13 @@
             border: 1px solid #ced4da;
         }
 
-        /* PREVIOUS ORDERS STYLES */
-        .previous-orders-container {
+        /* my ORDERS STYLES */
+        .my-orders-container {
             font-family: var(--primary-font);
-            background-color: var(--color-primary);
             padding: 20px;
-            border-radius: 8px;
         }
 
-        .previous-orders-header {
+        .my-orders-header {
             font-size: 1.5rem;
             color: var(--color-dark);
             margin: 0;
@@ -416,13 +414,13 @@
             </div>
         </div>
 
-        <!-- Previous Orders Section -->
+        <!-- my Orders Section -->
         <div class="row my-5">
-            <div class="previous-orders-container">
-                <h3 class="previous-orders-header">Previous Orders</h3>
+            <div class="my-orders-container">
+                <h3 class="my-orders-header">My Orders</h3>
 
                 @if ($orders && count($orders) > 0)
-                    <table class="orders-table">
+                    <table class="orders-table table table-hover">
                         <thead>
                             <tr>
                                 <th>Order Number</th>
@@ -441,16 +439,18 @@
                                     $totalAmount = $order->orderItems->sum('total');
                                 @endphp
                                 <tr>
-                                    <td>#{{ $order->order_number }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y') }}</td>
-                                    <td>{{ $totalQuantity }}</td> <!-- Use the calculated variable -->
-                                    <td>${{ number_format($totalAmount, 2) }}</td> <!-- Use the calculated variable -->
-                                    <td>
+                                    <td class="fs-6">#{{ $order->order_number }}</td>
+                                    <td class="fs-6">{{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y') }}
+                                    </td>
+                                    <td class="fs-6">{{ $totalQuantity }}</td> <!-- Use the calculated variable -->
+                                    <td class="fs-6">${{ number_format($totalAmount, 2) }}</td>
+                                    <!-- Use the calculated variable -->
+                                    <td class="fs-6">
                                         <span class="order-status-badge status-{{ $order->status }}">
                                             {{ ucfirst($order->status) }}
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="fs-6">
                                         <a href="{{ route('invoice', $order->id) }}" class="primary-btn">Details</a>
                                     </td>
                                 </tr>
