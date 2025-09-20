@@ -36,7 +36,18 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->nullable(),
+                Select::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'failed' => 'Failed',
+                        'refunded' => 'Refunded',
+                        'cancelled' => 'Cancelled',
+                    ])->required()->helperText('Order Status.'),
             ]);
     }
 
@@ -140,7 +151,7 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                // Tables\Actions\EditAction::make()->color('secondary'),
+                Tables\Actions\EditAction::make()->color('secondary'),
                 // Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
