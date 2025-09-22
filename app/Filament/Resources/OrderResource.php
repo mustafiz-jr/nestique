@@ -5,9 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
+use Doctrine\DBAL\Schema\Schema;
 use Filament\Forms;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\Tabs\Tab;
@@ -15,6 +17,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Infolists\Components\KeyValueEntry;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -36,18 +39,52 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->searchable()
-                    ->nullable(),
-                Select::make('status')
-                    ->options([
-                        'pending' => 'Pending',
-                        'paid' => 'Paid',
-                        'failed' => 'Failed',
-                        'refunded' => 'Refunded',
-                        'cancelled' => 'Cancelled',
-                    ])->required()->helperText('Order Status.'),
+                Section::make('Customer & Status')
+                    ->description('Select the customer and set the order status and payment details.')
+                    ->schema([
+                        Select::make('user_id')
+                            ->relationship('user', 'name')
+                            ->searchable()
+                            ->nullable(),
+                        Select::make('status')
+                            ->options([
+                                'pending' => 'Pending',
+                                'paid' => 'Paid',
+                                'failed' => 'Failed',
+                                'refunded' => 'Refunded',
+                                'cancelled' => 'Cancelled',
+                            ])->required()->helperText('Order Status.'),
+                        Select::make('payment_method')
+                            ->options([
+                                'stripe' => 'Stripe',
+                                'paypal' => 'PayPal',
+                                'cod' => 'Cash on Delivery',
+                            ])->nullable()->helperText('Payment method used.'),
+                        Select::make('payment_status')
+                            ->options([
+                                'pending' => 'Pending',
+                                'paid' => 'Paid',
+                                'failed' => 'Failed',
+                                'refunded' => 'Refunded',
+                            ])->required()->helperText('Payment Status.'),
+                        TextInput::make('payment_intent_id')->maxLength(255)->nullable()->helperText('Payment intent/reference ID.'),
+                    ])->columns(2),
+                Section::make('Order Details')
+                    ->description('Set the order Total, Currency, shipping, and tracking information.')
+                    ->schema([
+                        TextInput::make('total')->numeric()->required()->helperText('Order total amount.'),
+                        TextInput::make('currency')->maxLength(10)->default('USD')->helperText('Currency code.'),
+                        TextInput::make('shipping_method')->maxLength(255)->nullable()->helperText('Shipping method used.'),
+                        TextInput::make('tracking')->maxLength(255)->nullable()->helperText('Tracking number or URL.'),
+                    ])->columns(2),
+                Section::make('Addresses & Notes')
+                    ->description('Enter shipping & billing address and any special notes for the order.')
+                    ->schema([
+                        Forms\Components\KeyValue::make('shipping_address')->label('Shipping Address')->helperText('Shipping address details.'),
+                        Forms\Components\KeyValue::make('billing_address')->label('Billing Address')->helperText('Billing address details.'),
+                        MarkdownEditor::make('notes')->nullable()->helperText('Order notes or special instructions.')->columnSpanFull(),
+                    ])->columns(2),
+
             ]);
     }
 
@@ -60,19 +97,15 @@ class OrderResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->copyable()
+                    ->weight('bold')
                     ->tooltip('Copy order number'),
 
                 TextColumn::make('user.name')
                     ->label('Customer')
                     ->searchable()
-                    ->placeholder('Guest'),
+                    ->description(fn($record) => $record->user->email ?? 'Guest')
+                    ->icon('heroicon-o-user'),
 
-                TextColumn::make('total')
-                    ->label('Total Amount')
-                    ->money('USD')
-                    ->sortable()
-                    ->color('success')
-                    ->weight('bold'),
 
                 BadgeColumn::make('status')
                     ->label('Status')
@@ -119,18 +152,25 @@ class OrderResource extends Resource
                     ->badge()
                     ->color('gray'),
 
+                TextColumn::make('tracking')
+                    ->label('Tracking #')
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('shipping_method')
+                    ->label('Shipping Method')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('shipping_address.city')
+                    ->label('City')
+                    ->getStateUsing(fn($record) => $record->shipping_address['city'] ?? 'N/A')
+                    ->searchable()
+                    ->sortable()
+                    ->icon('heroicon-o-map-pin'),
                 TextColumn::make('created_at')
                     ->label('Order Date')
-                    ->dateTime('M j, Y g:i A')
+                    ->dateTime('M j, Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
-
-                TextColumn::make('coupon_code')
-                    ->label('Coupon Used')
-                    ->placeholder('None')
-                    ->badge()
-                    ->color('warning')
-                    ->toggleable(),
 
                 TextColumn::make('discount_amount')
                     ->label('Discount')
@@ -138,14 +178,16 @@ class OrderResource extends Resource
                     ->color('danger')
                     ->toggleable(),
 
-                TextColumn::make('shipping_method')
-                    ->label('Shipping Method')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('total')
+                    ->label('Total Amount')
+                    ->money('USD')
+                    ->sortable()
+                    ->color('success')
+                    ->weight('bold'),
 
-                TextColumn::make('tracking')
-                    ->label('Tracking #')
-                    ->copyable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+
+
+
             ])
             ->filters([
                 //

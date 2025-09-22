@@ -9,6 +9,11 @@ class Order extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'shipping_address' => 'array',
+        'billing_address'  => 'array',
+    ];
+
     protected function coupons(): HasMany
     {
         return $this->hasMany(Order::class);
