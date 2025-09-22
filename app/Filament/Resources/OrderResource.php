@@ -49,9 +49,13 @@ class OrderResource extends Resource
                         Select::make('status')
                             ->options([
                                 'pending' => 'Pending',
-                                'paid' => 'Paid',
-                                'failed' => 'Failed',
+                                'confirmed' => 'Confirmed',
+                                'processing' => 'Processing',
+                                'shipped' => 'Shipped',
+                                'delivered' => 'Delivered',
+                                'completed' => 'Completed',
                                 'refunded' => 'Refunded',
+                                'returned' => 'Returned',
                                 'cancelled' => 'Cancelled',
                             ])->required()->helperText('Order Status.'),
                         Select::make('payment_method')
@@ -121,7 +125,7 @@ class OrderResource extends Resource
                     ->icons([
                         'heroicon-o-clock' => 'pending',
                         'heroicon-o-check-circle' => 'confirmed',
-                        'heroicon-o-refresh' => 'processing',
+                        'heroicon-o-arrow-path' => 'processing',
                         'heroicon-o-truck' => 'shipped',
                         'heroicon-o-check-badge' => 'delivered',
                         'heroicon-o-arrow-uturn-left' => 'returned',
@@ -171,6 +175,9 @@ class OrderResource extends Resource
                     ->dateTime('M j, Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),
+
+                TextColumn::make('subtotal')
+                    ->label('Total before discount'),
 
                 TextColumn::make('discount_amount')
                     ->label('Discount')
