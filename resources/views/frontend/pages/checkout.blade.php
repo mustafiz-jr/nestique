@@ -2,7 +2,6 @@
 
 @section('css')
     <style>
-        /* All your CSS styles */
         .nestique-checkout-page {
             padding: 40px 20px;
             background-color: var(--color-light);
@@ -332,6 +331,40 @@
             margin-top: 5px;
             display: none;
         }
+
+        .stripe-element {
+            padding: 12px 0;
+            border-bottom: 1px solid #ccc;
+            background-color: transparent;
+        }
+
+        .StripeElement--focus {
+            border-bottom: 1px solid var(--color-accent);
+        }
+
+        .StripeElement--invalid {
+            border-bottom: 1px solid #e74c3c;
+        }
+
+        .card-errors {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .coupon-success {
+            color: #27ae60;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .coupon-error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 @endsection
 
@@ -342,13 +375,13 @@
             <div class="nestique-checkout-layout">
                 <div class="nestique-checkout-form-column">
                     <h2>Shipping Address</h2>
-                    <form action="{{ route('order') }}" method="POST">
+                    <form action="{{ route('order') }}" method="POST" id="checkout-form">
                         @csrf
-                        @method('POST')
                         <div class="nestique-form-group">
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email" placeholder="Email"
                                 value="{{ $customer->email }}" required>
+                            <div class="error-message" id="email-error">Please enter a valid email address</div>
                         </div>
                         <div class="nestique-form-group">
                             <label for="country">Country</label>
@@ -367,29 +400,34 @@
                             <div>
                                 <label for="name">Name</label>
                                 <input type="text" id="name" name="name" value="{{ $customer->name }}"
-                                    placeholder="name" required>
+                                    placeholder="Name" required>
+                                <div class="error-message" id="name-error">Please enter your name</div>
                             </div>
                             <div>
                                 <label for="address">Address</label>
                                 <input type="text" id="address" name="address" value="{{ $customer->address }}"
                                     placeholder="Address" required>
+                                <div class="error-message" id="address-error">Please enter your address</div>
                             </div>
                         </div>
                         <div class="nestique-form-group">
                             <label for="city">City</label>
                             <input type="text" id="city" name="city" value="{{ $customer->city }}"
                                 placeholder="City" required>
+                            <div class="error-message" id="city-error">Please enter your city</div>
                         </div>
                         <div class="nestique-form-group form-row">
                             <div>
                                 <label for="zip-code">Zip Code</label>
                                 <input type="text" id="zip-code" name="zip" value="{{ $customer->zip }}"
                                     placeholder="Zip Code" required>
+                                <div class="error-message" id="zip-error">Please enter your zip code</div>
                             </div>
                             <div>
                                 <label for="phone">Phone</label>
                                 <input type="tel" id="phone" name="phone" value="{{ $customer->phone }}"
                                     placeholder="Phone" required>
+                                <div class="error-message" id="phone-error">Please enter your phone number</div>
                             </div>
                         </div>
                         <div class="gap-1 fw-bold d-flex">
@@ -419,7 +457,7 @@
                             <div class="radio-option selected">
                                 <input type="radio" id="payment-online" name="payment-method" value="online" checked>
                                 <div class="details">
-                                    <label for="payment-online">Online Payment</label>
+                                    <label for="payment-online">Online Payment (Stripe)</label>
                                 </div>
                             </div>
                             <div class="radio-option">
@@ -433,25 +471,18 @@
                             <div class="nestique-form-separator"></div>
                             <h2>Payment Details</h2>
                             <div class="nestique-form-group">
-                                <label for="card-number">Card Number</label>
+                                <label for="card-element">Card Information</label>
                                 <div class="nestique-payment-icons">
                                     <i class="fab fa-cc-visa"></i>
                                     <i class="fab fa-cc-mastercard"></i>
                                     <i class="fab fa-cc-amex"></i>
                                     <i class="fab fa-cc-discover"></i>
                                 </div>
-                                <input type="text" id="card-number" name="card-number" placeholder="Card Number"
-                                    required>
-                            </div>
-                            <div class="nestique-form-group form-row">
-                                <div>
-                                    <label for="exp-date">Expiration Date</label>
-                                    <input type="text" id="exp-date" name="exp-date" placeholder="MM/YY" required>
+                                <div id="card-element" class="stripe-element">
+                                    <input type="text" name="">
+                                    <!-- Stripe Elements will create form elements here -->
                                 </div>
-                                <div>
-                                    <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
-                                </div>
+                                <div id="card-errors" class="card-errors" role="alert"></div>
                             </div>
                         </div>
                 </div>
@@ -467,7 +498,7 @@
                             <div class="nestique-summary-item-price">${{ number_format($item->price, 2) }}</div>
                         </div>
                     @endforeach
-                    <div class="nestique-form-group form-row">
+                    <div class="nestique-form-group">
                         <label for="coupon">Coupon Code</label>
                         <input type="text" id="coupon" name="coupon_code" placeholder="COUPON CODE"
                             value="{{ session('applied_coupon') ? session('applied_coupon')['code'] : '' }}">
@@ -478,179 +509,244 @@
                         @if (session('error'))
                             <span class="coupon-error">{{ session('error') }}</span>
                         @endif
-                        <div class="nestique-form-separator"></div>
-                        <div class="nestique-summary-line">
-                            <span>Subtotal</span>
-                            <span id="subtotal-price">${{ number_format(str_replace(',', '', $subtotal), 2) }}</span>
-                        </div>
-                        <div class="nestique-summary-line shipping">
-                            <span>Shipping</span>
-                            <span id="shipping-price">${{ number_format($shippingMethods->first()->price, 2) }}</span>
-                        </div>
-                        <div class="nestique-summary-line total">
-                            <span>Total</span>
-                            <span
-                                id="total-price">${{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2) }}</span>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ route('cart.show') }}" class="primary-btn px-3">
-                                <span class="fas fa-arrow-left"></span>
-                                Return to Cart
-                            </a>
-                            <button type="submit" class="secondary-btn px-5" id="checkout-button">
-                                Place Order
-                                <span class="fas fa-arrow-right"></span>
-                            </button>
-                        </div>
-                        </form>
                     </div>
+                    <div class="nestique-form-separator"></div>
+                    <div class="nestique-summary-line">
+                        <span>Subtotal</span>
+                        <span id="subtotal-price">${{ number_format(str_replace(',', '', $subtotal), 2) }}</span>
+                    </div>
+                    <div class="nestique-summary-line shipping">
+                        <span>Shipping</span>
+                        <span id="shipping-price">${{ number_format($shippingMethods->first()->price, 2) }}</span>
+                    </div>
+                    <div class="nestique-summary-line total">
+                        <span>Total</span>
+                        <span
+                            id="total-price">${{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ route('cart.show') }}" class="primary-btn px-3">
+                            <span class="fas fa-arrow-left"></span>
+                            Return to Cart
+                        </a>
+                        <button type="submit" class="secondary-btn px-5" id="checkout-button">
+                            Place Order
+                            <span class="fas fa-arrow-right"></span>
+                        </button>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @section('js')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Toggle payment details based on payment method
-                const onlinePayment = document.getElementById('payment-online');
-                const codPayment = document.getElementById('payment-cod');
-                const paymentDetails = document.getElementById('online-payment-details');
+@section('js')
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Stripe with your publishable key
+            const stripe = Stripe('{{ env('STRIPE_KEY') }}');
+            const elements = stripe.elements();
 
-                function togglePaymentDetails() {
-                    if (onlinePayment.checked) {
-                        paymentDetails.style.display = 'block';
-                        // Make card fields required for online payment
-                        document.getElementById('card-number').setAttribute('required', 'true');
-                        document.getElementById('exp-date').setAttribute('required', 'true');
-                        document.getElementById('cvv').setAttribute('required', 'true');
-                    } else {
-                        paymentDetails.style.display = 'none';
-                        // Remove required attribute for COD
-                        document.getElementById('card-number').removeAttribute('required');
-                        document.getElementById('exp-date').removeAttribute('required');
-                        document.getElementById('cvv').removeAttribute('required');
+            // Create card element
+            const cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#424770',
+                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                        '::placeholder': {
+                            color: '#aab7c4',
+                        },
+                    },
+                },
+            });
+
+            cardElement.mount('#card-element');
+
+            // Handle real-time validation errors from the card Element
+            cardElement.on('change', function(event) {
+                const displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+
+            // Toggle payment details based on payment method
+            const onlinePayment = document.getElementById('payment-online');
+            const codPayment = document.getElementById('payment-cod');
+            const paymentDetails = document.getElementById('online-payment-details');
+
+            function togglePaymentDetails() {
+                if (onlinePayment.checked) {
+                    paymentDetails.style.display = 'block';
+                } else {
+                    paymentDetails.style.display = 'none';
+                }
+            }
+
+            onlinePayment.addEventListener('change', togglePaymentDetails);
+            codPayment.addEventListener('change', togglePaymentDetails);
+
+            // Initialize on page load
+            togglePaymentDetails();
+
+            // Shipping method selection
+            const shippingOptions = document.querySelectorAll('.nestique-shipping-options .radio-option');
+            shippingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    shippingOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                    updateShippingPrice();
+                });
+            });
+
+            // Payment method selection
+            const paymentOptions = document.querySelectorAll('.nestique-payment-options .radio-option');
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                    togglePaymentDetails();
+                });
+            });
+
+            // Update shipping price in summary
+            function updateShippingPrice() {
+                const selectedShipping = document.querySelector(
+                    '.nestique-shipping-options input[type="radio"]:checked');
+                const shippingPrice = selectedShipping ? parseFloat(selectedShipping.dataset.price) : 0;
+                const subtotal = parseFloat('{{ str_replace(',', '', $subtotal) }}');
+
+                document.getElementById('shipping-price').textContent = '$' + shippingPrice.toFixed(2);
+                document.getElementById('total-price').textContent = '$' + (subtotal + shippingPrice).toFixed(2);
+            }
+
+            // Form submission
+            const form = document.getElementById('checkout-form');
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const isOnlinePayment = onlinePayment.checked;
+                const checkoutButton = document.getElementById('checkout-button');
+
+                // Disable button to prevent multiple submissions
+                checkoutButton.disabled = true;
+                checkoutButton.innerHTML = 'Processing... <span class="fas fa-spinner fa-spin"></span>';
+
+                let isValid = true;
+
+                // Basic validation for required fields
+                const requiredFields = [{
+                        id: 'email',
+                        error: 'email-error'
+                    },
+                    {
+                        id: 'name',
+                        error: 'name-error'
+                    },
+                    {
+                        id: 'address',
+                        error: 'address-error'
+                    },
+                    {
+                        id: 'city',
+                        error: 'city-error'
+                    },
+                    {
+                        id: 'zip-code',
+                        error: 'zip-error'
+                    },
+                    {
+                        id: 'phone',
+                        error: 'phone-error'
+                    }
+                ];
+
+                // Hide all error messages first
+                requiredFields.forEach(field => {
+                    document.getElementById(field.error).style.display = 'none';
+                });
+
+                // Validate required fields
+                requiredFields.forEach(field => {
+                    const input = document.getElementById(field.id);
+                    const error = document.getElementById(field.error);
+
+                    if (!input.value.trim()) {
+                        error.style.display = 'block';
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    checkoutButton.disabled = false;
+                    checkoutButton.innerHTML = 'Place Order <span class="fas fa-arrow-right"></span>';
+                    const firstError = document.querySelector('.error-message[style="display: block"]');
+                    if (firstError) {
+                        firstError.closest('.nestique-form-group').scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                    return;
+                }
+
+                // If online payment, process with Stripe
+                if (isOnlinePayment) {
+                    try {
+                        const {
+                            paymentMethod,
+                            error
+                        } = await stripe.createPaymentMethod({
+                            type: 'card',
+                            card: cardElement,
+                            billing_details: {
+                                name: document.getElementById('name').value,
+                                email: document.getElementById('email').value,
+                                phone: document.getElementById('phone').value,
+                                address: {
+                                    line1: document.getElementById('address').value,
+                                    city: document.getElementById('city').value,
+                                    postal_code: document.getElementById('zip-code').value,
+                                    country: document.getElementById('country').value,
+                                }
+                            }
+                        });
+
+                        if (error) {
+                            const errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = error.message;
+                            checkoutButton.disabled = false;
+                            checkoutButton.innerHTML =
+                                'Place Order <span class="fas fa-arrow-right"></span>';
+                            return;
+                        }
+
+                        // Add the payment method ID to the form
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.setAttribute('type', 'hidden');
+                        hiddenInput.setAttribute('name', 'payment_method_id');
+                        hiddenInput.setAttribute('value', paymentMethod.id);
+                        form.appendChild(hiddenInput);
+
+                    } catch (error) {
+                        console.error('Stripe error:', error);
+                        checkoutButton.disabled = false;
+                        checkoutButton.innerHTML =
+                            'Place Order <span class="fas fa-arrow-right"></span>';
+                        return;
                     }
                 }
 
-                onlinePayment.addEventListener('change', togglePaymentDetails);
-                codPayment.addEventListener('change', togglePaymentDetails);
-
-                // Initialize on page load
-                togglePaymentDetails();
-
-                // Shipping method selection
-                const shippingOptions = document.querySelectorAll('.nestique-shipping-options .radio-option');
-                shippingOptions.forEach(option => {
-                    option.addEventListener('click', function() {
-                        // Remove selected class from all options
-                        shippingOptions.forEach(opt => opt.classList.remove('selected'));
-                        // Add selected class to clicked option
-                        this.classList.add('selected');
-                        // Check the radio button
-                        this.querySelector('input[type="radio"]').checked = true;
-                    });
-                });
-
-                // Payment method selection
-                const paymentOptions = document.querySelectorAll('.nestique-payment-options .radio-option');
-                paymentOptions.forEach(option => {
-                    option.addEventListener('click', function() {
-                        // Remove selected class from all options
-                        paymentOptions.forEach(opt => opt.classList.remove('selected'));
-                        // Add selected class to clicked option
-                        this.classList.add('selected');
-                        // Check the radio button
-                        this.querySelector('input[type="radio"]').checked = true;
-                        // Toggle payment details
-                        togglePaymentDetails();
-                    });
-                });
-
-                // Form validation
-                const form = document.getElementById('checkout-form');
-                form.addEventListener('submit', function(e) {
-                    let isValid = true;
-
-                    // Basic validation for required fields
-                    const requiredFields = [{
-                            id: 'email',
-                            error: 'email-error'
-                        },
-                        {
-                            id: 'name',
-                            error: 'name-error'
-                        },
-                        {
-                            id: 'address',
-                            error: 'address-error'
-                        },
-                        {
-                            id: 'city',
-                            error: 'city-error'
-                        },
-                        {
-                            id: 'zip-code',
-                            error: 'zip-error'
-                        },
-                        {
-                            id: 'phone',
-                            error: 'phone-error'
-                        }
-                    ];
-
-                    requiredFields.forEach(field => {
-                        const input = document.getElementById(field.id);
-                        const error = document.getElementById(field.error);
-
-                        if (!input.value.trim()) {
-                            error.style.display = 'block';
-                            isValid = false;
-                        } else {
-                            error.style.display = 'none';
-                        }
-                    });
-
-                    // Additional validation for online payment
-                    if (onlinePayment.checked) {
-                        const cardNumber = document.getElementById('card-number');
-                        const expDate = document.getElementById('exp-date');
-                        const cvv = document.getElementById('cvv');
-
-                        if (!cardNumber.value.trim()) {
-                            document.getElementById('card-error').style.display = 'block';
-                            isValid = false;
-                        } else {
-                            document.getElementById('card-error').style.display = 'none';
-                        }
-
-                        if (!expDate.value.trim()) {
-                            document.getElementById('exp-error').style.display = 'block';
-                            isValid = false;
-                        } else {
-                            document.getElementById('exp-error').style.display = 'none';
-                        }
-
-                        if (!cvv.value.trim()) {
-                            document.getElementById('cvv-error').style.display = 'block';
-                            isValid = false;
-                        } else {
-                            document.getElementById('cvv-error').style.display = 'none';
-                        }
-                    }
-
-                    if (!isValid) {
-                        e.preventDefault();
-                        // Scroll to the first error
-                        const firstError = document.querySelector('.error-message[style="display: block"]');
-                        if (firstError) {
-                            firstError.closest('.nestique-form-group').scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'center'
-                            });
-                        }
-                    }
-                });
+                // Submit the form
+                form.submit();
             });
-        </script>
-    @endsection
+        });
+    </script>
+@endsection

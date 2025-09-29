@@ -13,7 +13,8 @@
         "filament/tables": "^3.3",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "laravel/ui": "^4.6"
+        "laravel/ui": "^4.6",
+        "stripe/stripe-php": "^17.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
