@@ -56,6 +56,13 @@
 @section('content')
     <div class="container py-5">
         <!-- Thank You Header Section -->
+        <div class="my-3">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+        </div>
         <div class="card bg-white p-4 p-md-5 text-center mb-4 card-custom shadow-lg">
             <div class="d-flex flex-column align-items-center mb-3">
                 <i class="fa-solid fa-check-circle  display-3 mb-4"></i>

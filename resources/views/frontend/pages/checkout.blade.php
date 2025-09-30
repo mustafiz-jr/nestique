@@ -375,7 +375,7 @@
             <div class="nestique-checkout-layout">
                 <div class="nestique-checkout-form-column">
                     <h2>Shipping Address</h2>
-                    <form action="{{ route('order') }}" method="POST" id="checkout-form">
+                    <form action="" method="POST" id="checkout-form">
                         @csrf
                         <div class="nestique-form-group">
                             <label for="email">Email</label>
@@ -438,7 +438,7 @@
                         <h2>Shipping Method</h2>
                         <div class="nestique-form-group nestique-shipping-options">
                             @foreach ($shippingMethods as $method)
-                                <div class="radio-option {{ $loop->first ? 'selected' : '' }}">
+                                <div class="radio-option">
                                     <input type="radio" id="shipping-{{ $method->id }}" name="shipping-method"
                                         value="{{ $method->name }}" data-price="{{ $method->price }}"
                                         {{ $loop->first ? 'checked' : '' }}>
@@ -454,17 +454,15 @@
                         <div class="nestique-form-separator"></div>
                         <h2>Payment Method</h2>
                         <div class="nestique-form-group nestique-payment-options">
-                            <div class="radio-option selected">
-                                <input type="radio" id="payment-online" name="payment-method" value="online" checked>
-                                <div class="details">
-                                    <label for="payment-online">Online Payment (Stripe)</label>
-                                </div>
+                            <div class="radio-option">
+                                <input onclick="setAction('stripe')" type="radio" id="payment-online"
+                                    name="payment-method" value="online" checked>
+                                <label for="payment-online">Online Payment (Stripe)</label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="payment-cod" name="payment-method" value="cod">
-                                <div class="details">
-                                    <label for="payment-cod">Cash on Delivery (COD)</label>
-                                </div>
+                                <input onclick="setAction('cod')" type="radio" id="payment-cod" name="payment-method"
+                                    value="cod">
+                                <label for="payment-cod">Cash on Delivery (COD)</label>
                             </div>
                         </div>
                         <div id="online-payment-details" class="nestique-payment-details-container">
@@ -479,7 +477,6 @@
                                     <i class="fab fa-cc-discover"></i>
                                 </div>
                                 <div id="card-element" class="stripe-element">
-                                    <input type="text" name="">
                                     <!-- Stripe Elements will create form elements here -->
                                 </div>
                                 <div id="card-errors" class="card-errors" role="alert"></div>
@@ -544,209 +541,15 @@
 @section('js')
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Stripe with your publishable key
-            const stripe = Stripe('{{ env('STRIPE_KEY') }}');
-            const elements = stripe.elements();
-
-            // Create card element
-            const cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                        '::placeholder': {
-                            color: '#aab7c4',
-                        },
-                    },
-                },
-            });
-
-            cardElement.mount('#card-element');
-
-            // Handle real-time validation errors from the card Element
-            cardElement.on('change', function(event) {
-                const displayError = document.getElementById('card-errors');
-                if (event.error) {
-                    displayError.textContent = event.error.message;
-                } else {
-                    displayError.textContent = '';
-                }
-            });
-
-            // Toggle payment details based on payment method
-            const onlinePayment = document.getElementById('payment-online');
-            const codPayment = document.getElementById('payment-cod');
-            const paymentDetails = document.getElementById('online-payment-details');
-
-            function togglePaymentDetails() {
-                if (onlinePayment.checked) {
-                    paymentDetails.style.display = 'block';
-                } else {
-                    paymentDetails.style.display = 'none';
-                }
+        function setAction(method) {
+            let form = document.getElementById('checkout-form');
+            if (method === 'stripe') {
+                form.action = "{{ route('stripe.payment') }}";
+                document.getElementById('online-payment-details').style.display = 'block';
+            } else {
+                form.action = "{{ route('order') }}";
+                document.getElementById('online-payment-details').style.display = 'none';
             }
-
-            onlinePayment.addEventListener('change', togglePaymentDetails);
-            codPayment.addEventListener('change', togglePaymentDetails);
-
-            // Initialize on page load
-            togglePaymentDetails();
-
-            // Shipping method selection
-            const shippingOptions = document.querySelectorAll('.nestique-shipping-options .radio-option');
-            shippingOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    shippingOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    this.querySelector('input[type="radio"]').checked = true;
-                    updateShippingPrice();
-                });
-            });
-
-            // Payment method selection
-            const paymentOptions = document.querySelectorAll('.nestique-payment-options .radio-option');
-            paymentOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    paymentOptions.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    this.querySelector('input[type="radio"]').checked = true;
-                    togglePaymentDetails();
-                });
-            });
-
-            // Update shipping price in summary
-            function updateShippingPrice() {
-                const selectedShipping = document.querySelector(
-                    '.nestique-shipping-options input[type="radio"]:checked');
-                const shippingPrice = selectedShipping ? parseFloat(selectedShipping.dataset.price) : 0;
-                const subtotal = parseFloat('{{ str_replace(',', '', $subtotal) }}');
-
-                document.getElementById('shipping-price').textContent = '$' + shippingPrice.toFixed(2);
-                document.getElementById('total-price').textContent = '$' + (subtotal + shippingPrice).toFixed(2);
-            }
-
-            // Form submission
-            const form = document.getElementById('checkout-form');
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-
-                const isOnlinePayment = onlinePayment.checked;
-                const checkoutButton = document.getElementById('checkout-button');
-
-                // Disable button to prevent multiple submissions
-                checkoutButton.disabled = true;
-                checkoutButton.innerHTML = 'Processing... <span class="fas fa-spinner fa-spin"></span>';
-
-                let isValid = true;
-
-                // Basic validation for required fields
-                const requiredFields = [{
-                        id: 'email',
-                        error: 'email-error'
-                    },
-                    {
-                        id: 'name',
-                        error: 'name-error'
-                    },
-                    {
-                        id: 'address',
-                        error: 'address-error'
-                    },
-                    {
-                        id: 'city',
-                        error: 'city-error'
-                    },
-                    {
-                        id: 'zip-code',
-                        error: 'zip-error'
-                    },
-                    {
-                        id: 'phone',
-                        error: 'phone-error'
-                    }
-                ];
-
-                // Hide all error messages first
-                requiredFields.forEach(field => {
-                    document.getElementById(field.error).style.display = 'none';
-                });
-
-                // Validate required fields
-                requiredFields.forEach(field => {
-                    const input = document.getElementById(field.id);
-                    const error = document.getElementById(field.error);
-
-                    if (!input.value.trim()) {
-                        error.style.display = 'block';
-                        isValid = false;
-                    }
-                });
-
-                if (!isValid) {
-                    checkoutButton.disabled = false;
-                    checkoutButton.innerHTML = 'Place Order <span class="fas fa-arrow-right"></span>';
-                    const firstError = document.querySelector('.error-message[style="display: block"]');
-                    if (firstError) {
-                        firstError.closest('.nestique-form-group').scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-                    }
-                    return;
-                }
-
-                // If online payment, process with Stripe
-                if (isOnlinePayment) {
-                    try {
-                        const {
-                            paymentMethod,
-                            error
-                        } = await stripe.createPaymentMethod({
-                            type: 'card',
-                            card: cardElement,
-                            billing_details: {
-                                name: document.getElementById('name').value,
-                                email: document.getElementById('email').value,
-                                phone: document.getElementById('phone').value,
-                                address: {
-                                    line1: document.getElementById('address').value,
-                                    city: document.getElementById('city').value,
-                                    postal_code: document.getElementById('zip-code').value,
-                                    country: document.getElementById('country').value,
-                                }
-                            }
-                        });
-
-                        if (error) {
-                            const errorElement = document.getElementById('card-errors');
-                            errorElement.textContent = error.message;
-                            checkoutButton.disabled = false;
-                            checkoutButton.innerHTML =
-                                'Place Order <span class="fas fa-arrow-right"></span>';
-                            return;
-                        }
-
-                        // Add the payment method ID to the form
-                        const hiddenInput = document.createElement('input');
-                        hiddenInput.setAttribute('type', 'hidden');
-                        hiddenInput.setAttribute('name', 'payment_method_id');
-                        hiddenInput.setAttribute('value', paymentMethod.id);
-                        form.appendChild(hiddenInput);
-
-                    } catch (error) {
-                        console.error('Stripe error:', error);
-                        checkoutButton.disabled = false;
-                        checkoutButton.innerHTML =
-                            'Place Order <span class="fas fa-arrow-right"></span>';
-                        return;
-                    }
-                }
-
-                // Submit the form
-                form.submit();
-            });
-        });
+        }
     </script>
 @endsection

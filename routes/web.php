@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     // Pages
     Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::post('order', [CartController::class, 'order'])->name('order');
+    Route::post('stripe-payment', [StripeController::class, 'stripe_payment'])->name('stripe.payment');
     Route::get('thanks', [PageController::class, 'thanks'])->name('thanks');
     // Cart and Ajax actions
     Route::controller(CartController::class)->group(function () {
