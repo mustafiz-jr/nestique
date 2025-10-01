@@ -164,51 +164,6 @@
             display: none;
         }
 
-        /* Call to Action Button */
-        .nestique-checkout-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: var(--color-accent);
-            color: var(--color-light);
-            padding: 15px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-top: 30px;
-            transition: background-color 0.2s ease, box-shadow 0.2s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .secondary-btn:hover {
-            background: var(--color-accent);
-            color: white;
-        }
-
-        .nestique-checkout-btn:hover {
-            background-color: var(--color-secondary);
-        }
-
-        .nestique-checkout-btn span {
-            margin-left: 10px;
-            font-size: 1.2rem;
-        }
-
-        .nestique-back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: var(--color-dark);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s ease;
-        }
-
-        .nestique-back-link:hover {
-            color: var(--color-secondary);
-        }
-
         /* Order Summary Column */
         .nestique-order-summary-column {
             background-color: var(--color-primary);
@@ -332,12 +287,6 @@
             display: none;
         }
 
-        .stripe-element {
-            padding: 12px 0;
-            border-bottom: 1px solid #ccc;
-            background-color: transparent;
-        }
-
         .StripeElement--focus {
             border-bottom: 1px solid var(--color-accent);
         }
@@ -377,11 +326,21 @@
                     <h2>Shipping Address</h2>
                     <form action="" method="POST" id="checkout-form">
                         @csrf
+                        {{-- HIDDEN INPUT FOR STRIPE TOKEN --}}
+                        <input type="hidden" id="stripe-token-id" name="stripe_token">
+                        {{-- HIDDEN INPUTS TO PASS CALCULATED PRICE TO CONTROLLER --}}
+                        <input type="hidden" id="shipping-price-input" name="shipping_price"
+                            value="{{ $shippingMethods->first()->price ?? 0.0 }}">
+                        <input type="hidden" id="total-price-input" name="total_price"
+                            value="{{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2, '.', '') }}">
+                        {{-- END HIDDEN INPUTS --}}
+
                         <div class="nestique-form-group">
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email" placeholder="Email"
                                 value="{{ $customer->email }}" required>
-                            <div class="error-message" id="email-error">Please enter a valid email address</div>
+                            <div class="error-message" id="email-error">Please enter a valid
+                                email address</div>
                         </div>
                         <div class="nestique-form-group">
                             <label for="country">Country</label>
@@ -401,38 +360,44 @@
                                 <label for="name">Name</label>
                                 <input type="text" id="name" name="name" value="{{ $customer->name }}"
                                     placeholder="Name" required>
-                                <div class="error-message" id="name-error">Please enter your name</div>
+                                <div class="error-message" id="name-error">Please enter your
+                                    name</div>
                             </div>
                             <div>
                                 <label for="address">Address</label>
                                 <input type="text" id="address" name="address" value="{{ $customer->address }}"
                                     placeholder="Address" required>
-                                <div class="error-message" id="address-error">Please enter your address</div>
+                                <div class="error-message" id="address-error">Please enter
+                                    your address</div>
                             </div>
                         </div>
                         <div class="nestique-form-group">
                             <label for="city">City</label>
                             <input type="text" id="city" name="city" value="{{ $customer->city }}"
                                 placeholder="City" required>
-                            <div class="error-message" id="city-error">Please enter your city</div>
+                            <div class="error-message" id="city-error">Please enter your city
+                            </div>
                         </div>
                         <div class="nestique-form-group form-row">
                             <div>
                                 <label for="zip-code">Zip Code</label>
                                 <input type="text" id="zip-code" name="zip" value="{{ $customer->zip }}"
                                     placeholder="Zip Code" required>
-                                <div class="error-message" id="zip-error">Please enter your zip code</div>
+                                <div class="error-message" id="zip-error">Please enter your
+                                    zip code</div>
                             </div>
                             <div>
                                 <label for="phone">Phone</label>
                                 <input type="tel" id="phone" name="phone" value="{{ $customer->phone }}"
                                     placeholder="Phone" required>
-                                <div class="error-message" id="phone-error">Please enter your phone number</div>
+                                <div class="error-message" id="phone-error">Please enter
+                                    your phone number</div>
                             </div>
                         </div>
                         <div class="gap-1 fw-bold d-flex">
                             <input type="checkbox" id="save-info" name="save-info">
-                            <label class="save-info" for="save-info">Save this information for next time</label>
+                            <label class="save-info" for="save-info">Save this information for
+                                next time</label>
                         </div>
                         <div class="nestique-form-separator"></div>
                         <h2>Shipping Method</h2>
@@ -447,7 +412,8 @@
                                             class="h5">{{ $method->name }}</label>
                                         <p>{{ $method->duration }}</p>
                                     </div>
-                                    <div class="price">${{ number_format($method->price, 2) }}</div>
+                                    <div class="price">
+                                        ${{ number_format($method->price, 2) }}</div>
                                 </div>
                             @endforeach
                         </div>
@@ -465,24 +431,18 @@
                                 <label for="payment-cod">Cash on Delivery (COD)</label>
                             </div>
                         </div>
-                        <div id="online-payment-details" class="nestique-payment-details-container">
-                            <div class="nestique-form-separator"></div>
-                            <h2>Payment Details</h2>
-                            <div class="nestique-form-group">
-                                <label for="card-element">Card Information</label>
-                                <div class="nestique-payment-icons">
-                                    <i class="fab fa-cc-visa"></i>
-                                    <i class="fab fa-cc-mastercard"></i>
-                                    <i class="fab fa-cc-amex"></i>
-                                    <i class="fab fa-cc-discover"></i>
-                                </div>
-                                <div id="card-element" class="stripe-element">
-                                    <!-- Stripe Elements will create form elements here -->
-                                </div>
-                                <div id="card-errors" class="card-errors" role="alert"></div>
-                            </div>
+                        <!-- Stripe Payment Details -->
+                        <div id="online-payment-details" class="mb-4" style="display: block;">
+                            <label for="card-element" class="form-label">Credit or Debit Card</label>
+                            <div id="card-element" class="form-control py-3"></div>
+                            <div id="card-errors" class="text-danger mt-2"></div>
+                            <!-- Hidden Inputs -->
+                            <input type="hidden" name="stripeToken" id="stripe-token-id">
                         </div>
+
+
                 </div>
+
                 <div class="nestique-order-summary-column">
                     <h3>Order Summary</h3>
                     @foreach ($cartItems as $item)
@@ -492,15 +452,18 @@
                                 <h4>{{ $item->name }}</h4>
                                 <p>Qty: {{ $item->qty }}</p>
                             </div>
-                            <div class="nestique-summary-item-price">${{ number_format($item->price, 2) }}</div>
+                            <div class="nestique-summary-item-price">
+                                ${{ number_format($item->price, 2) }}</div>
                         </div>
                     @endforeach
                     <div class="nestique-form-group">
                         <label for="coupon">Coupon Code</label>
                         <input type="text" id="coupon" name="coupon_code" placeholder="COUPON CODE"
-                            value="{{ session('applied_coupon') ? session('applied_coupon')['code'] : '' }}">
+                            value="{{ session('applied_coupon') ? session('applied_coupon')['code'] : '' }}"
+                            form="checkout-form">
                         @if (session('applied_coupon'))
                             <span class="coupon-success">Coupon applied: {{ session('applied_coupon')['code'] }}
+
                                 (-${{ number_format(session('applied_coupon')['discount'], 2) }})</span>
                         @endif
                         @if (session('error'))
@@ -514,42 +477,113 @@
                     </div>
                     <div class="nestique-summary-line shipping">
                         <span>Shipping</span>
-                        <span id="shipping-price">${{ number_format($shippingMethods->first()->price, 2) }}</span>
+                        <span id="shipping-price">${{ number_format($shippingMethods->first()->price ?? 0.0, 2) }}</span>
                     </div>
                     <div class="nestique-summary-line total">
                         <span>Total</span>
                         <span
                             id="total-price">${{ number_format(str_replace(',', '', $subtotal) + ($shippingMethods->first()->price ?? 0.0), 2) }}</span>
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mt-4">
                         <a href="{{ route('cart.show') }}" class="primary-btn px-3">
                             <span class="fas fa-arrow-left"></span>
                             Return to Cart
                         </a>
-                        <button type="submit" class="secondary-btn px-5" id="checkout-button">
+                        <button type="submit" class="secondary-btn px-5" id="checkout-button" form="checkout-form">
                             Place Order
                             <span class="fas fa-arrow-right"></span>
                         </button>
                     </div>
-                    </form>
                 </div>
+                </form>
             </div>
         </div>
     </div>
-@endsection
 
-@section('js')
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        function setAction(method) {
-            let form = document.getElementById('checkout-form');
-            if (method === 'stripe') {
-                form.action = "{{ route('stripe.payment') }}";
-                document.getElementById('online-payment-details').style.display = 'block';
-            } else {
-                form.action = "{{ route('order') }}";
-                document.getElementById('online-payment-details').style.display = 'none';
+        const STRIPE_PUBLISHABLE_KEY = "{{ env('STRIPE_KEY') }}";
+
+
+        const checkoutForm = document.getElementById('checkout-form');
+        const checkoutButton = document.getElementById('checkout-button');
+        const cardErrors = document.getElementById('card-errors');
+        const onlinePaymentDetails = document.getElementById('online-payment-details');
+        const originalButtonText = checkoutButton.innerHTML;
+
+        // Stripe Init: Card Element তৈরি ও মাউন্ট করা
+        const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+        const elements = stripe.elements();
+        const cardElement = elements.create('card', {
+            hidePostalCode: true
+        });
+        cardElement.mount('#card-element');
+
+        // কার্ড ইনপুট Error হ্যান্ডেল করা
+        cardElement.on('change', function(event) {
+            cardErrors.textContent = event.error ? event.error.message : '';
+        });
+
+        // ===============================================
+        // 💡 ফর্ম অ্যাকশন এবং UI লজিক - এখন এটি সব হ্যান্ডেল করবে
+        // ===============================================
+
+        function updatePaymentLogic() {
+            // বর্তমানে নির্বাচিত পেমেন্ট মেথডটি খুঁজে বের করা
+            const selectedMethod = document.querySelector('input[name="payment-method"]:checked').value;
+
+            if (selectedMethod === 'online') {
+                // Stripe-এর জন্য অ্যাকশন সেট করা এবং ডিটেইলস দেখানো
+                checkoutForm.action = "{{ route('stripe.payment') }}";
+                onlinePaymentDetails.style.display = 'block';
+            } else if (selectedMethod === 'cod') {
+                // COD-এর জন্য অ্যাকশন সেট করা এবং Stripe ডিটেইলস লুকানো
+                checkoutForm.action = "{{ route('order') }}";
+                onlinePaymentDetails.style.display = 'none';
             }
         }
+
+        // পেজ লোডের সময় প্রাথমিক অ্যাকশন সেট করুন (যদি 'online' checked থাকে)
+        document.addEventListener('DOMContentLoaded', updatePaymentLogic);
+
+        // রেডিও বাটনে ক্লিক/চেঞ্জ হলে অ্যাকশন আপডেট করুন
+        document.querySelectorAll('input[name="payment-method"]').forEach(input => {
+            input.addEventListener('change', updatePaymentLogic);
+        });
+
+        // ===============================================
+        // 🚀 ফর্ম সাবমিট হ্যান্ডেলার - 'selectedPaymentMethod' ফিক্সড!
+        // ===============================================
+
+        checkoutForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            checkoutButton.disabled = true;
+            checkoutButton.innerHTML = 'Processing... <i class="fas fa-spinner fa-spin"></i>';
+
+            // 🟢 ফিক্স: এখন ভ্যারিয়েবলটি ডিক্লেয়ার করা হয়েছে!
+            const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+
+            if (selectedPaymentMethod === 'online') {
+                // STRIPE পেমেন্টের লজিক 
+                const {
+                    token,
+                    error
+                } = await stripe.createToken(cardElement, {
+                    name: document.getElementById('name').value,
+                });
+
+                if (error) {
+                    cardErrors.textContent = error.message;
+                    checkoutButton.disabled = false;
+                    checkoutButton.innerHTML = originalButtonText;
+                } else {
+                    document.getElementById('stripe-token-id').value = token.id;
+                    checkoutForm.submit();
+                }
+            } else if (selectedPaymentMethod === 'cod') {
+                checkoutForm.submit();
+            }
+        });
     </script>
 @endsection

@@ -409,9 +409,9 @@
                 <div class="info-detail"><strong>Email:</strong> {{ $user->email }}</div>
                 <div class="info-detail"><strong>Phone:</strong> {{ $user->phone ?? 'N/A' }}</div>
                 <div class="info-detail"><strong>Address:</strong>
-                    {{ json_decode($order->billing_address)->address ?? 'N/A' }},
-                    {{ json_decode($order->billing_address)->city ?? '' }},
-                    {{ json_decode($order->billing_address)->zip ?? '' }}
+                    {{ $order->billing_address['address'] ?? 'N/A' }},
+                    {{ $order->billing_address['city'] ?? '' }},
+                    {{ $order->billing_address['zip'] ?? '' }}
                 </div>
             </div>
 
@@ -496,10 +496,26 @@
                         <span>-${{ number_format($order->discount_amount, 2) }}</span>
                     </div>
                 @endif
-                <div class="total-row final">
-                    <span>Total Due:</span>
-                    <span>${{ number_format($order->total, 2) }}</span>
-                </div>
+
+                {{-- 💡 NEW LOGIC: Conditional Total Row --}}
+                @if ($order->payment_status === 'completed')
+                    <div class="total-row final"
+                        style="color: var(--color-accent); border-top-color: var(--color-accent);">
+                        <span>TOTAL PAID:</span>
+                        <span>${{ number_format($order->total, 2) }}</span>
+                    </div>
+                    <p style="text-align: right; font-size: 14px; font-weight: bold; color: green; margin-top: 5px;">
+                        <i class="fas fa-check-circle"></i> PAYMENT RECEIVED
+                    </p>
+                @else
+                    <div class="total-row final">
+                        <span>Total Due:</span>
+                        <span>${{ number_format($order->total, 2) }}</span>
+                    </div>
+                @endif
+                {{-- 💡 END NEW LOGIC --}}
+
+
             </div>
         </div>
 

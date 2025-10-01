@@ -426,6 +426,7 @@
                                 <th>Order Number</th>
                                 <th>Date</th>
                                 <th>Product Quantity</th>
+                                <th>Payment Status</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -443,6 +444,10 @@
                                     <td class="fs-6">{{ \Carbon\Carbon::parse($order->created_at)->format('M d, Y') }}
                                     </td>
                                     <td class="fs-6">{{ $totalQuantity }}</td> <!-- Use the calculated variable -->
+                                    <td class="fs-6 ">
+                                        <span
+                                            class="order-status-badge status-{{ $order->payment_status }}">{{ $order->payment_status }}</span>
+                                    </td>
                                     <td class="fs-6">${{ number_format($totalAmount, 2) }}</td>
                                     <!-- Use the calculated variable -->
                                     <td class="fs-6">

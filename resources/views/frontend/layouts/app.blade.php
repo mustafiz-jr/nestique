@@ -399,6 +399,8 @@
 
         {{-- footer end --}}
 
+        {{-- stripe js cdn --}}
+        <script src="https://js.stripe.com/v3/"></script>
 
         {{-- jquery cdn --}}
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
