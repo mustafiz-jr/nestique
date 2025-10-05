@@ -8,6 +8,7 @@ use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
@@ -78,6 +79,27 @@ class ProductResource extends Resource
                                         'archived' => 'Archived',
                                     ])
                                     ->default('draft'),
+                                Repeater::make('variants')
+                                    ->label('Product Variants')
+                                    ->helperText('Define custom variant options (e.g., Key: "color", Value: "red")')
+                                    ->schema([
+                                        TextInput::make('key')
+                                            ->label('Variant Name (Key)')
+                                            ->placeholder('e.g., size or color')
+                                            ->required()
+                                            ->columnSpan(1),
+
+                                        TextInput::make('value')
+                                            ->label('Variant Value')
+                                            ->placeholder('e.g., Large or Red')
+                                            ->required()
+                                            ->columnSpan(1),
+                                    ])
+                                    ->columns(2)
+                                    ->defaultItems(0)
+                                    ->cloneable()
+                                    ->collapsed()
+                                    ->columnSpanFull(),
                                 MarkdownEditor::make('description')
                                     ->columnSpan(2),
                             ])->columns(2),

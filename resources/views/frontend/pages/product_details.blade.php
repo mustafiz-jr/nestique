@@ -148,7 +148,7 @@
                                 <form action="{{ route('cart.add') }}" method="POST">
                                     @csrf
 
-                                    <!-- পণ্যের ID লুকানো ইনপুট ফিল্ড হিসেবে পাঠানো হচ্ছে -->
+
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                                     <input type="hidden" name="quantity" value="1" min="1"
@@ -213,9 +213,27 @@
                                 @endforeach
                             </li>
                             <li><span class="fw-bold">Variants:</span>
-                                @foreach ($product->variants as $item)
-                                    {{ $item }}
-                                @endforeach
+                                <ul>
+                                    <li>
+                                        Colors:
+                                        @foreach ($product->variants as $item)
+                                            @if ($item['key'] == 'color')
+                                                {{ $item['value'] }},
+                                            @endif
+                                        @endforeach
+                                    </li>
+                                    <li>
+                                        Sizes:
+                                        @foreach ($product->variants as $item)
+                                            @if ($item['key'] === 'size')
+                                                {{ $item['value'] }},
+                                            @endif
+                                        @endforeach
+                                    </li>
+                                </ul>
+
+
+
                             </li>
                         </ul>
                     </div>
