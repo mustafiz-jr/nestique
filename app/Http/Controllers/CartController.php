@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Termwind\Components\Dd;
 
 class CartController extends Controller
 {
@@ -195,19 +196,29 @@ class CartController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity'   => 'required|integer|min:1',
+            'weight'     => 'nullable|numeric',
         ]);
 
         $product = Product::findOrFail($request->product_id);
 
-        Cart::add(
-            $product->id,
-            $product->name,
-            $request->quantity,
-            $product->price
-        )->associate('App\Models\Product');
+        $options = [
+            'color' => is_array($request->variant_color) ? implode(',', $request->variant_color) : $request->variant_color,
+            'size'  => is_array($request->variant_size) ? implode(',', $request->variant_size) : $request->variant_size,
+        ];
 
+        $item = Cart::add([
+            'id'      => $product,
+            'name'    => $product->name,
+            'qty'     => $request->quantity,
+            'price'   => $product->price,
+            'weight'  => $request->weight ?? 0,
+            'options' => $options,
+        ])->associate(\App\Models\Product::class);
+        // dd($item);
         return redirect()->back()->with('success', 'Cart added!');
     }
+
+
 
     public function update_cart(Request $request)
     {

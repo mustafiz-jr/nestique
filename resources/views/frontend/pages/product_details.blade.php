@@ -62,16 +62,17 @@
             font-weight: bolder;
         }
 
-        /* Active tab color change */
         .nav-tabs .nav-link.active {
             color: var(--color-secondary) !important;
             background: var(--color-primary);
-            /* border: 1px solid var(--color-accent); */
         }
 
-        /* Optional: hover effect */
         .nav-tabs .nav-link:hover {
             color: #415E72;
+        }
+
+        input:checked {
+            background: var(--color-secondary) !important;
         }
     </style>
 @endsection
@@ -82,13 +83,14 @@
             <!-- Left: Product Images -->
             {{-- @dd($product) --}}
             <div class="col-md-6">
-                <img id="mainProductImage" class="main-image mb-3" src="{{ asset($product->thumbnail) }}" alt="polo shirt"
-                    data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal(this.src)">
+                <img id="mainProductImage" class="main-image mb-3" src="{{ asset('storage/' . $product->thumbnail) }}"
+                    alt="polo shirt" data-bs-toggle="modal" data-bs-target="#imageModal" onclick="openModal(this.src)">
 
                 <div class="row g-2 product-gallery">
                     @foreach ($product->gallery as $item)
                         <div class="col-3">
-                            <img src="{{ asset($item) }}" class="img-fluid" onclick="changeMainImage(this.src)">
+                            <img src="{{ asset('storage/' . $item) }}" class="img-fluid"
+                                onclick="changeMainImage(this.src)">
                         </div>
                     @endforeach
                 </div>
@@ -147,15 +149,51 @@
                             <div class="w-100">
                                 <form action="{{ route('cart.add') }}" method="POST">
                                     @csrf
-
-
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <div class="row my-4">
+                                        <div class="col-6">
+                                            <label class="form-label">Select color</label>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                @foreach ($product->variants as $item)
+                                                    @if ($item['key'] == 'color')
+                                                        {{-- Input and Label for Radio Button --}}
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="variant_color"
+                                                                id="color-{{ $item['value'] }}" value="{{ $item['value'] }}"
+                                                                @if ($loop->first) checked @endif>
+                                                            <label class="form-check-label" for="color-{{ $item['value'] }}">
+                                                                {{ $item['value'] }}
+                                                            </label>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <label class="form-label">Select size</label>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                @foreach ($product->variants as $item)
+                                                    @if ($item['key'] == 'size')
+                                                        {{-- Input and Label for Radio Button --}}
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="variant_size"
+                                                                id="size-{{ $item['value'] }}" value="{{ $item['value'] }}"
+                                                                @if ($loop->first) checked @endif>
+                                                            <label class="form-check-label" for="size-{{ $item['value'] }}">
+                                                                {{ $item['value'] }}
+                                                            </label>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <input type="hidden" name="quantity" value="1" min="1"
                                         max="{{ $product->stock_quantity }}">
 
-                                    <button type="submit" id="cart_add" onclick="count_cart()"
-                                        class="btn secondary-btn w-100">Add to
+                                    <button type="submit" id="cart_add" class="btn secondary-btn w-100">Add to
                                         Cart</button>
                                 </form>
                             </div>
@@ -183,8 +221,8 @@
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button"
-                            role="tab">
+                        <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs"
+                            type="button" role="tab">
                             Specifications
                         </button>
                     </li>
@@ -213,7 +251,7 @@
                                 @endforeach
                             </li>
                             <li><span class="fw-bold">Variants:</span>
-                                <ul>
+                                <ul class="list-unstyled ms-3 ps-5">
                                     <li>
                                         Colors:
                                         @foreach ($product->variants as $item)
@@ -231,9 +269,6 @@
                                         @endforeach
                                     </li>
                                 </ul>
-
-
-
                             </li>
                         </ul>
                     </div>

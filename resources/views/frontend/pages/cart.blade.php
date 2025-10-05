@@ -284,7 +284,6 @@
                     {{ session('success') }}
                 </div>
             @endif
-
             <div class="nestique-cart-layout">
                 <div class="nestique-cart-items-column">
                     @if ($cartItems->isEmpty())
@@ -297,7 +296,8 @@
                     @else
                         @foreach ($cartItems as $item)
                             <div class="nestique-cart-item">
-                                <img src="{{ asset($item->model->thumbnail) }}" alt="{{ $item->name }}"
+                                {{-- @dd($item->id->thumbnail) --}}
+                                <img src="{{ asset('storage/' . $item->id->thumbnail) }}" alt="{{ $item->name }}"
                                     class="nestique-cart-item-image">
                                 <div class="nestique-cart-item-details">
                                     <h4>{{ $item->name }}</h4>
