@@ -375,6 +375,7 @@
     </style>
 </head>
 
+
 <body>
     <div class="invoice-container">
         <div class="action-buttons">
@@ -446,15 +447,31 @@
                 <tr>
                     <th>Description</th>
                     <th>Quantity</th>
+                    @if ($order->orderItems->contains(fn($item) => isset(json_decode($item->variant, true)['size'])))
+                        <th>Size</th>
+                    @endif
+
+                    @if ($order->orderItems->contains(fn($item) => isset(json_decode($item->variant, true)['color'])))
+                        <th>Color</th>
+                    @endif
                     <th>Unit Price</th>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($order->orderItems as $item)
+                    @php
+                        $variant = json_decode($item->variant, true);
+                    @endphp
                     <tr>
                         <td>{{ $item->product_name }}</td>
                         <td>{{ $item->quantity }}</td>
+                        @if (isset($variant['size']))
+                            <td>{{ $variant['size'] }}</td>
+                        @endif
+                        @if (isset($variant['color']))
+                            <td>{{ $variant['color'] }}</td>
+                        @endif
                         <td>${{ number_format($item->price, 2) }}</td>
                         <td class="text-right">${{ number_format($item->total, 2) }}</td>
                     </tr>
@@ -524,7 +541,6 @@
             <p>Thank you for choosing Nestique for your fashion needs</p>
             <p>www.nestique.com | info@nestique.com | (123) 456-7890</p>
         </div>
-
         <div class="page-break"></div>
     </div>
 

@@ -154,7 +154,7 @@ class StripeController extends Controller
         foreach ($cartItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
-                'product_id' => $item->id,
+                'product_id' => $item->id->id,
                 'product_name' => $item->name,
                 'price' => $item->price,
                 'quantity' => $item->qty,

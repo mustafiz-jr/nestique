@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
         $categoryStructure = [
             // Men
             'T-Shirts & Polos' => [
-                'Men\'s Classic V-Neck T-Shirt',
+                "Men's Classic V-Neck T-Shirt",
                 'Casual Polo Shirt with Pocket',
             ],
             'Shirts' => [
@@ -98,16 +98,31 @@ class ProductSeeder extends Seeder
             ],
         ];
 
-        $brands = Brand::pluck('id')->toArray(); // Random brand_id pick
+        $brands = Brand::pluck('id')->toArray();
+
+        // Random color and size sets
+        $colors = ['red', 'green', 'blue', 'black', 'white', 'yellow', 'gray', 'navy'];
+        $sizes = ['S', 'M', 'L', 'XL', 'XXL'];
 
         foreach ($categoryStructure as $categoryName => $productNames) {
             $category = Category::where('name', $categoryName)->first();
 
-            if (!$category) {
-                continue;
-            }
+            if (!$category) continue;
 
             foreach ($productNames as $productName) {
+
+                // Random variants per product
+                $selectedColors = array_slice($colors, 0, rand(2, 4));
+                $selectedSizes = array_slice($sizes, 0, rand(2, 4));
+
+                $variants = [];
+                foreach ($selectedColors as $color) {
+                    $variants[] = ['key' => 'color', 'value' => $color];
+                }
+                foreach ($selectedSizes as $size) {
+                    $variants[] = ['key' => 'size', 'value' => $size];
+                }
+
                 DB::table('products')->insert([
                     'name' => $productName,
                     'slug' => Str::slug($productName) . '-' . uniqid(),
@@ -122,23 +137,27 @@ class ProductSeeder extends Seeder
                         'assets/frontend/images/jersey_04.webp',
                         'assets/frontend/images/jersey_05.webp'
                     ]),
+                    'regular_price' => rand(600, 1000),
                     'price' => rand(500, 5000),
                     'compare_at_price' => rand(5500, 7000),
                     'cost_per_item' => rand(300, 1000),
                     'track_quantity' => true,
-                    'has_variants' => false,
+                    'has_variants' => true,
                     'sku' => strtoupper(Str::random(10)),
                     'barcode' => rand(1000000000, 9999999999),
                     'weight' => rand(1, 10),
                     'height' => rand(5, 20),
                     'width' => rand(5, 20),
                     'length' => rand(5, 20),
-                    'stock' => rand(0, 100),
+                    'stock' => rand(10, 100),
                     'status' => 'active',
                     'published_at' => now(),
                     'tags' => json_encode(['Fashion', 'New', 'Trending']),
-                    'options' => json_encode([]),
-                    'variants' => json_encode([]),
+
+                    // ✅ Variant fields
+                    'options' => json_encode(['Color', 'Size']),
+                    'variants' => json_encode($variants),
+
                     'meta_title' => $productName . " - Buy Now",
                     'meta_description' => "Meta description for $productName",
                     'meta_keywords' => "fashion, " . strtolower($categoryName),

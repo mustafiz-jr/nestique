@@ -151,20 +151,31 @@ class CartController extends Controller
         $order->tracking = null;
         $order->save();
 
-        // Step 5.1: Save each cart item to the order_items table
+
+
         foreach ($cartItems as $item) {
             $orderItem = new OrderItem();
             $orderItem->order_id = $order->id;
-            $orderItem->product_id = $item->id;
+
+            $orderItem->product_id = $item->id->id ?? $item->id;
+
             $orderItem->product_name = $item->name;
             $orderItem->sku = $item->options->sku ?? null;
             $orderItem->price = $item->price;
             $orderItem->quantity = $item->qty;
             $orderItem->total = $item->price * $item->qty;
-            $orderItem->variant = json_encode($item->options ?? []);
+
+            $variantData = [
+                'color' => $item->options->color ?? null,
+                'size'  => $item->options->size ?? null,
+            ];
+
+            $orderItem->variant = json_encode($variantData);
             $orderItem->notes = null;
             $orderItem->save();
         }
+
+
 
         if ($coupon) {
             $coupon->increment('used');

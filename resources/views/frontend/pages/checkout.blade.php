@@ -447,13 +447,40 @@
                     <h3>Order Summary</h3>
                     @foreach ($cartItems as $item)
                         <div class="nestique-summary-item">
-                            <img src="{{ asset($item->model->thumbnail) }}" alt="{{ $item->name }}">
+                            <img src="{{ asset('storage/' . $item->id->thumbnail) }}" alt="{{ $item->name }}"
+                                class="">
+
                             <div class="nestique-summary-item-details">
                                 <h4>{{ $item->name }}</h4>
-                                <p>Qty: {{ $item->qty }}</p>
+                                <div class="row">
+                                    <div class="col-6">
+                                        @if ($item->options->has('size'))
+                                            <p>Size: {{ $item->options->size }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="col-6">
+                                        @if ($item->options->has('color'))
+                                            <p>Color: {{ $item->options->color }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="col-6">
+                                        <p>Quantity: {{ $item->qty }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        @if ($item->options->has('size'))
+                                            <p>Size: {{ $item->options->size }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="col-6">
+                                        @if ($item->options->has('color'))
+                                            <p>Color: {{ $item->options->color }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="nestique-summary-item-price col-6">
+                                    {{ number_format((float) $item->price, 2) }} TK
+                                </div>
                             </div>
-                            <div class="nestique-summary-item-price">
-                                ${{ number_format($item->price, 2) }}</div>
                         </div>
                     @endforeach
                     <div class="nestique-form-group">
