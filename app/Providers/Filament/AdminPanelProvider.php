@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\AdminDashboardRoleMiddleWare;
+use App\Models\User;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -14,6 +16,7 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\View\LegacyComponents\Widget;
 use Filament\Widgets;
+
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -32,7 +35,6 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Nestique Admin')
             ->brandLogo(asset('assets/backend/images/logo.png'))
             ->brandLogoHeight('70px')
-            ->favicon(asset('assets/frontend/images/favicon.ico'))
             ->colors([
                 'secondary' => Color::hex("#ac8e51"),
                 'accent' => Color::hex('#415E72'),
@@ -77,6 +79,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                AdminDashboardRoleMiddleWare::class,
             ]);
     }
 }

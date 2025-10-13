@@ -347,9 +347,9 @@
                     </div>
                 </div>
             </div>
-            <div class="payment containers my-4">
+            <div class="payment containers my-4 ps-sm-0 ps-5">
                 <h4 class="ps-5">Pay with</h4>
-                <div class="d-flex gap-1 flex-wrap g-1 justify-content-center">
+                <div class="d-flex gap-1 flex-wrap g-1 justify-content-start ps-4">
                     <!-- Nagad -->
                     <img src="https://www.logo.wine/a/logo/Nagad/Nagad-Vertical-Logo.wine.svg" alt="Nagad Logo"
                         width="100">
