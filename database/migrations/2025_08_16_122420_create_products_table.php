@@ -37,7 +37,7 @@ return new class extends Migration
             $table->enum('status', ['draft', 'active', 'archived'])->default('draft');
             $table->timestamp('published_at')->nullable();
             $table->json('tags')->nullable();
-            $table->json('options')->nullable(); // e.g. ["Color", "Size"]
+            $table->json('options')->nullable();
             $table->json('variants')->nullable();
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
