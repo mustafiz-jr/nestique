@@ -311,7 +311,49 @@
                 </div>
             </div>
 
-            <div class="contact-form">
+            <div>
+                @php
+                    if (Auth::user()->role->slug == 'customer') {
+                        echo '<iframe src="' .
+                            route(config('chatify.routes.prefix')) .
+                            '" frameborder="0" style="width:100%; height:80vh;"></iframe>';
+                    } else {
+                        echo '<div class="contact-form">
+        <h2>Personal Consultation</h2>
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Request Consultation</button>
+        </form>
+    </div>';
+                    }
+                @endphp
+
+
+
+            </div>
+        </div>
+
+        <div class="contact-map">
+            {{-- <div class="contact-form">
                 <h2>Personal Consultation</h2>
                 <form action="#" method="POST">
                     <div class="form-group">
@@ -336,10 +378,7 @@
 
                     <button type="submit" class="submit-btn">Request Consultation</button>
                 </form>
-            </div>
-        </div>
-
-        <div class="contact-map">
+            </div> --}}
             <div class="map-header">
                 <h2>Find Our Boutique</h2>
             </div>
