@@ -8,7 +8,7 @@ use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-// Publicly accessible routes (no login required)
+// Publicly accessible routes (no login required)   
 
 Route::get('/', [PageController::class, 'guest'])->name('guest');
 Route::get('/home', [PageController::class, 'home'])->name('home');

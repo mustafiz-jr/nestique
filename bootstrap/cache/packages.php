@@ -133,6 +133,17 @@
       0 => 'Livewire\\LivewireServiceProvider',
     ),
   ),
+  'munafio/chatify' => 
+  array (
+    'aliases' => 
+    array (
+      'Chatify' => 'Chatify\\Facades\\ChatifyMessenger',
+    ),
+    'providers' => 
+    array (
+      0 => 'Chatify\\ChatifyServiceProvider',
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 
