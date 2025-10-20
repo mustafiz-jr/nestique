@@ -145,8 +145,13 @@
                                     <i class="far fa-user"></i>
                                 </span>
                                 <ul class="dropdown-menu p-3 gap-2">
-                                    <li> <a class="text-decoration-none" href="{{ route('profile.index') }}"><i
-                                                class="fa-regular fa-user mx-1"></i> Profile</a></li>
+                                    @if (auth()->user()->role->slug == 'admin')
+                                        <li> <a class="text-decoration-none" href="/admin"><i
+                                                    class="fa-regular fa-user mx-1"></i>Dashboard</a></li>
+                                    @elseif(auth()->user()->role->slug == 'customer')
+                                        <li> <a class="text-decoration-none" href="{{ route('profile.index') }}"><i
+                                                    class="fa-regular fa-user mx-1"></i> Profile</a></li>
+                                    @endif
                                     <li> <a class="text-decoration-none" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                                 class="fa-solid fa-right-from-bracket mx-1"></i> Logout</a>
@@ -233,6 +238,7 @@
                 </div>
             </div>
         </header>
+
 
         <!-- Navigation Links -->
         <nav class="navbar-links">
